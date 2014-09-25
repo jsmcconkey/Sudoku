@@ -5,13 +5,22 @@ package cell;
 public class Cell {
 	
 	int number;
+	int x;
+	int y; 
+	int cellsize;
+	
 	boolean locked;
 	
 	
 	
-	public Cell(int n, boolean l){
+	public Cell(int n, boolean l, int ix, int iy, int icellsize){
 		number = n;	
 		locked = l;
+		x = ix;
+		y = iy;
+		
+		cellsize = icellsize;
+		
 	}
 	
 	public boolean getLocked()
@@ -21,7 +30,16 @@ public class Cell {
 
 	public void Click()
 	{
-		number = number + 1;
+		System.out.println("Cell " + x + ":" + y + " has been clicked. Value: " + number);
+	}
+	
+	public void checkClick(int mx, int my)
+	{
+		if(((mx >= x) && (mx <= (x + cellsize))) && ((my >= y) && (my <= (y + cellsize))))
+		{
+			Click();	
+		}	
+		
 	}
 	
 	public String getString()

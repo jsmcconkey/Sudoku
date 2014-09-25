@@ -15,11 +15,17 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import cell.Cell;
 import java.awt.BorderLayout; 
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
 import java.util.Random;
 
 
 
-public class PlayingField extends JPanel {
+public class PlayingField extends JPanel
+
+	{
 	
 	public Cell[][] cellArray = new Cell[9][9];
 	public Random rand = new Random();
@@ -28,8 +34,18 @@ public class PlayingField extends JPanel {
 	public PlayingField(){
 		    super();
 		    setBackground(Color.WHITE);	
+
+		    addMouseListener(new MouseAdapter() {
+		        @Override
+		        public void mouseClicked(MouseEvent e) 
+		        {
+		            System.out.println("X: " + e.getX() + " Y: " + e.getY());
+		            checkCells(e.getX(),e.getY());
+		        }
+		    });
 		    
-		    
+		    int offset = 25;
+		    int cellsize = 45;
 		    
 			for(int j = 0; j<9; j++)
 				for(int i = 0; i<9; i++)
@@ -41,9 +57,17 @@ public class PlayingField extends JPanel {
 						l = false;
 					
 					System.out.print(l);
-					cellArray[j][i] = new Cell(rand.nextInt(9),l);		
+					cellArray[j][i] = new Cell(rand.nextInt(9),l, offset + (cellsize * i), offset + (cellsize * j), cellsize);		
 				}
 	}
+	
+	public void checkCells(int x, int y)
+	{
+		for(int j = 0; j<9; j++)
+			for(int i = 0; i<9; i++)
+				cellArray[j][i].checkClick(x, y);		
+	}
+	
 	
     public void paintComponent(Graphics g)  
     {

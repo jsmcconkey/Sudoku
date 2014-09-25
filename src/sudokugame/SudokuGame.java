@@ -12,6 +12,7 @@ public class SudokuGame extends JApplet
   public void init()
    {
 	  PlayingField field = new PlayingField();
+	  
 	  getContentPane().add(field);
       setSize(WIDTH,HEIGHT);       
    }

@@ -73,7 +73,7 @@ public class PlayingField extends JPanel
 		for(int j = 0; j<9; j++)
 			for(int i = 0; i<9; i++)
 				if(cellArray[j][i].checkClick(x, y) == true)
-					buttongrid.setLocation(x-52,y-50);
+					buttongrid.resetLoc(x, y, cellArray[j][i]);
 	}
 	
 	public boolean checkVictory()
@@ -87,7 +87,7 @@ public class PlayingField extends JPanel
 			
 			for(int i = 0; i<9; i++)//Columns
 			{
-				numbers.add(cellArray[j][i].getNumber());								
+				numbers.add(cellArray[j][i].getValue());								
 			}
 			
 			if(!(numbers.contains(1) && numbers.contains(2) && numbers.contains(3) && numbers.contains(4) && numbers.contains(5) && numbers.contains(6) && numbers.contains(7) && numbers.contains(8) && numbers.contains(9)))
@@ -101,7 +101,7 @@ public class PlayingField extends JPanel
 			
 			for(int i = 0; i<9; i++)//Columns
 			{
-				numbers.add(cellArray[i][j].getNumber());								
+				numbers.add(cellArray[i][j].getValue());								
 			}
 			
 			if(!(numbers.contains(1) && numbers.contains(2) && numbers.contains(3) && numbers.contains(4) && numbers.contains(5) && numbers.contains(6) && numbers.contains(7) && numbers.contains(8) && numbers.contains(9)))
@@ -121,7 +121,7 @@ public class PlayingField extends JPanel
 				{
 					for(int p = 0; p<3; p++)
 					{
-						numbers.add(cellArray[i][j].getNumber());				
+						numbers.add(cellArray[i][j].getValue());				
 					}
 					
 					if(!(numbers.contains(1) && numbers.contains(2) && numbers.contains(3) && numbers.contains(4) && numbers.contains(5) && numbers.contains(6) && numbers.contains(7) && numbers.contains(8) && numbers.contains(9)))

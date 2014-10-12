@@ -4,7 +4,7 @@ package cell;
 
 public class Cell {
 	
-	private int number;
+	private int value;
 	private int x;
 	private int y; 
 	private int cellsize;
@@ -14,7 +14,7 @@ public class Cell {
 	
 	
 	public Cell(int n, boolean l, int ix, int iy, int icellsize){
-		number = n;	
+		value = n;	
 		locked = l;
 		x = ix;
 		y = iy;
@@ -28,31 +28,33 @@ public class Cell {
 		return locked;
 	}
 	
-	public int getNumber()
+	public int getValue()
 	{
-		return number;		
+		return value;		
 	}
 	
 	public boolean checkClick(int mx, int my)
 	{
 		boolean r = false;
-		if((((mx >= x) && (mx <= (x + cellsize))) && ((my >= y) && (my <= (y + cellsize)))) && (locked == false))
-		{
-			System.out.println("Cell " + x + ":" + y + " has been clicked. Value: " + number);
-			number = number +1;
+		if((((mx >= x) && (mx <= (x + cellsize-1))) && ((my >= y) && (my <= (y + cellsize-1)))) && (locked == false))//If the bounds are correct
 			r = true;
-		}	
+
 		
 		return r;
 		
 	}
 	
+	public void setValue(int v)
+	{
+		value = v;		
+	}
+	
 	public String getString()
 	{
-		if(number == 0)
+		if(value == 0)
 			return " ";		
 		else
-			return Integer.toString(number);
+			return Integer.toString(value);
 	}
 	
 }

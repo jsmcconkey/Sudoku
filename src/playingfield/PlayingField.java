@@ -62,7 +62,6 @@ public class PlayingField extends JPanel
 					else
 						l = false;
 					
-					System.out.print(l);
 					cellArray[j][i] = new Cell(rand.nextInt(9),l, offset + (cellsize * i), offset + (cellsize * j), cellsize);		
 				}
 	}

@@ -21,6 +21,11 @@ public class Cell {
 		
 		cellsize = icellsize;
 		
+		if(locked==false)
+		{
+			value = 0;
+		}
+		
 	}
 	
 	public boolean getLocked()

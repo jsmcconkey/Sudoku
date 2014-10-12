@@ -4,10 +4,10 @@ package cell;
 
 public class Cell {
 	
-	int number;
-	int x;
-	int y; 
-	int cellsize;
+	private int number;
+	private int x;
+	private int y; 
+	private int cellsize;
 	
 	boolean locked;
 	
@@ -27,18 +27,23 @@ public class Cell {
 	{	
 		return locked;
 	}
-
-	public void Click()
+	
+	public int getNumber()
 	{
-		System.out.println("Cell " + x + ":" + y + " has been clicked. Value: " + number);
+		return number;		
 	}
 	
-	public void checkClick(int mx, int my)
+	public boolean checkClick(int mx, int my)
 	{
-		if(((mx >= x) && (mx <= (x + cellsize))) && ((my >= y) && (my <= (y + cellsize))))
+		boolean r = false;
+		if((((mx >= x) && (mx <= (x + cellsize))) && ((my >= y) && (my <= (y + cellsize)))) && (locked == false))
 		{
-			Click();	
+			System.out.println("Cell " + x + ":" + y + " has been clicked. Value: " + number);
+			number = number +1;
+			r = true;
 		}	
+		
+		return r;
 		
 	}
 	

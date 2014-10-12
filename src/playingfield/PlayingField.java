@@ -14,11 +14,13 @@ import java.awt.BasicStroke;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import cell.Cell;
+import gridselector.GridSelector;
 import java.awt.BorderLayout; 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+import java.util.ArrayList;
 import java.util.Random;
 
 
@@ -31,16 +33,20 @@ public class PlayingField extends JPanel
 	public Random rand = new Random();
 	public String cellAt;
 	public Font bigFont = new Font("Serif", Font.BOLD, 16);
+	public GridSelector buttongrid = new GridSelector();
+	
 	public PlayingField(){
 		    super();
 		    setBackground(Color.WHITE);	
-
+		    add(buttongrid);
+		    buttongrid.setLocation(800,800);
 		    addMouseListener(new MouseAdapter() {
 		        @Override
-		        public void mouseClicked(MouseEvent e) 
+		        public void mousePressed(MouseEvent e) 
 		        {
 		            System.out.println("X: " + e.getX() + " Y: " + e.getY());
 		            checkCells(e.getX(),e.getY());
+		            repaint();
 		        }
 		    });
 		    
@@ -63,9 +69,67 @@ public class PlayingField extends JPanel
 	
 	public void checkCells(int x, int y)
 	{
+
 		for(int j = 0; j<9; j++)
 			for(int i = 0; i<9; i++)
-				cellArray[j][i].checkClick(x, y);		
+				if(cellArray[j][i].checkClick(x, y) == true)
+					buttongrid.setLocation(x-52,y-50);
+	}
+	
+	public boolean checkVictory()
+	{
+		boolean r = true;
+		
+		//This loop checks every row for 1-9
+		for(int j = 0; j<9; j++)//Rows
+		{	
+			ArrayList<Integer> numbers = new ArrayList<Integer>();
+			
+			for(int i = 0; i<9; i++)//Columns
+			{
+				numbers.add(cellArray[j][i].getNumber());								
+			}
+			
+			if(!(numbers.contains(1) && numbers.contains(2) && numbers.contains(3) && numbers.contains(4) && numbers.contains(5) && numbers.contains(6) && numbers.contains(7) && numbers.contains(8) && numbers.contains(9)))
+				r = false;			
+		}
+		
+		//This loops checks every column for 1-9
+		for(int j = 0; j<9; j++)//Rows
+		{	
+			ArrayList<Integer> numbers = new ArrayList<Integer>();
+			
+			for(int i = 0; i<9; i++)//Columns
+			{
+				numbers.add(cellArray[i][j].getNumber());								
+			}
+			
+			if(!(numbers.contains(1) && numbers.contains(2) && numbers.contains(3) && numbers.contains(4) && numbers.contains(5) && numbers.contains(6) && numbers.contains(7) && numbers.contains(8) && numbers.contains(9)))
+				r = false;			
+		}
+		
+		//This loops checks the boxes
+		for(int j = 0; j<3; j++)//Box Rows
+		{	
+			
+			
+			for(int i = 0; i<3; i++)//Box Columns
+			{
+				ArrayList<Integer> numbers = new ArrayList<Integer>();
+				
+				for(int s = 0; s<3; s++)//Rows within the box
+				{
+					for(int p = 0; p<3; p++)
+					{
+						numbers.add(cellArray[i][j].getNumber());				
+					}
+					
+					if(!(numbers.contains(1) && numbers.contains(2) && numbers.contains(3) && numbers.contains(4) && numbers.contains(5) && numbers.contains(6) && numbers.contains(7) && numbers.contains(8) && numbers.contains(9)))
+						r = false;						
+				}																
+			}		
+		}				
+		return r;
 	}
 	
 	
@@ -156,6 +220,6 @@ public class PlayingField extends JPanel
 		
 	
 	}
-
+	
     
 }

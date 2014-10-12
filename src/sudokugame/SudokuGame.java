@@ -1,7 +1,8 @@
 package sudokugame;
 
-import javax.swing.*;
+import java.awt.Component;
 
+import javax.swing.*;
 import playingfield.PlayingField;
 
 public class SudokuGame extends JApplet

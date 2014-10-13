@@ -3,7 +3,12 @@ package gridselector;
 
 import javax.swing.JPanel; //imports JFrame library
 import javax.swing.JButton; //imports JButton library
+
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.GridLayout; //imports GridLayout library
+import java.awt.Insets;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import cell.Cell;
@@ -24,6 +29,13 @@ public class GridSelector extends JPanel{
                         for(int x=0; x<3; x++){
                         		k++;
                                 JButton button = new JButton(Integer.toString(k)); //creates new button   
+                                
+                                button.setPreferredSize(new Dimension(15, 15));  //Sets the size of the box to be smaller
+                                Font customFont = new Font("Courier New", Font.BOLD, 11);
+                                button.setFont(customFont);
+                                button.setMargin(new Insets(0, 0, 0, 0));
+                                button.setBorder(null);
+                                button.setBackground(Color.green);
                                 
                                 button.addActionListener(new ActionListener() {
                                     public void actionPerformed(ActionEvent e)
@@ -62,8 +74,8 @@ public class GridSelector extends JPanel{
         
         public void resetLoc(int x,int y, Cell clickedCell)
         {
-        	setLocation(x-52,y-50);
-        	myCell = clickedCell;     	       	
+        	myCell = clickedCell;
+        	setLocation(myCell.getX(), myCell.getY()); //Sets to the location of the cell instead of x,y where clicked
         }
         
 

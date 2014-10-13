@@ -34,19 +34,22 @@ public class PlayingField extends JPanel
 	public String cellAt;
 	public Font bigFont = new Font("Serif", Font.BOLD, 16);
 	public GridSelector buttongrid = new GridSelector();
+	public boolean flag = false;
 	
 	public PlayingField(){
 		    super();
 		    setBackground(Color.WHITE);	
+		    
 		    add(buttongrid);
-		    buttongrid.setLocation(800,800);
+		    buttongrid.setVisible(false);
+		    		    
 		    addMouseListener(new MouseAdapter() {
 		        @Override
 		        public void mousePressed(MouseEvent e) 
 		        {
-		            System.out.println("X: " + e.getX() + " Y: " + e.getY());
+		            System.out.println("Mouse Pressed - X: " + e.getX() + " Y: " + e.getY());
 		            checkCells(e.getX(),e.getY());
-		            repaint();
+		        	buttongrid.setVisible(true);		            
 		        }
 		    });
 		    

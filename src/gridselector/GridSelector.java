@@ -31,7 +31,7 @@ public class GridSelector extends JPanel{
                                 JButton button = new JButton(Integer.toString(k)); //creates new button   
                                 
                                 button.setPreferredSize(new Dimension(15, 15));  //Sets the size of the box to be smaller
-                                Font customFont = new Font("Courier New", Font.BOLD, 11);
+                                Font customFont = new Font("Arial", Font.BOLD, 11);
                                 button.setFont(customFont);
                                 button.setMargin(new Insets(0, 0, 0, 0));
                                 button.setBorder(null);

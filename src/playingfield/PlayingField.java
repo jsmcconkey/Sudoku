@@ -25,6 +25,7 @@ import java.util.Random;
 
 
 
+
 public class PlayingField extends JPanel
 
 	{
@@ -35,6 +36,10 @@ public class PlayingField extends JPanel
 	public Font bigFont = new Font("Serif", Font.BOLD, 16);
 	public GridSelector buttongrid = new GridSelector();
 	public boolean flag = false;
+	public static int yoffset = 1;
+	public static int xoffset = 83;
+	public static int cellsize = 52;
+	public JButton finishGame = new JButton("Finish Game");
 	
 	public PlayingField(){
 		    super();
@@ -42,6 +47,8 @@ public class PlayingField extends JPanel
 		    
 		    add(buttongrid);
 		    buttongrid.setVisible(false);
+
+
 		    		    
 		    addMouseListener(new MouseAdapter() {
 		        @Override
@@ -53,9 +60,7 @@ public class PlayingField extends JPanel
 		        }
 		    });
 		    
-		    int offset = 25;
-		    int cellsize = 45;
-		    
+
 			for(int j = 0; j<9; j++)
 				for(int i = 0; i<9; i++)
 				{
@@ -65,7 +70,7 @@ public class PlayingField extends JPanel
 					else
 						l = false;
 					
-					cellArray[j][i] = new Cell(rand.nextInt(9),l, offset + (cellsize * i), offset + (cellsize * j), cellsize);		
+					cellArray[j][i] = new Cell(rand.nextInt(9),l, xoffset + (cellsize * i), yoffset + (cellsize * j), cellsize);		
 				}
 	}
 	
@@ -142,20 +147,18 @@ public class PlayingField extends JPanel
         
         super.paintComponent(g); 
 
-		int offset = 25;
-		int cellsize = 45;
 		
 		Graphics2D g2 = (Graphics2D) g;
 		
-		drawGrid(g, g2, cellsize,offset);
+		drawGrid(g, g2, cellsize,xoffset,yoffset);
 		//Draws Vertical Lines
 
 		
-		drawCells(g, g2, offset, cellsize);
+		drawCells(g, g2, xoffset, yoffset, cellsize);
         
     }
     
-	public void drawCells(Graphics g, Graphics2D g2, int offset, int cellsize)
+	public void drawCells(Graphics g, Graphics2D g2, int xoffset, int yoffset, int cellsize)
 	{
 		g.setFont(bigFont);
 		for(int j = 0; j<9; j++)
@@ -166,58 +169,59 @@ public class PlayingField extends JPanel
 				if(cellArray[j][i].getLocked() == true)//Dark gray for locked
 				{
 					g.setColor(Color.GRAY);
-					g.fillRect(offset + (cellsize * i), offset + (cellsize * j), cellsize, cellsize);
-					drawGrid(g, g2, cellsize, offset);										
+					g.fillRect(xoffset + (cellsize * i), yoffset + (cellsize * j), cellsize, cellsize);
+					drawGrid(g, g2, cellsize, xoffset, yoffset);										
 				}	
 				else if(cellArray[j][i].getLocked() == false){
 					if(cellArray[j][i].getString() == " ")//White for unentered
 					{
 						g.setColor(Color.WHITE);
-						g.fillRect(offset + (cellsize * i), offset + (cellsize * j), cellsize, cellsize);
-						drawGrid(g, g2, cellsize, offset);
+						g.fillRect(xoffset + (cellsize * i), yoffset + (cellsize * j), cellsize, cellsize);
+						drawGrid(g, g2, cellsize, xoffset, yoffset);
 					}
 					if(cellArray[j][i].getString() != " ") //Lightgray for entered numbers
 					{
 						g.setColor(Color.lightGray);
-						g.fillRect(offset + (cellsize * i), offset + (cellsize * j), cellsize, cellsize);
-						drawGrid(g, g2,cellsize, offset);			
+						g.fillRect(xoffset + (cellsize * i), yoffset + (cellsize * j), cellsize, cellsize);
+						drawGrid(g, g2,cellsize, xoffset,yoffset);			
 					}
 				}
 				
 				
 				g.setColor(Color.BLACK);				
-				g.drawString(cellArray[j][i].getString(), offset - 3 + (cellsize/2) + (cellsize * i), offset + 5 + (cellsize/2) + (cellsize * j) );
+				g.drawString(cellArray[j][i].getString(), xoffset - 3 + (cellsize/2) + (cellsize * i), yoffset + 5 + (cellsize/2) + (cellsize * j) );
 				
 				
 			}
 		}
 	}
 	
-	public void drawGrid(Graphics g, Graphics2D g2, int cellsize, int offset)
+	public void drawGrid(Graphics g, Graphics2D g2, int cellsize, int xoffset, int yoffset)
 	{
 		g.setColor(Color.BLACK);
 		
+		//Draws Vertical Lines
 		for(int i = 0; i<=9; i++){
-			int x = i * cellsize + offset;
+			int x = i * cellsize + xoffset;
 
 			g2.setStroke(new BasicStroke(1));			
 			
 			if((i%3) == 0)
 				g2.setStroke(new BasicStroke(3));
 				
-			g2.drawLine(x, offset, x, offset + (cellsize * 9));		
+			g2.drawLine(x, yoffset, x, yoffset + (cellsize * 9));		
 		}
 		
 		//Draws Horizontal Lines
 		for(int i = 0; i<=9; i++){
-			int y = i * cellsize + offset;
+			int y = i * cellsize + yoffset;
 			
 			g2.setStroke(new BasicStroke(1));	
 			
 			if((i%3) == 0)
 				g2.setStroke(new BasicStroke(3));	
 				
-			g2.drawLine(offset, y, offset + (cellsize * 9), y);		
+			g2.drawLine(xoffset, y, xoffset + (cellsize * 9), y);		
 		}	
 		
 	

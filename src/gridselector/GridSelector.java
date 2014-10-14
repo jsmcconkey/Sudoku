@@ -30,12 +30,12 @@ public class GridSelector extends JPanel{
                         		k++;
                                 JButton button = new JButton(Integer.toString(k)); //creates new button   
                                 
-                                button.setPreferredSize(new Dimension(15, 15));  //Sets the size of the box to be smaller
-                                Font customFont = new Font("Courier New", Font.BOLD, 11);
+                                button.setPreferredSize(new Dimension(18, 18));  //Sets the size of the box to be smaller
+                                Font customFont = new Font("Courier New", Font.BOLD, 12);
                                 button.setFont(customFont);
                                 button.setMargin(new Insets(0, 0, 0, 0));
                                 button.setBorder(null);
-                                button.setBackground(Color.green);
+                                button.setBackground(Color.lightGray);
                                 
                                 button.addActionListener(new ActionListener() {
                                     public void actionPerformed(ActionEvent e)

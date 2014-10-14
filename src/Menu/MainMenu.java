@@ -58,61 +58,61 @@ public class MainMenu extends JPanel{
 //		mediumButton.setBackground(new Color());
 		mediumButton.setBounds(200, 150, 100, 60);
 		add(mediumButton);
-		mediumButton.addMouseListener(new MouseAdapter(){
-			@Override
-			public void mousePressed(MouseEvent e){
-				System.out.println("You pressed the Medium button");
-				buttonPressed = "Medium";
-			}
-		});
+//		mediumButton.addMouseListener(new MouseAdapter(){
+//			@Override
+//			public void mousePressed(MouseEvent e){
+//				System.out.println("You pressed the Medium button");
+//				buttonPressed = "Medium";
+//			}
+//		});
 		
 		hardButton = new JButton("Hard");
 //		hardButton.setBackground(new Color());
 		hardButton.setBounds(325, 150, 100, 60);
 		add(hardButton);
-		hardButton.addMouseListener(new MouseAdapter(){
-			@Override
-			public void mousePressed(MouseEvent e){
-				System.out.println("You pressed the Hard button");
-				buttonPressed = "Hard";
-			}
-		});
+//		hardButton.addMouseListener(new MouseAdapter(){
+//			@Override
+//			public void mousePressed(MouseEvent e){
+//				System.out.println("You pressed the Hard button");
+//				buttonPressed = "Hard";
+//			}
+//		});
 		
 		hardestButton = new JButton("Hardest");
 //		hardestButton.setBackground(new Color());
 		hardestButton.setBounds(450, 150, 100, 60);
 		add(hardestButton);
-		hardestButton.addMouseListener(new MouseAdapter(){
-			@Override
-			public void mousePressed(MouseEvent e){
-				System.out.println("You pressed the Hardest button");
-				buttonPressed = "Hardest";
-			}
-		});
+//		hardestButton.addMouseListener(new MouseAdapter(){
+//			@Override
+//			public void mousePressed(MouseEvent e){
+//				System.out.println("You pressed the Hardest button");
+//				buttonPressed = "Hardest";
+//			}
+//		});
 		
 		userScores = new JButton("User Scores");
 //		userScores.setBackground(new Color());
 		userScores.setBounds(this.getWidth()/3-75, 400, 150, 40);
 		add(userScores);
-		userScores.addMouseListener(new MouseAdapter(){
-			@Override
-			public void mousePressed(MouseEvent e){
-				System.out.println("You pressed the User Scores button");
-				buttonPressed = "UserScores";
-			}
-		});
+//		userScores.addMouseListener(new MouseAdapter(){
+//			@Override
+//			public void mousePressed(MouseEvent e){
+//				System.out.println("You pressed the User Scores button");
+//				buttonPressed = "UserScores";
+//			}
+//		});
 		
 		loadGame = new JButton("Load Game");
 //		loadGame.setBackground(new Color());
 		loadGame.setBounds(this.getWidth()/3*2 - 75, 400, 150, 40);
 		add(loadGame);
-		loadGame.addMouseListener(new MouseAdapter(){
-			@Override
-			public void mousePressed(MouseEvent e){
-				System.out.println("You pressed the Load Game button");
-				buttonPressed = "LoadGame";
-			}
-		});
+//		loadGame.addMouseListener(new MouseAdapter(){
+//			@Override
+//			public void mousePressed(MouseEvent e){
+//				System.out.println("You pressed the Load Game button");
+//				buttonPressed = "LoadGame";
+//			}
+//		});
 		
 		
 				

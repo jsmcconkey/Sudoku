@@ -35,6 +35,9 @@ public class PlayingField extends JPanel
 	public String cellAt;
 	public Font bigFont = new Font("Serif", Font.BOLD, 16);
 	public GridSelector buttongrid = new GridSelector();
+	public JButton giveUp;
+	public JButton savePuzzle;
+	public JButton checkPuzzle;
 	public boolean flag = false;
 	public static int yoffset = 1;
 	public static int xoffset = 83;
@@ -48,6 +51,18 @@ public class PlayingField extends JPanel
 		    add(buttongrid);
 		    buttongrid.setVisible(false);
             buttongrid.setBounds(0, 0, 54, 54); //Makes it so that the buttongrid does not show up until first click...
+            
+            giveUp = new JButton("Give Up");
+            giveUp.setBounds(575, 0, 100, 50);
+            add(giveUp);
+            
+            savePuzzle = new JButton("Save Puzzle");
+            savePuzzle.setBounds(575, 310, 100, 50);
+            add(savePuzzle);
+            
+            checkPuzzle = new JButton("Check Puzzle");
+            checkPuzzle.setBounds(575, 360, 100, 100);
+            add(checkPuzzle);
 		    		    
 		    addMouseListener(new MouseAdapter() {
 		        @Override

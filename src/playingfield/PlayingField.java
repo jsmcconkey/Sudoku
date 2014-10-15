@@ -44,11 +44,10 @@ public class PlayingField extends JPanel
 	public PlayingField(){
 		    super();
 		    setBackground(Color.WHITE);	
-		    
+		    this.setLayout(null); //Allows us to put the button added where we want to...does not start it in a default spot
 		    add(buttongrid);
 		    buttongrid.setVisible(false);
-
-
+            buttongrid.setBounds(0, 0, 54, 54); //Makes it so that the buttongrid does not show up until first click...
 		    		    
 		    addMouseListener(new MouseAdapter() {
 		        @Override
@@ -56,10 +55,9 @@ public class PlayingField extends JPanel
 		        {
 		            System.out.println("Mouse Pressed - X: " + e.getX() + " Y: " + e.getY());
 		            checkCells(e.getX(),e.getY());
-		        	buttongrid.setVisible(true);		            
+		        	buttongrid.setVisible(true);	
 		        }
 		    });
-		    
 
 			for(int j = 0; j<9; j++)
 				for(int i = 0; i<9; i++)

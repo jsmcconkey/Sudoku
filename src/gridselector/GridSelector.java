@@ -24,6 +24,7 @@ public class GridSelector extends JPanel{
         public GridSelector(){ //constructor  	
                 setLayout(new GridLayout(3,3)); //set layout
                 grid=new JButton[3][3]; //allocate the size of grid
+                
                 int k = 0;
                 for(int y=0; y<3; y++){
                         for(int x=0; x<3; x++){

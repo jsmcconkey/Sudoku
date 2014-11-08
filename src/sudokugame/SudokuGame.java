@@ -5,7 +5,9 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 import javax.swing.*;
+
 import playingfield.PlayingField;
+import puzzle.Puzzle;
 import Menu.MainMenu;
 
 
@@ -13,6 +15,9 @@ public class SudokuGame extends JApplet
 {
   private final int WIDTH = 640;
   private final int HEIGHT = 480;
+  private final int yoffset = 1;
+  private final int xoffset = 83;
+  private final int cellsize = 52;
 
   public void init()
    {
@@ -20,7 +25,8 @@ public class SudokuGame extends JApplet
 	  
 	  final JPanel cards = new JPanel(new CardLayout());
 	  MainMenu card1 = new MainMenu();
-	  PlayingField card2 = new PlayingField();
+	  Puzzle puzzle1 = new Puzzle(xoffset,cellsize,yoffset);
+	  PlayingField card2 = new PlayingField(puzzle1,xoffset,cellsize,yoffset);
 	  
 	  //Each screen will be a different screen, we will switch between these like "cards"
 	  //In the end our game should have login screen, main menu, game, and scores, for a total
@@ -66,6 +72,15 @@ public class SudokuGame extends JApplet
 	  
 
    }
+  
+ public void readPuzzles()
+ {
+	 
+	 
+	 
+	 
+	 
+ }
     
   
 }

@@ -24,20 +24,18 @@ public class SudokuGame extends JApplet
   public void init()
    {
 	  this.setSize(WIDTH, HEIGHT);
+
 	  
-	  final JPanel cards = new JPanel(new CardLayout());
-<<<<<<< HEAD
-	  MainMenu card1 = new MainMenu();
 	  Puzzle puzzle1 = new Puzzle(xoffset,cellsize,yoffset);
-	  PlayingField card2 = new PlayingField(puzzle1,xoffset,cellsize,yoffset);
-=======
+	  
+	  
+	  final JPanel cards = new JPanel(new CardLayout());  
 	  
 	  LoginScreen card0 = new LoginScreen();
 	  CreateUser card1 = new CreateUser();
 	  MainMenu card2 = new MainMenu();
-	  PlayingField card3 = new PlayingField();
-	  
->>>>>>> 57a749c7c41da42bb932551d2f4d298de5cd520d
+	  PlayingField card3 = new PlayingField(puzzle1,xoffset,cellsize,yoffset);
+
 	  
 	  //Each screen will be a different screen, we will switch between these like "cards"
 	  //In the end our game should have login screen, main menu, game, and scores, for a total

@@ -7,6 +7,7 @@ import java.awt.event.MouseEvent;
 import javax.swing.*;
 import playingfield.PlayingField;
 import Menu.MainMenu;
+import Menu.UserScores;
 import loginscreen.CreateUser;
 import loginscreen.LoginScreen;
 
@@ -26,6 +27,7 @@ public class SudokuGame extends JApplet
 	  CreateUser card1 = new CreateUser();
 	  MainMenu card2 = new MainMenu();
 	  PlayingField card3 = new PlayingField();
+	  UserScores card4 = new UserScores();
 	  
 	  
 	  //Each screen will be a different screen, we will switch between these like "cards"
@@ -35,7 +37,7 @@ public class SudokuGame extends JApplet
 	  cards.add(card1, "CreateUser");
 	  cards.add(card2, "MainMenu");
 	  cards.add(card3, "MainGame");
-//	  cards.add(card3, "UserScores");
+	  cards.add(card4, "UserScores");
 	  
 	  this.add(cards);
 	  
@@ -75,11 +77,11 @@ public class SudokuGame extends JApplet
 			  cardLayout.show(cards, "MainGame");
 		  }
 	  });
-//	  card2.scoreButton.addMouseListener(new MouseAdapter(){
-//		  public void mousePressed(MouseEvent e){
-//			  cardLayout.show(cards, "ScorePage");
-//		  }
-//	  });
+	  card2.userScores.addMouseListener(new MouseAdapter(){
+		  public void mousePressed(MouseEvent e){
+			  cardLayout.show(cards, "UserScores");
+		  }
+	  });
 //	  card2.loadGame.addMouseListener(new MouseAdapter(){
 //		  public void mousePressed(MouseEvent e){
 //			  cardLayout.show(cards, "LoadGameMenu");

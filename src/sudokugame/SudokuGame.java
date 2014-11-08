@@ -19,7 +19,7 @@ public class SudokuGame extends JApplet
   private final int WIDTH = 640;
   private final int HEIGHT = 480;
   private final int yoffset = 1;
-  private final int xoffset = 83;
+  private final int xoffset = 30;
   private final int cellsize = 52;
 
   public void init()

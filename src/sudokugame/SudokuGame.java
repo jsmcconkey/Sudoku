@@ -5,7 +5,9 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 import javax.swing.*;
+
 import playingfield.PlayingField;
+import puzzle.Puzzle;
 import Menu.MainMenu;
 import Menu.UserScores;
 import loginscreen.CreateUser;
@@ -16,17 +18,24 @@ public class SudokuGame extends JApplet
 {
   private final int WIDTH = 640;
   private final int HEIGHT = 480;
+  private final int yoffset = 1;
+  private final int xoffset = 83;
+  private final int cellsize = 52;
 
   public void init()
    {
 	  this.setSize(WIDTH, HEIGHT);
+
 	  
-	  final JPanel cards = new JPanel(new CardLayout());
+	  Puzzle puzzle1 = new Puzzle(xoffset,cellsize,yoffset);
+	  
+	  
+	  final JPanel cards = new JPanel(new CardLayout());  
 	  
 	  LoginScreen card0 = new LoginScreen();
 	  CreateUser card1 = new CreateUser();
 	  MainMenu card2 = new MainMenu();
-	  PlayingField card3 = new PlayingField();
+	  PlayingField card3 = new PlayingField(puzzle1,xoffset,cellsize,yoffset);
 	  UserScores card4 = new UserScores();
 	  
 	  
@@ -90,6 +99,15 @@ public class SudokuGame extends JApplet
 	  
 
    }
+  
+ public void readPuzzles()
+ {
+	 
+	 
+	 
+	 
+	 
+ }
     
   
 }

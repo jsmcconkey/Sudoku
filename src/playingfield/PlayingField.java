@@ -10,11 +10,16 @@ import java.awt.Color;
 
 import javax.swing.JLabel;
 import javax.swing.ImageIcon;
+
+import puzzle.Puzzle;
+
 import java.awt.BasicStroke;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+
 import cell.Cell;
 import gridselector.GridSelector;
+
 import java.awt.BorderLayout; 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -29,25 +34,45 @@ import java.util.Random;
 public class PlayingField extends JPanel
 
 	{
-	
-	public Cell[][] cellArray = new Cell[9][9];
-	public Random rand = new Random();
+	//Main Variables
+	public Cell[][] cellArray;
 	public String cellAt;
 	public Font bigFont = new Font("Serif", Font.BOLD, 16);
 	public GridSelector buttongrid = new GridSelector();
+	public boolean flag = false;
+	
+	//Buttons
 	public JButton giveUp;
 	public JButton savePuzzle;
 	public JButton checkPuzzle;
-	public boolean flag = false;
-	public static int yoffset = 1;
-	public static int xoffset = 83;
-	public static int cellsize = 52;
+	
+
+	
+	//Offsets
+	public int xoffset;
+	public int yoffset;
+	public int cellsize;
+
+
+
+
+	
 	public JButton finishGame = new JButton("Finish Game");
 	
-	public PlayingField(){
-		    super();
+	public PlayingField(Puzzle grid, int x, int c, int y){
+		    super();		
+		    
+		    
+		    //Main Setup 
+			cellArray = grid.getArray();
 		    setBackground(Color.WHITE);	
 		    this.setLayout(null); //Allows us to put the button added where we want to...does not start it in a default spot
+                    
+            xoffset = x;
+            yoffset = y;
+            cellsize = c;
+		    
+		    //Buttons
 		    add(buttongrid);
 		    buttongrid.setVisible(false);
             buttongrid.setBounds(0, 0, 54, 54); //Makes it so that the buttongrid does not show up until first click...
@@ -62,34 +87,27 @@ public class PlayingField extends JPanel
             
             checkPuzzle = new JButton("Check Puzzle");
             checkPuzzle.setBounds(575, 360, 100, 100);
-            add(checkPuzzle);
+            add(checkPuzzle); 
+            
+
+            
+
 		    		    
 		    addMouseListener(new MouseAdapter() {
-		        @Override
 		        public void mousePressed(MouseEvent e) 
 		        {
-		            System.out.println("Mouse Pressed - X: " + e.getX() + " Y: " + e.getY());
+		            //System.out.println("Mouse Pressed - X: " + e.getX() + " Y: " + e.getY());
 		            checkCells(e.getX(),e.getY());
 		        	buttongrid.setVisible(true);	
 		        }
 		    });
 
-			for(int j = 0; j<9; j++)
-				for(int i = 0; i<9; i++)
-				{
-					boolean l;
-					if((rand.nextInt(3)) == 0)
-						l = true;
-					else
-						l = false;
-					
-					cellArray[j][i] = new Cell(rand.nextInt(9),l, xoffset + (cellsize * i), yoffset + (cellsize * j), cellsize);		
-				}
+
 	}
 	
 	public void checkCells(int x, int y)
 	{
-
+		//This function runs through every cell every time the user clicks, in order to tell when one has been clicked on
 		for(int j = 0; j<9; j++)
 			for(int i = 0; i<9; i++)
 				if(cellArray[j][i].checkClick(x, y) == true)
@@ -98,6 +116,7 @@ public class PlayingField extends JPanel
 	
 	public boolean checkVictory()
 	{
+		//This function checks for the victory condition when the user presses the finish button
 		boolean r = true;
 		
 		//This loop checks every row for 1-9

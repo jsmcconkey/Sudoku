@@ -21,9 +21,9 @@ public class UserScores extends JPanel{
 		message.setBounds(this.getWidth()/2-75, this.getHeight()/10, 200, 20);
 		add(message);
 		
-		backButton = new JButton("<== Back");
+		backButton = new JButton("<== Main Menu");
 		backButton.setBackground(new Color(102,255,255));
-		backButton.setBounds(this.getWidth()/20,this.getHeight()/20,100,50);
+		backButton.setBounds(this.getWidth()/20,this.getHeight()/20,150,50);
 		add(backButton);
 	}
 	

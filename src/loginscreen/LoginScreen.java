@@ -48,7 +48,7 @@ public class LoginScreen extends JPanel{
 		
 		login = new JButton("Login");
 		login.setBackground(new Color(102,255,255));
-		login.setBounds(this.getWidth()/2+password.getWidth()+10,this.getHeight()/3,100,60);
+		login.setBounds(this.getWidth()/2+password.getWidth()+10,this.getHeight()/3,100,50);
 		add(login);
 		
 		newUser = new JButton("Create Login");

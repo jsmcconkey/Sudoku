@@ -78,15 +78,15 @@ public class PlayingField extends JPanel
             buttongrid.setBounds(0, 0, 54, 54); //Makes it so that the buttongrid does not show up until first click...
             
             giveUp = new JButton("Give Up");
-            giveUp.setBounds(575, 0, 100, 50);
+            giveUp.setBounds(510, 0, 120, 50);
             add(giveUp);
             
             savePuzzle = new JButton("Save Puzzle");
-            savePuzzle.setBounds(575, 310, 100, 50);
+            savePuzzle.setBounds(510, 310, 120, 50);
             add(savePuzzle);
             
             checkPuzzle = new JButton("Check Puzzle");
-            checkPuzzle.setBounds(575, 360, 100, 100);
+            checkPuzzle.setBounds(510, 370, 120, 100);
             add(checkPuzzle); 
             
 

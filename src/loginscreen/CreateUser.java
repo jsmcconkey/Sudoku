@@ -12,8 +12,7 @@ public class CreateUser extends JPanel{
 	public JTextField newUsername;
 	public JPasswordField newPassword;
 	public JPasswordField confirmNewPassword;
-	protected String userName;
-	protected User newUser;
+	public JButton createUser;
 	
 	public CreateUser()
 	{
@@ -57,6 +56,11 @@ public class CreateUser extends JPanel{
 		confirmNewPassword.setEditable(true);
 		confirmNewPassword.setBounds(this.getWidth()/2, this.getHeight()/3+60, 100, 20);
 		add(confirmNewPassword);
+		
+		createUser = new JButton("Create User");
+		createUser.setBackground(new Color(102,255,255));
+		createUser.setBounds(this.getWidth()-200,158,125,85);
+		add(createUser);
 	}
 	
 	

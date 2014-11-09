@@ -9,6 +9,8 @@ public class Puzzle {
 	public Cell[][] cellArray = new Cell[9][9];
 	public Random rand = new Random();
 	
+	
+	//Generates a Random-Ass puzzle
 	public Puzzle(int xoffset, int cellsize, int yoffset)
 	{
 		for(int j = 0; j<9; j++)

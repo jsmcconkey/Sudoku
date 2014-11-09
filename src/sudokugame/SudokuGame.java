@@ -168,6 +168,7 @@ public class SudokuGame extends JApplet
 				cardLayout.show(cards, "UserScores");
 			}
 		});
+		
 		  
 	//	  card2.loadGame.addMouseListener(new MouseAdapter(){
 	//		  public void mousePressed(MouseEvent e){
@@ -181,7 +182,31 @@ public class SudokuGame extends JApplet
 				cardLayout.show(cards, "MainMenu");
 			}
 		});
-		  
+		
+		card3.savePuzzle.addMouseListener(new MouseAdapter(){
+			public void mousePressed(MouseEvent e){
+				//This is where we need to add in the logic for saving the game.  I think we should
+				//only allow users to keep one game saved at a time.
+				cardLayout.show(cards, "MainMenu");
+			}
+		});
+		
+		card3.checkPuzzle.addMouseListener(new MouseAdapter(){
+			public void mousePressed(MouseEvent e){
+				boolean puzzleComplete = checkPuzzle();
+				
+				if(puzzleComplete == true)
+				{
+					
+					cardLayout.show(cards, "UserScores");
+				}
+				else
+				{
+					//Do nothing
+				}
+			}
+		});
+				  
 		card4.backButton.addMouseListener(new MouseAdapter(){
 			public void mousePressed(MouseEvent e){
 				cardLayout.show(cards, "MainMenu");
@@ -195,13 +220,41 @@ public class SudokuGame extends JApplet
   	
   	
   
-	private boolean addUser(String username, char[] password)
+	public boolean addUser(String username, char[] password)
 	{
 		
 		
 		
 		
 		return true;
+	}
+	
+	public boolean checkPuzzle()
+	{
+		boolean puzzleComplete = true;
+		
+		//Do a double for loop here to traverse the puzzle to check if each tile contains a 1-9 for
+		//for each column and row with no repeats
+		
+		//Now check each 3 by 3 subsection of the puzzle
+		
+		
+		if(puzzleComplete == true)
+		{
+			String message = "GOOD JOB! \n\nPUZZLE COMPLETE!";				  
+			JOptionPane.showMessageDialog(null, message);
+			
+			//Add to the user's score here
+			
+			
+			return true;
+		}
+		else
+		{
+			String message = "Puzzle is still incomplete. There must be an error in your answer.\n\nGood luck!";
+			JOptionPane.showMessageDialog(null, message);
+			return false;
+		}
 	}
 	  
 	public void readPuzzles()

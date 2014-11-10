@@ -25,7 +25,12 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.LinkOption;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 public class SudokuGame extends JApplet
 {
@@ -76,16 +81,23 @@ public class SudokuGame extends JApplet
 			public void mousePressed(MouseEvent e){
 				String username = card0.enterUsername.getText();
 				char[] password = card0.enterPassword.getPassword();
-				System.out.println(username+"\n");
-				System.out.println(password+"\n");
+				String stringPassword = new String(password);
 								  
 				//This is where we need to check if this person is a registered user
-								  
-								  
-								  
+				boolean isExistingLogin = checkLogin(username, stringPassword);
+				
+				if(isExistingLogin == true)
+				{
+					String message = "Welcome back " + username + "!";				  
+					JOptionPane.showMessageDialog(null, message);
+					cardLayout.show(cards, "MainMenu");
+				}
+				else
+				{
+//					String message = "Your username or password are incorrect. \n\n Please reenter your username and password";				  
+//					JOptionPane.showMessageDialog(null, message);
+				}
 					
-								  
-				cardLayout.show(cards, "MainMenu");
 			}
 		});
 		  
@@ -100,7 +112,7 @@ public class SudokuGame extends JApplet
 				boolean passwordsMatch = true;
 				
 				//Implement logic to add the user here
-				String username = card1.usernameLabel.getText();
+				String username = card1.newUsername.getText();
 				char[] password = card1.newPassword.getPassword();
 				char[] confirmPassword = card1.confirmNewPassword.getPassword();
 				
@@ -128,19 +140,20 @@ public class SudokuGame extends JApplet
 				{
 					//Call function to add username and password to txt file, this function needs to return
 					//true if that username and password already exist
-					boolean userAlreadyExists = addUser(username, password);
+					String newPassword = new String(password);
+					boolean userAlreadyExists = addUser(username, newPassword);
 					
 					if(userAlreadyExists == true)
 					{
-					 
+						String message = "The username " + username + " is already registered. \n\nPlease enter a different username.";				  
+						JOptionPane.showMessageDialog(null, message);
 					}
 					else
 					{
-					 
+						String message = username + " let's play Sudoku!";				  
+						JOptionPane.showMessageDialog(null, message);
+						cardLayout.show(cards, "MainGame");
 					}
-					
-					
-					cardLayout.show(cards, "MainGame");
 				}
 				else
 				{
@@ -231,15 +244,139 @@ public class SudokuGame extends JApplet
 	   }
   	
   	
-  	
+  	public boolean checkLogin(String username, String password)
+  	{
+	  	String path = null;
+	  	String parentDir = null;
+	  	String fileUsername = null;
+	  	String filePassword = null;
+	  	
+	  	try
+	  	{
+	  		if(OSDetector.isWindows())
+	  		{
+	  			path = getClass().getClassLoader().getResource(".").getPath();
+	  			path = path.substring(0, path.length()-4);
+	  			parentDir = path.substring(0, path.length()-4);
+	  			path = path + "data\\\\Users\\\\" + username + ".txt";
+	  		}
+	  		else if(OSDetector.isLinux() || OSDetector.isMac())
+	  		{
+			  	path = getClass().getClassLoader().getResource(".").getPath();
+			  	path = path.substring(0, path.length()-4);
+			  	parentDir = path.substring(0, path.length()-4);
+			  	path = path + "data/Users/" + username + ".txt";
+			}
+	  	} catch (Exception e)
+	  	{
+	  		e.printStackTrace(System.err);
+	  	}
+  		
+	  	File possibleUser = new File(path);
+	  	
+	  	if(possibleUser.exists())
+	  	{
+	  		//Get the password from that txt file
+		    File file = new File(path);
+		    FileInputStream fis = null;
+		    BufferedInputStream bis = null;
+		    DataInputStream dis = null;
+		    
+		    try {
+				fis = new FileInputStream(file);
+				bis = new BufferedInputStream(fis);
+				dis = new DataInputStream(bis);
+								
+				fileUsername = dis.readLine();				
+				filePassword = dis.readLine();
+				
+		  		fis.close();
+		  		bis.close();
+		  		dis.close();
+		  		
+		    } catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+	  		
+	  		System.out.println("That is a user, now check the password.");
+	  		if(password.equals(filePassword))
+	  		{
+	  			return true;
+	  		}
+	  		else
+	  		{
+				String message = "That password does not match our records.  \n\nPlease reenter your password.";				  
+				JOptionPane.showMessageDialog(null, message);
+	  			return false;
+	  		}
+	  	}
+	  	else
+	  	{
+			String message = "Your username is not found. \n\nPlease enter a valid username or create a new user.";				  
+			JOptionPane.showMessageDialog(null, message);
+	  		return false;
+	  	}  	
+	}
   
-	public boolean addUser(String username, char[] password)
+	public boolean addUser(String username, String password)
 	{
-		
-		
-		
-		
-		return true;
+	  	String path = null;
+	  	String parentDir = null;
+	  	
+	  	try
+	  	{
+	  		if(OSDetector.isWindows())
+	  		{
+	  			path = getClass().getClassLoader().getResource(".").getPath();
+	  			path = path.substring(0, path.length()-4);
+	  			parentDir = path.substring(0, path.length()-4);
+	  			path = path + "data\\\\Users\\\\" + username + ".txt";
+	  		}
+	  		else if(OSDetector.isLinux() || OSDetector.isMac())
+	  		{
+			  	path = getClass().getClassLoader().getResource(".").getPath();
+			  	path = path.substring(0, path.length()-4);
+			  	parentDir = path.substring(0, path.length()-4);
+			  	path = path + "data/Users/" + username + ".txt";
+			}
+	  	} catch (Exception e)
+	  	{
+	  		e.printStackTrace(System.err);
+	  	}
+	  	
+	  	System.out.println(path);
+	  	File newUser = new File(path);
+	  	if(newUser.exists())
+	  	{
+	  		System.out.println("That user already exists");
+	  		return true;
+	  	}
+	  	else
+	  	{
+	  		try {
+	  			File file = new File(parentDir, (username+".txt"));
+	  			try {
+					file.createNewFile();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				PrintWriter writer = new PrintWriter(path);//, "UTF-8)");
+				writer.println(username);		//Is the password writing encrypted?
+				writer.println(password);
+				writer.println("#");
+				writer.println("##");
+				writer.close();
+			} catch (FileNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+	  		
+	  		System.out.println("That user does not exist");
+	  		
+	  		return false;
+	  	}		
 	}
 	
 	public boolean checkPuzzle()
@@ -279,13 +416,13 @@ public class SudokuGame extends JApplet
 		  		{
 		  			path = getClass().getClassLoader().getResource(".").getPath();
 		  			path = path.substring(0, path.length()-4);
-		  			path = path + "data\\\\puzzle2.txt";
+		  			path = path + "data\\\\Puzzles\\\\puzzle2.txt";
 		  		}
 		  		else if(OSDetector.isLinux() || OSDetector.isMac())
 		  		{
 				  	path = getClass().getClassLoader().getResource(".").getPath();
 				  	path = path.substring(0, path.length()-4);
-				  	path = path + "data/puzzle2.txt";
+				  	path = path + "data/Puzzles/puzzle2.txt";
 				}
 		  	} catch (Exception e)
 		  	{

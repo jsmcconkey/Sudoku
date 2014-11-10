@@ -246,7 +246,7 @@ public class SudokuGame extends JApplet
 		//Do a double for loop here to traverse the puzzle to check if each tile contains a 1-9 for
 		//for each column and row with no repeats
 		
-		//Now check each 3 by 3 subsection of the puzzle
+		//Now check each 3 by 3 subsection of the puzzle for 1-9
 		
 		
 		if(puzzleComplete == true)

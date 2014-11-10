@@ -308,19 +308,29 @@ public class SudokuGame extends JApplet
 		      
 		      //Sets up new Puzzle
 	    	  Puzzle thisPuzzle = new Puzzle(xoffset,cellsize,yoffset);
+	    	  boolean finished = false;
 	    	  
 		      // dis.available() returns 0 if the file does not have more lines.
 		      while (dis.available() != 0) {
 
 		    	  
-		    	String s = dis.readLine();
+				String s = dis.readLine();
 		    	
-		    	if(s.equals("easy") || s.equals("medium") || s.equals("hard") || s.equals("expert"))
+				if(s.contains("/*"))
+				{
+					if(s.contains("correct"))
+						finished = true;
+					System.out.println("Comment Line");	
+				}
+				
+				
+				
+				else if(s.equals("easy") || s.equals("medium") || s.equals("hard") || s.equals("expert"))
 		    	{
 		    		thisPuzzle.setDifficulty(s);
 		    		System.out.println("Difficulty written");
 		    	}
-		    	else
+		    	else if(s.length() == 5)
 		    	{
 		    		String tokens[] = s.split(",");
 		    		System.out.println("Splitting "+s);		    		
@@ -329,10 +339,10 @@ public class SudokuGame extends JApplet
 		    			break;
 		    		
 		    		int row = Integer.parseInt(tokens[0]) -1;
-		    		int column = Integer.parseInt(tokens[0]) -1;
-		    		int value = Integer.parseInt(tokens[0]);
-		    		thisPuzzle.setCell(row, column, value);
-		    		System.out.println("Cell Written");	    			    		
+		    		int column = Integer.parseInt(tokens[1]) -1;
+		    		int value = Integer.parseInt(tokens[2]);
+		    		thisPuzzle.setCell(row, column, value,finished);
+		    		System.out.println("Cell "+(row+1) +" "+ (column+1) +"Written with Value: " +value);	    			    		
 		    	}
 		    		
 		    	
@@ -344,7 +354,8 @@ public class SudokuGame extends JApplet
 		      bis.close();
 		      dis.close();
 		      
-		      PuzzleList.add(thisPuzzle);
+		      if(thisPuzzle.checkReal() == true)
+		    	  PuzzleList.add(thisPuzzle);
 
 		    } catch (FileNotFoundException e) {
 		      e.printStackTrace();

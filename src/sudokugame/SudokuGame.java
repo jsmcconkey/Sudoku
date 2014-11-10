@@ -17,6 +17,12 @@ import loginscreen.LoginScreen;
 import loginscreen.User;
 
 
+import java.io.BufferedInputStream;
+import java.io.DataInputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 
 public class SudokuGame extends JApplet
 {
@@ -26,14 +32,18 @@ public class SudokuGame extends JApplet
 	private final int xoffset = 30;
 	private final int cellsize = 52;
 	
+	//Stores all of the puzzles
+	public ArrayList<Puzzle> PuzzleList;
+	
 	ArrayList<User> userList = new ArrayList<User>();
 	
   	public void init()
 	{
 		this.setSize(WIDTH, HEIGHT);
-			
-				  
-		Puzzle puzzle1 = new Puzzle(xoffset,cellsize,yoffset);
+		
+		PuzzleList = new ArrayList<Puzzle>();
+		readPuzzles();
+
 				  
 				  
 		final JPanel cards = new JPanel(new CardLayout());  
@@ -41,7 +51,7 @@ public class SudokuGame extends JApplet
 		final LoginScreen card0 = new LoginScreen();
 		final CreateUser card1 = new CreateUser();
 		final MainMenu card2 = new MainMenu();
-		final PlayingField card3 = new PlayingField(puzzle1,xoffset,cellsize,yoffset);
+		final PlayingField card3 = new PlayingField(PuzzleList.get(0),xoffset,cellsize,yoffset);
 		final UserScores card4 = new UserScores();
 		 
 				  
@@ -257,10 +267,67 @@ public class SudokuGame extends JApplet
 		}
 	}
 	  
-	public void readPuzzles()
-	{
-		
-	}
+	  public void readPuzzles() {
+
+		    File file = new File("C:\\Users\\Ethan\\Documents\\Code\\Java\\Sudoku\\data\\puzzle2.txt");
+		    FileInputStream fis = null;
+		    BufferedInputStream bis = null;
+		    DataInputStream dis = null;
+
+		    try {
+		      fis = new FileInputStream(file);
+
+		      // Here BufferedInputStream is added for fast reading.
+		      bis = new BufferedInputStream(fis);
+		      dis = new DataInputStream(bis);
+		      
+		      //Sets up new Puzzle
+	    	  Puzzle thisPuzzle = new Puzzle(xoffset,cellsize,yoffset);
+	    	  
+		      // dis.available() returns 0 if the file does not have more lines.
+		      while (dis.available() != 0) {
+
+		    	  
+		    	String s = dis.readLine();
+		    	
+		    	if(s.equals("easy") || s.equals("medium") || s.equals("hard") || s.equals("expert"))
+		    	{
+		    		thisPuzzle.setDifficulty(s);
+		    		System.out.println("Difficulty written");
+		    	}
+		    	else
+		    	{
+		    		String tokens[] = s.split(",");
+		    		System.out.println("Splitting "+s);		    		
+		    		
+		    		if(tokens.length != 3)
+		    			break;
+		    		
+		    		int row = Integer.parseInt(tokens[0]) -1;
+		    		int column = Integer.parseInt(tokens[0]) -1;
+		    		int value = Integer.parseInt(tokens[0]);
+		    		thisPuzzle.setCell(row, column, value);
+		    		System.out.println("Cell Written");	    			    		
+		    	}
+		    		
+		    	
+		        System.out.println(s);
+		      }
+
+		      // dispose all the resources after using them.
+		      fis.close();
+		      bis.close();
+		      dis.close();
+		      
+		      PuzzleList.add(thisPuzzle);
+
+		    } catch (FileNotFoundException e) {
+		      e.printStackTrace();
+		    } catch (IOException e) {
+		      e.printStackTrace();
+		    }
+		  }
+
     
   
 }

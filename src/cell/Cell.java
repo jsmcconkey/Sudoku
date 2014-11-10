@@ -54,6 +54,12 @@ public class Cell {
 		value = v;		
 	}
 	
+	public void overwriteCell(int v)
+	{
+		value = v;
+		locked = true;	
+	}
+	
 	public String getString()
 	{
 		if(value == 0)

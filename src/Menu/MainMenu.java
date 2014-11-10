@@ -5,7 +5,6 @@ import java.awt.*;
 
 public class MainMenu extends JPanel{
 
-	public String buttonPressed;
 	public JLabel mainMenu;
 	public JLabel startPuzzle;
 	public JButton easyButton;
@@ -18,8 +17,6 @@ public class MainMenu extends JPanel{
 	public MainMenu()
 	{
 		super();
-		
-		buttonPressed = "None";
 		
 		setSize(640, 480);
 		setLayout(null);

@@ -7,7 +7,9 @@ import java.awt.*;
 import java.io.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+
 import javax.swing.*;
+
 import playingfield.PlayingField;
 import puzzle.Puzzle;
 import Menu.MainMenu;
@@ -15,7 +17,7 @@ import Menu.UserScores;
 import loginscreen.CreateUser;
 import loginscreen.LoginScreen;
 import loginscreen.User;
-
+import osdetector.OSDetector;
 
 import java.io.BufferedInputStream;
 import java.io.DataInputStream;
@@ -23,6 +25,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.net.URL;
 
 public class SudokuGame extends JApplet
 {
@@ -268,8 +271,30 @@ public class SudokuGame extends JApplet
 	}
 	  
 	  public void readPuzzles() {
-
-		    File file = new File("C:\\Users\\Ethan\\Documents\\Code\\Java\\Sudoku\\data\\puzzle2.txt");
+		  	String path = null;
+		  	
+		  	try
+		  	{
+		  		if(OSDetector.isWindows())
+		  		{
+		  			path = getClass().getClassLoader().getResource(".").getPath();
+		  			path = path.substring(0, path.length()-4);
+		  			path = path + "data\\\\puzzle2.txt";
+		  		}
+		  		else if(OSDetector.isLinux() || OSDetector.isMac())
+		  		{
+				  	path = getClass().getClassLoader().getResource(".").getPath();
+				  	path = path.substring(0, path.length()-4);
+				  	path = path + "data/puzzle2.txt";
+				}
+		  	} catch (Exception e)
+		  	{
+		  		e.printStackTrace(System.err);
+		  	}
+		  	
+		  	
+		  	
+		    File file = new File(path);
 		    FileInputStream fis = null;
 		    BufferedInputStream bis = null;
 		    DataInputStream dis = null;

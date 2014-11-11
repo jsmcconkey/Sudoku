@@ -9,6 +9,7 @@ public class Puzzle {
 	public Cell[][] cellArray = new Cell[9][9];
 	public Cell[][] answerArray = new Cell[9][9];	
 	private String difficulty;
+	private boolean hasAnswer = false;
 	
 	//Generates a Blank Puzzle
 	public Puzzle(int xoffset, int cellsize, int yoffset)
@@ -28,14 +29,18 @@ public class Puzzle {
 		if(finished == false)
 			cellArray[row][column].overwriteCell(value);	
 		else
+		{
+			//cellArray[row][column].overwriteCell(value);
 			answerArray[row][column].overwriteCell(value);
+			hasAnswer = true;
+		}
 	}
 	
 	public boolean checkReal()
 	{
 		//Checks the legitimacy of a puzzle after loading it
 		boolean r = true;
-		if(difficulty.equals(null))
+		if(difficulty == null)
 		{
 			r = false;
 		}
@@ -59,6 +64,21 @@ public class Puzzle {
 		
 		return r;
 		
+	}
+	
+	public String getDifficulty()
+	{
+		return difficulty;
+	}
+	
+	public boolean hasAnswer()
+	{
+		return hasAnswer;		
+	}
+	
+	public Cell[][] getAnswerArray()
+	{
+		return answerArray;
 	}
 	
 	

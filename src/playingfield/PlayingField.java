@@ -36,10 +36,12 @@ public class PlayingField extends JPanel
 	{
 	//Main Variables
 	public Cell[][] cellArray;
+	public Cell[][] answerArray;
 	public String cellAt;
 	public Font bigFont = new Font("Serif", Font.BOLD, 16);
 	public GridSelector buttongrid = new GridSelector();
 	public boolean flag = false;
+	public boolean hasAnswer = false;
 	
 	//Buttons
 	public JButton giveUp;
@@ -59,12 +61,10 @@ public class PlayingField extends JPanel
 	
 	public JButton finishGame = new JButton("Finish Game");
 	
-	public PlayingField(Puzzle grid, int x, int c, int y){
+	public PlayingField(int x, int c, int y){
 		    super();		
 		    
 		    
-		    //Main Setup 
-			cellArray = grid.getArray();
 		    setBackground(Color.WHITE);	
 		    this.setLayout(null); //Allows us to put the button added where we want to...does not start it in a default spot
                     
@@ -89,10 +89,7 @@ public class PlayingField extends JPanel
             checkPuzzle.setBounds(510, 370, 120, 100);
             add(checkPuzzle); 
             
-
-            
-
-		    		    
+    		    
 		    addMouseListener(new MouseAdapter() {
 		        public void mousePressed(MouseEvent e) 
 		        {
@@ -105,6 +102,18 @@ public class PlayingField extends JPanel
 
 	}
 	
+	public void setGrid(Puzzle grid)
+	{
+	    //Main Setup 
+		cellArray = grid.getArray();
+		
+		if(grid.hasAnswer() == true)
+		{
+			answerArray = grid.getAnswerArray();
+			hasAnswer = true;
+		}		
+	}
+	
 	public void checkCells(int x, int y)
 	{
 		//This function runs through every cell every time the user clicks, in order to tell when one has been clicked on
@@ -114,60 +123,88 @@ public class PlayingField extends JPanel
 					buttongrid.resetLoc(x, y, cellArray[j][i]);
 	}
 	
+	
 	public boolean checkVictory()
 	{
 		//This function checks for the victory condition when the user presses the finish button
 		boolean r = true;
 		
-		//This loop checks every row for 1-9
-		for(int j = 0; j<9; j++)//Rows
-		{	
-			ArrayList<Integer> numbers = new ArrayList<Integer>();
+		
+		//If the board already has a stored answer
+		if(hasAnswer==true)
+		{
+			boolean match = true;
 			
-			for(int i = 0; i<9; i++)//Columns
-			{
-				numbers.add(cellArray[j][i].getValue());								
-			}
-			
-			if(!(numbers.contains(1) && numbers.contains(2) && numbers.contains(3) && numbers.contains(4) && numbers.contains(5) && numbers.contains(6) && numbers.contains(7) && numbers.contains(8) && numbers.contains(9)))
-				r = false;			
+			for(int j = 0; j<9; j++)
+				for(int i = 0; i<9; i++)
+				{
+					int v1 = answerArray[j][i].getValue();
+					int v2 = cellArray[j][i].getValue();
+					
+					if(v1 != v2)
+						match = false;
+						
+				}		
+			r = match;
 		}
 		
-		//This loops checks every column for 1-9
-		for(int j = 0; j<9; j++)//Rows
-		{	
-			ArrayList<Integer> numbers = new ArrayList<Integer>();
-			
-			for(int i = 0; i<9; i++)//Columns
-			{
-				numbers.add(cellArray[i][j].getValue());								
-			}
-			
-			if(!(numbers.contains(1) && numbers.contains(2) && numbers.contains(3) && numbers.contains(4) && numbers.contains(5) && numbers.contains(6) && numbers.contains(7) && numbers.contains(8) && numbers.contains(9)))
-				r = false;			
-		}
 		
-		//This loops checks the boxes
-		for(int j = 0; j<3; j++)//Box Rows
-		{	
-			
-			
-			for(int i = 0; i<3; i++)//Box Columns
-			{
+		
+		//If the Puzzle does NOT have a stored answer
+		else if(hasAnswer==false)
+		{
+			//This loop checks every row for 1-9
+			for(int j = 0; j<9; j++)//Rows
+			{	
 				ArrayList<Integer> numbers = new ArrayList<Integer>();
 				
-				for(int s = 0; s<3; s++)//Rows within the box
+				for(int i = 0; i<9; i++)//Columns
 				{
-					for(int p = 0; p<3; p++)
-					{
-						numbers.add(cellArray[i][j].getValue());				
-					}
+					numbers.add(cellArray[j][i].getValue());								
+				}
+				
+				if(!(numbers.contains(1) && numbers.contains(2) && numbers.contains(3) && numbers.contains(4) && numbers.contains(5) && numbers.contains(6) && numbers.contains(7) && numbers.contains(8) && numbers.contains(9)))
+					r = false;			
+			}
+			
+			//This loops checks every column for 1-9
+			for(int j = 0; j<9; j++)//Rows
+			{	
+				ArrayList<Integer> numbers = new ArrayList<Integer>();
+				
+				for(int i = 0; i<9; i++)//Columns
+				{
+					numbers.add(cellArray[i][j].getValue());								
+				}
+				
+				if(!(numbers.contains(1) && numbers.contains(2) && numbers.contains(3) && numbers.contains(4) && numbers.contains(5) && numbers.contains(6) && numbers.contains(7) && numbers.contains(8) && numbers.contains(9)))
+					r = false;			
+			}
+			
+			//This loops checks the boxes
+			for(int j = 0; j<3; j++)//Box Rows
+			{	
+				
+				
+				for(int i = 0; i<3; i++)//Box Columns
+				{
+					ArrayList<Integer> numbers = new ArrayList<Integer>();
 					
-					if(!(numbers.contains(1) && numbers.contains(2) && numbers.contains(3) && numbers.contains(4) && numbers.contains(5) && numbers.contains(6) && numbers.contains(7) && numbers.contains(8) && numbers.contains(9)))
-						r = false;						
-				}																
-			}		
-		}				
+					for(int s = 0; s<3; s++)//Rows within the box
+					{
+						for(int p = 0; p<3; p++)
+						{
+							numbers.add(cellArray[i][j].getValue());				
+						}
+						
+						if(!(numbers.contains(1) && numbers.contains(2) && numbers.contains(3) && numbers.contains(4) && numbers.contains(5) && numbers.contains(6) && numbers.contains(7) && numbers.contains(8) && numbers.contains(9)))
+							r = false;						
+					}																
+				}		
+			}
+		}
+		
+		
 		return r;
 	}
 	

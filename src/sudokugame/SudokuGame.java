@@ -34,18 +34,35 @@ public class SudokuGame extends JApplet
 	private final int yoffset = 1;
 	private final int xoffset = 30;
 	private final int cellsize = 52;
+	private final int AMNT_PUZZLES = 9;
+	private Random rn;
 	
-	//Stores all of the puzzles
-	public ArrayList<Puzzle> PuzzleList;
+	private PlayingField activeField;
 	
-	ArrayList<User> userList = new ArrayList<User>();
+	//Stores all of the puzzles and the users
+	private ArrayList<Puzzle> EasyList;
+	private ArrayList<Puzzle> MediumList;
+	private ArrayList<Puzzle> HardList;
+	private ArrayList<Puzzle> ExpertList;
+	
+	private ArrayList<User> UserList;
 	
   	public void init()
 	{
 		this.setSize(WIDTH, HEIGHT);
 		
-		PuzzleList = new ArrayList<Puzzle>();
+		EasyList = new ArrayList<Puzzle>();
+		MediumList = new ArrayList<Puzzle>();
+		HardList = new ArrayList<Puzzle>();
+		ExpertList = new ArrayList<Puzzle>();
+		UserList = new ArrayList<User>();
 		readPuzzles();
+		
+		rn = new Random();
+		
+		
+		
+		activeField = new PlayingField(xoffset,cellsize,yoffset);
 
 				  
 				  
@@ -54,7 +71,7 @@ public class SudokuGame extends JApplet
 		final LoginScreen card0 = new LoginScreen();
 		final CreateUser card1 = new CreateUser();
 		final MainMenu card2 = new MainMenu();
-		final PlayingField card3 = new PlayingField(PuzzleList.get(0),xoffset,cellsize,yoffset);
+		final PlayingField card3 = activeField;
 		final UserScores card4 = new UserScores();
 		 
 				  
@@ -154,25 +171,77 @@ public class SudokuGame extends JApplet
 		//Each of these will also need to implement the logic that makes up the difficulty
 		card2.easyButton.addMouseListener(new MouseAdapter(){
 			public void mousePressed(MouseEvent e){
-				cardLayout.show(cards, "MainGame");
+				int amount = EasyList.size();
+				System.out.println("Size of EasyList: "+ amount);
+				
+				if(amount == 0)
+				{
+					String message = "There are no easy mazes in the data folder!";				  
+					JOptionPane.showMessageDialog(null, message);					
+				}
+				else if(amount > 0)
+				{
+					int rand = rn.nextInt(amount);					
+					activeField.setGrid(EasyList.get(rand));
+					cardLayout.show(cards, "MainGame");									
+				}
 			}
 		});
 		  
 		card2.mediumButton.addMouseListener(new MouseAdapter(){
 			public void mousePressed(MouseEvent e){
-				cardLayout.show(cards, "MainGame");
+				int amount = MediumList.size();
+				System.out.println("Size of MediumList: "+ amount);
+				
+				if(amount == 0)
+				{
+					String message = "There are no medium mazes in the data folder!";				  
+					JOptionPane.showMessageDialog(null, message);					
+				}
+				else if(amount > 0)
+				{
+					int rand = rn.nextInt(amount);					
+					activeField.setGrid(MediumList.get(rand));
+					cardLayout.show(cards, "MainGame");									
+				}
 			}
 		});
 		  
 		card2.hardButton.addMouseListener(new MouseAdapter(){
 			public void mousePressed(MouseEvent e){
-				cardLayout.show(cards, "MainGame");
+				int amount = HardList.size();
+				System.out.println("Size of HardList: "+ amount);
+				
+				if(amount == 0)
+				{
+					String message = "There are no hard mazes in the data folder!";				  
+					JOptionPane.showMessageDialog(null, message);					
+				}
+				else if(amount > 0)
+				{
+					int rand = rn.nextInt(amount);					
+					activeField.setGrid(HardList.get(rand));
+					cardLayout.show(cards, "MainGame");									
+				}
 			}
 		});
 		
 		card2.hardestButton.addMouseListener(new MouseAdapter(){
 			public void mousePressed(MouseEvent e){
-				cardLayout.show(cards, "MainGame");
+				int amount = ExpertList.size();
+				System.out.println("Size of ExpertList: "+ amount);
+				
+				if(amount == 0)
+				{
+					String message = "There are no expert mazes in the data folder!";				  
+					JOptionPane.showMessageDialog(null, message);					
+				}
+				else if(amount > 0)
+				{
+					int rand = rn.nextInt(amount);					
+					activeField.setGrid(ExpertList.get(rand));
+					cardLayout.show(cards, "MainGame");									
+				}
 			}
 		});
 		  
@@ -244,14 +313,8 @@ public class SudokuGame extends JApplet
 	
 	public boolean checkPuzzle()
 	{
-		boolean puzzleComplete = true;
-		
-		//Do a double for loop here to traverse the puzzle to check if each tile contains a 1-9 for
-		//for each column and row with no repeats
-		
-		//Now check each 3 by 3 subsection of the puzzle
-		
-		
+		boolean puzzleComplete = activeField.checkVictory();
+
 		if(puzzleComplete == true)
 		{
 			String message = "GOOD JOB! \n\nPUZZLE COMPLETE!";				  
@@ -273,99 +336,119 @@ public class SudokuGame extends JApplet
 	  public void readPuzzles() {
 		  	String path = null;
 		  	
-		  	try
+		  	
+		  	for(int puzzNum = 1; puzzNum <= AMNT_PUZZLES; puzzNum++)
 		  	{
-		  		if(OSDetector.isWindows())
-		  		{
-		  			path = getClass().getClassLoader().getResource(".").getPath();
-		  			path = path.substring(0, path.length()-4);
-		  			path = path + "data\\\\puzzle2.txt";
-		  		}
-		  		else if(OSDetector.isLinux() || OSDetector.isMac())
-		  		{
-				  	path = getClass().getClassLoader().getResource(".").getPath();
-				  	path = path.substring(0, path.length()-4);
-				  	path = path + "data/puzzle2.txt";
-				}
-		  	} catch (Exception e)
-		  	{
-		  		e.printStackTrace(System.err);
-		  	}
-		  	
-		  	
-		  	
-		    File file = new File(path);
-		    FileInputStream fis = null;
-		    BufferedInputStream bis = null;
-		    DataInputStream dis = null;
-
-		    try {
-		      fis = new FileInputStream(file);
-
-		      // Here BufferedInputStream is added for fast reading.
-		      bis = new BufferedInputStream(fis);
-		      dis = new DataInputStream(bis);
-		      
-		      //Sets up new Puzzle
-	    	  Puzzle thisPuzzle = new Puzzle(xoffset,cellsize,yoffset);
-	    	  boolean finished = false;
-	    	  
-		      // dis.available() returns 0 if the file does not have more lines.
-		      while (dis.available() != 0) {
-
+			  	String puzzleName = "puzzle"+puzzNum+".txt";
+			  	
+			  	try
+			  	{
+			  		if(OSDetector.isWindows())
+			  		{
+			  			path = getClass().getClassLoader().getResource(".").getPath();
+			  			path = path.substring(0, path.length()-4);
+			  			path = path + "data\\\\" + puzzleName;
+			  		}
+			  		else if(OSDetector.isLinux() || OSDetector.isMac())
+			  		{
+					  	path = getClass().getClassLoader().getResource(".").getPath();
+					  	path = path.substring(0, path.length()-4);
+					  	path = path + "data\\\\" + puzzleName;
+					}
+			  	} catch (Exception e)
+			  	{
+			  		e.printStackTrace(System.err);
+			  	}
+			  	
+			  	
+			  	
+			    File file = new File(path);
+			    FileInputStream fis = null;
+			    BufferedInputStream bis = null;
+			    DataInputStream dis = null;
+	
+			    try {
+			      fis = new FileInputStream(file);
+	
+			      // Here BufferedInputStream is added for fast reading.
+			      bis = new BufferedInputStream(fis);
+			      dis = new DataInputStream(bis);
+			      
+			      //Sets up new Puzzle
+		    	  Puzzle thisPuzzle = new Puzzle(xoffset,cellsize,yoffset);
+		    	  boolean finished = false;
 		    	  
-				String s = dis.readLine();
-		    	
-				if(s.contains("/*"))
-				{
-					if(s.contains("correct"))
-						finished = true;
-					System.out.println("Comment Line");	
-				}
-				
-				
-				
-				else if(s.equals("easy") || s.equals("medium") || s.equals("hard") || s.equals("expert"))
-		    	{
-		    		thisPuzzle.setDifficulty(s);
-		    		System.out.println("Difficulty written");
-		    	}
-		    	else if(s.length() == 5)
-		    	{
-		    		String tokens[] = s.split(",");
-		    		System.out.println("Splitting "+s);		    		
-		    		
-		    		if(tokens.length != 3)
-		    			break;
-		    		
-		    		int row = Integer.parseInt(tokens[0]) -1;
-		    		int column = Integer.parseInt(tokens[1]) -1;
-		    		int value = Integer.parseInt(tokens[2]);
-		    		thisPuzzle.setCell(row, column, value,finished);
-		    		System.out.println("Cell "+(row+1) +" "+ (column+1) +"Written with Value: " +value);	    			    		
-		    	}
-		    		
-		    	
-		        System.out.println(s);
-		      }
-
-		      // dispose all the resources after using them.
-		      fis.close();
-		      bis.close();
-		      dis.close();
-		      
-		      if(thisPuzzle.checkReal() == true)
-		    	  PuzzleList.add(thisPuzzle);
-
-		    } catch (FileNotFoundException e) {
-		      e.printStackTrace();
-		    } catch (IOException e) {
-		      e.printStackTrace();
-		    }
-		  }
-
-    
-  
+		    	  System.out.println("-----------------------\nLOADING PUZZLE: "+puzzleName+"\n----------------------");
+		    	  
+			      // dis.available() returns 0 if the file does not have more lines.
+			      while (dis.available() != 0) {
+	
+			    	  
+					String s = dis.readLine();
+			    	
+					if(s.contains("/*"))
+					{
+						if(s.contains("correct"))
+						{
+							finished = true;
+				    		System.out.println("-----------------------\nLOADING SOLUTIONS FOR: "+ puzzleName + "\n----------------------");
+						}
+						System.out.println("Comment Line");	
+					}			
+					else if(s.equals("easy") || s.equals("medium") || s.equals("hard") || s.equals("expert"))
+			    	{
+			    		thisPuzzle.setDifficulty(s);
+				        System.out.println(s);
+			    	}
+			    	else if(s.length() == 5)
+			    	{
+			    		String tokens[] = s.split(",");
+			    		//System.out.println("Splitting "+s);		    		
+			    		
+			    		if(tokens.length != 3)
+			    			break;
+			    		
+			    		int row = Integer.parseInt(tokens[0]) -1;
+			    		int column = Integer.parseInt(tokens[1]) -1;
+			    		int value = Integer.parseInt(tokens[2]);
+			    		thisPuzzle.setCell(row, column, value,finished); 
+				        System.out.println(s);
+			    	}
+			    	else
+			    	{
+			    		//System.out.println("Line Unread, cannot understand format!");	
+			    	}
+			    		
+			    	
+	
+			      }
+	
+			      // dispose all the resources after using them.
+			      fis.close();
+			      bis.close();
+			      dis.close();
+			      
+			      if(thisPuzzle.checkReal() == true)
+			      {
+			    	  if(thisPuzzle.getDifficulty().equals("easy"))
+			    		  EasyList.add(thisPuzzle);
+			    	  else if(thisPuzzle.getDifficulty().equals("medium"))
+			    		  MediumList.add(thisPuzzle);
+			    	  else if(thisPuzzle.getDifficulty().equals("hard"))
+			    		  HardList.add(thisPuzzle);
+			    	  else if(thisPuzzle.getDifficulty().equals("expert"))
+			    		  ExpertList.add(thisPuzzle);
+			      }
+	
+			    } catch (FileNotFoundException e) {
+			      e.printStackTrace();
+			    } catch (IOException e) {
+			      e.printStackTrace();
+			    }
+			  }
+	
+	    
+	  }
 }
 
 

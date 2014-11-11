@@ -274,6 +274,18 @@ public class SudokuGame extends JApplet
 		  
 		card3.giveUp.addMouseListener(new MouseAdapter(){
 			public void mousePressed(MouseEvent e){
+				EasyList.clear();
+				EasyList = new ArrayList<Puzzle>();
+				MediumList.clear();
+				MediumList = new ArrayList<Puzzle>();
+				HardList.clear();
+				HardList = new ArrayList<Puzzle>();
+				ExpertList.clear();
+				ExpertList = new ArrayList<Puzzle>();
+				UserList.clear();
+				UserList = new ArrayList<User>();
+				readPuzzles();
+				
 				cardLayout.show(cards, "MainMenu");
 			}
 		});

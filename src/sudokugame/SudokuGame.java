@@ -167,9 +167,9 @@ public class SudokuGame extends JApplet
 					}
 					else
 					{
-						String message = username + " let's play Sudoku!";				  
+						String message = username + " let's play Sudoku!\n\nSelect your difficulty level.";				  
 						JOptionPane.showMessageDialog(null, message);
-						cardLayout.show(cards, "MainGame");
+						cardLayout.show(cards, "MainMenu");
 					}
 				}
 				else
@@ -490,7 +490,7 @@ public class SudokuGame extends JApplet
 			  		{
 					  	path = getClass().getClassLoader().getResource(".").getPath();
 					  	path = path.substring(0, path.length()-4);
-					  	path = path + "data\\\\puzzles\\\\" + puzzleName;
+					  	path = path + "data/puzzles/" + puzzleName;
 					}
 			  	} catch (Exception e)
 			  	{

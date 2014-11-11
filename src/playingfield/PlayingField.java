@@ -114,6 +114,11 @@ public class PlayingField extends JPanel
 		}		
 	}
 	
+	public Cell[][] getArray()
+	{
+		return cellArray;
+	}
+	
 	public void checkCells(int x, int y)
 	{
 		//This function runs through every cell every time the user clicks, in order to tell when one has been clicked on

@@ -280,6 +280,13 @@ public class SudokuGame extends JApplet
 		
 		card3.savePuzzle.addMouseListener(new MouseAdapter(){
 			public void mousePressed(MouseEvent e){
+				
+				activeField.getArray();
+				//Here you have the full array of cells. Now you just have to parse through this array and cell.getValue() to get all the values you want to write.
+				//You will also need to write whether or not the cell has been "locked" into the grid (the preset cells are all locked)
+				
+				
+				
 				//This is where we need to add in the logic for saving the game.  I think we should
 				//only allow users to keep one game saved at a time.
 				cardLayout.show(cards, "MainMenu");
@@ -515,7 +522,7 @@ public class SudokuGame extends JApplet
 		    	  Puzzle thisPuzzle = new Puzzle(xoffset,cellsize,yoffset);
 		    	  boolean finished = false;
 		    	  
-		    	  System.out.println("-----------------------\nLOADING PUZZLE: "+puzzleName+"\n----------------------");
+		    	  System.out.println("-------------------------------------------------\nLOADING PUZZLE: "+puzzleName+"\n-------------------------------------------------");
 		    	  
 			      // dis.available() returns 0 if the file does not have more lines.
 			      while (dis.available() != 0) {
@@ -528,7 +535,7 @@ public class SudokuGame extends JApplet
 						if(s.contains("correct"))
 						{
 							finished = true;
-				    		System.out.println("-----------------------\nLOADING SOLUTIONS FOR: "+ puzzleName + "\n----------------------");
+				    		System.out.println("-------------------------------------------------\nLOADING SOLUTIONS FOR: "+ puzzleName + "\n-------------------------------------------------");
 						}
 						System.out.println("Comment Line");	
 					}			

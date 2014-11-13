@@ -10,6 +10,7 @@ import java.awt.event.MouseEvent;
 
 import javax.swing.*;
 
+import cell.Cell;
 import playingfield.PlayingField;
 import puzzle.Puzzle;
 import Menu.MainMenu;
@@ -293,10 +294,7 @@ public class SudokuGame extends JApplet
 		card3.savePuzzle.addMouseListener(new MouseAdapter(){
 			public void mousePressed(MouseEvent e){
 				
-				activeField.getArray();
-				//Here you have the full array of cells. Now you just have to parse through this array and cell.getValue() to get all the values you want to write.
-				//You will also need to write whether or not the cell has been "locked" into the grid (the preset cells are all locked)
-				
+				saveGame();
 				
 				
 				//This is where we need to add in the logic for saving the game.  I think we should
@@ -345,22 +343,22 @@ public class SudokuGame extends JApplet
 	  		{
 	  			path = getClass().getClassLoader().getResource(".").getPath();
 	  			path = path.substring(0, path.length()-4);
-	  			parentDir = path.substring(0, path.length()-4);
-	  			path = path + "data\\\\Users\\\\" + username + ".txt";
+	  			parentDir = path + "data\\\\Users\\\\" + username;
+	  			path = path + "data\\\\Users\\\\" + username + "\\\\userinfo.txt";
 	  		}
 	  		else if(OSDetector.isLinux() || OSDetector.isMac())
 	  		{
 			  	path = getClass().getClassLoader().getResource(".").getPath();
-			  	path = path.substring(0, path.length()-4);
-			  	parentDir = path.substring(0, path.length()-4);
-			  	path = path + "data/Users/" + username + ".txt";
+			  	path = path.substring(0, path.length()-4) ;
+			  	parentDir = path + "data/Users/" + username;
+			  	path = path + "data/Users/" + username + "/userinfo.txt";
 			}
 	  	} catch (Exception e)
 	  	{
 	  		e.printStackTrace(System.err);
 	  	}
   		
-	  	File possibleUser = new File(path);
+	  	File possibleUser = new File(parentDir);
 	  	
 	  	if(possibleUser.exists())
 	  	{
@@ -418,23 +416,28 @@ public class SudokuGame extends JApplet
 	  		{
 	  			path = getClass().getClassLoader().getResource(".").getPath();
 	  			path = path.substring(0, path.length()-4);
-	  			parentDir = path.substring(0, path.length()-4);
-	  			path = path + "data\\\\Users\\\\" + username + ".txt";
+	  			parentDir = path + "data\\\\Users\\\\" + username;
+	  			path = path + "data\\\\Users\\\\" + username + "\\\\userinfo.txt";
 	  		}
 	  		else if(OSDetector.isLinux() || OSDetector.isMac())
 	  		{
 			  	path = getClass().getClassLoader().getResource(".").getPath();
-			  	path = path.substring(0, path.length()-4);
-			  	parentDir = path.substring(0, path.length()-4);
-			  	path = path + "data/Users/" + username + ".txt";
+			  	path = path.substring(0, path.length()-4) ;
+			  	parentDir = path + "data/Users/" + username;
+			  	path = path + "data/Users/" + username + "/userinfo.txt";
 			}
 	  	} catch (Exception e)
 	  	{
 	  		e.printStackTrace(System.err);
 	  	}
 	  	
+	  	System.out.println(parentDir);
 	  	System.out.println(path);
-	  	File newUser = new File(path);
+	  	
+	  	
+	  	
+	  	File newUser = new File(parentDir);
+	  	
 	  	if(newUser.exists())
 	  	{
 	  		System.out.println("That user already exists");
@@ -443,9 +446,12 @@ public class SudokuGame extends JApplet
 	  	else
 	  	{
 	  		try {
-	  			File file = new File(parentDir, (username+".txt"));
+	  			File userDirectory = new File(parentDir);
+	  			userDirectory.mkdir();
+	  			File userInfo = new File(parentDir, ("userinfo.txt"));
+	  			
 	  			try {
-					file.createNewFile();
+					userInfo.createNewFile();
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -465,6 +471,24 @@ public class SudokuGame extends JApplet
 	  		
 	  		return false;
 	  	}		
+	}
+	
+	public void saveGame()
+	{
+		
+		
+		Cell[][] arrayToSave = activeField.getArray();
+		//Here you have the full array of cells. Now you just have to parse through this array and cell.getValue() to get all the values you want to write.
+		//You will also need to write whether or not the cell has been "locked" into the grid (the preset cells are all locked)
+		for(int i = 0; i < arrayToSave.length; i++)
+		{
+			for(int j = 0; j < arrayToSave[i].length; j++)
+			{
+				
+			}
+		}
+		System.out.println(arrayToSave.length);
+		System.out.println(arrayToSave[0].length);
 	}
 	
 	public boolean checkPuzzle()

@@ -57,10 +57,10 @@ public class Cell implements Serializable
 		value = v;		
 	}
 	
-	public void overwriteCell(int v)
+	public void overwriteCell(int v,boolean l)
 	{
 		value = v;
-		locked = true;	
+		locked = l;	
 	}
 	
 	public String getString()

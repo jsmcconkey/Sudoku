@@ -95,7 +95,7 @@ public class MainMenu extends JPanel{
 //			}
 //		});
 		
-		loadGame = new JButton("Load Game");
+		loadGame = new JButton("Load Last Save");
 //		loadGame.setBackground(new Color());
 		loadGame.setBounds(this.getWidth()/3*2 - 75, 400, 150, 40);
 		add(loadGame);

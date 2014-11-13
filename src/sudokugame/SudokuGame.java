@@ -477,12 +477,30 @@ public class SudokuGame extends JApplet
 	
 	public void saveGame()
 	{
+		File savedGame = null;
+		PrintWriter writer = null;
+		
+	  	try
+	  	{
+	  		if(OSDetector.isWindows())
+	  		{
+	  			savedGame = new File(userParentDirectory, ("\\\\savedgame.txt"));
+	  			writer = new PrintWriter(userParentDirectory + "\\\\savedgame.txt");
+	  		}
+	  		else if(OSDetector.isLinux() || OSDetector.isMac())
+	  		{
+	  			savedGame = new File(userParentDirectory, ("/savedgame.txt"));
+	  			writer = new PrintWriter(userParentDirectory + "/savedgame.txt");
+			}
+	  	} catch (Exception e)
+	  	{
+	  		e.printStackTrace(System.err);
+	  	}
+		
 		try
 		{
 			System.out.println(userParentDirectory);
-  			File savedGame = new File(userParentDirectory, ("/savedgame.txt"));
   			savedGame.createNewFile();
-  			PrintWriter writer = new PrintWriter(userParentDirectory + "/savedgame.txt");
   			
   			Cell[][] arrayToSave = activeField.getArray();
   			
@@ -493,8 +511,8 @@ public class SudokuGame extends JApplet
 			{
 				for(int j = 0; j < arrayToSave[i].length; j++)
 				{
-					writer.println(i + ", " + j + ", " + arrayToSave[i][j].getValue() + ", " + arrayToSave[i][j].getLocked());
-					System.out.println(i + ", " + j + ", " + arrayToSave[i][j].getValue() + ", " + arrayToSave[i][j].getLocked());
+					writer.println(i + "," + j + "," + arrayToSave[i][j].getValue() + "," + arrayToSave[i][j].getLocked());
+					System.out.println(i + "," + j + "," + arrayToSave[i][j].getValue() + "," + arrayToSave[i][j].getLocked());
 				}
 			}
 			
@@ -509,14 +527,27 @@ public class SudokuGame extends JApplet
 	public void loadGame()
 	{
 		Puzzle savedPuzzle = new Puzzle(xoffset,cellsize,yoffset);
-
+		File file = null;
 		String currentLine = null;
-		
-  		//Get the password from that txt file
-	    File file = new File(userParentDirectory + "/savedgame.txt");
 	    FileInputStream fis = null;
 	    BufferedInputStream bis = null;
 	    DataInputStream dis = null;
+	    		
+	  	try
+	  	{
+	  		if(OSDetector.isWindows())
+	  		{
+	  		    file = new File(userParentDirectory + "\\\\savedgame.txt");
+	  		}
+	  		else if(OSDetector.isLinux() || OSDetector.isMac())
+	  		{
+	  		    file = new File(userParentDirectory + "/savedgame.txt");
+			}
+	  	} catch (Exception e)
+	  	{
+	  		e.printStackTrace(System.err);
+	  	}
+	  	
 		    
 	    try {
 			fis = new FileInputStream(file);
@@ -526,23 +557,24 @@ public class SudokuGame extends JApplet
 			while((currentLine = dis.readLine()) != null)
 			{
 				System.out.println("Current line: " + currentLine);
-				char row = currentLine.charAt(0);
-				char col = currentLine.charAt(3);
-				char value = currentLine.charAt(6);
-				char locked = currentLine.charAt(9);
+				
+				String tokens[] = currentLine.split(",");
+				
+	    		int row = Integer.parseInt(tokens[0]);
+	    		int column = Integer.parseInt(tokens[1]);
+	    		int value = Integer.parseInt(tokens[2]);
+	    		String locked = tokens[3];
+	    		
+
 				boolean b = true;
-				if(locked == 'f')
+				if(locked.equals("false"))
 				{
 					b = false;
 				}
 				
-				savedPuzzle.setCell((int)row, (int)col, (int)value, b);
+				savedPuzzle.setCell(row, column, value, false, b);
 				
 				System.out.println(row);
-				System.out.println(col);
-				System.out.println(value);
-				System.out.println(locked);
-//				savedPuzzle.setCell(row, column, value, finished);
 			}
 	    } catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -550,23 +582,6 @@ public class SudokuGame extends JApplet
 		}
 	    
 	    activeField.setGrid(savedPuzzle);
-		
-		
-//		try
-//		{
-//			FileInputStream fileIn = new FileInputStream(userParentDirectory + "/savedgame.txt");
-//			ObjectInputStream in = new ObjectInputStream(fileIn);
-//			activeField = (PlayingField) in.readObject();
-//			
-//			in.close();
-//			fileIn.close();
-//			
-//		}catch(IOException e)
-//		{
-//			e.printStackTrace();
-//		} catch (ClassNotFoundException e) {
-//			e.printStackTrace();
-//		}
 	}
 	
 	public boolean checkPuzzle()
@@ -591,7 +606,8 @@ public class SudokuGame extends JApplet
 		}
 	}
 	  
-	  public void readPuzzles() {
+	  public void readPuzzles() 
+	  {
 		  	String path = null;
 
 		  	
@@ -667,7 +683,7 @@ public class SudokuGame extends JApplet
 			    		int row = Integer.parseInt(tokens[0]) -1;
 			    		int column = Integer.parseInt(tokens[1]) -1;
 			    		int value = Integer.parseInt(tokens[2]);
-			    		thisPuzzle.setCell(row, column, value,finished); 
+			    		thisPuzzle.setCell(row, column, value,finished,true); 
 				        System.out.println(s);
 			    	}
 			    	else
@@ -702,9 +718,7 @@ public class SudokuGame extends JApplet
 			      e.printStackTrace();
 			    }
 			  }
-	
-	    
-	  }
+		}
 }
 
 

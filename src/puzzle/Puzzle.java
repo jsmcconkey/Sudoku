@@ -24,14 +24,13 @@ public class Puzzle {
 			
 	}
 	
-	public void setCell(int row, int column, int value, boolean finished)
+	public void setCell(int row, int column, int value, boolean finished, boolean locked)
 	{
 		if(finished == false)
-			cellArray[row][column].overwriteCell(value);	
+			cellArray[row][column].overwriteCell(value,locked);	
 		else
 		{
-			//cellArray[row][column].overwriteCell(value);
-			answerArray[row][column].overwriteCell(value);
+			answerArray[row][column].overwriteCell(value,locked);
 			hasAnswer = true;
 		}
 	}

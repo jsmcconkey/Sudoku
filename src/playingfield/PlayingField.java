@@ -25,15 +25,17 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Random;
 
 
 
 
-public class PlayingField extends JPanel
+public class PlayingField extends JPanel implements Serializable
 
 	{
+	private static final long serialVersionUID = -6651451576028481191L;
 	//Main Variables
 	public Cell[][] cellArray;
 	public Cell[][] answerArray;

@@ -1,9 +1,12 @@
 package cell;
 
+import java.io.Serializable;
 
 
-public class Cell {
-	
+
+public class Cell implements Serializable
+{
+	private static final long serialVersionUID = -1794579801776158173L;
 	private int value;
 	private int x;
 	private int y; 

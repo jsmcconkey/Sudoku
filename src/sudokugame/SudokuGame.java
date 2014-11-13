@@ -53,6 +53,8 @@ public class SudokuGame extends JApplet
 	
 	private ArrayList<User> UserList;
 	
+	private String userParentDirectory = null;
+	
   	public void init()
 	{
 		this.setSize(WIDTH, HEIGHT);
@@ -266,11 +268,14 @@ public class SudokuGame extends JApplet
 		});
 		
 		  
-	//	  card2.loadGame.addMouseListener(new MouseAdapter(){
-	//		  public void mousePressed(MouseEvent e){
-	//			  cardLayout.show(cards, "LoadGameMenu");
-	//		  }
-	//	  });
+		card2.loadGame.addMouseListener(new MouseAdapter(){
+			public void mousePressed(MouseEvent e){
+				loadGame();
+				
+				
+				cardLayout.show(cards, "MainGame");
+			}
+		});
 		  
 		  
 		card3.giveUp.addMouseListener(new MouseAdapter(){
@@ -295,10 +300,9 @@ public class SudokuGame extends JApplet
 			public void mousePressed(MouseEvent e){
 				
 				saveGame();
+				String message = "Your game has been saved!\nTo load your game select Load Game from the main menu.";				  
+				JOptionPane.showMessageDialog(null, message);	
 				
-				
-				//This is where we need to add in the logic for saving the game.  I think we should
-				//only allow users to keep one game saved at a time.
 				cardLayout.show(cards, "MainMenu");
 			}
 		});
@@ -333,7 +337,6 @@ public class SudokuGame extends JApplet
   	public boolean checkLogin(String username, String password)
   	{
 	  	String path = null;
-	  	String parentDir = null;
 	  	String fileUsername = null;
 	  	String filePassword = null;
 	  	
@@ -343,14 +346,14 @@ public class SudokuGame extends JApplet
 	  		{
 	  			path = getClass().getClassLoader().getResource(".").getPath();
 	  			path = path.substring(0, path.length()-4);
-	  			parentDir = path + "data\\\\Users\\\\" + username;
+	  			userParentDirectory = path + "data\\\\Users\\\\" + username;
 	  			path = path + "data\\\\Users\\\\" + username + "\\\\userinfo.txt";
 	  		}
 	  		else if(OSDetector.isLinux() || OSDetector.isMac())
 	  		{
 			  	path = getClass().getClassLoader().getResource(".").getPath();
 			  	path = path.substring(0, path.length()-4) ;
-			  	parentDir = path + "data/Users/" + username;
+			  	userParentDirectory = path + "data/Users/" + username;
 			  	path = path + "data/Users/" + username + "/userinfo.txt";
 			}
 	  	} catch (Exception e)
@@ -358,7 +361,7 @@ public class SudokuGame extends JApplet
 	  		e.printStackTrace(System.err);
 	  	}
   		
-	  	File possibleUser = new File(parentDir);
+	  	File possibleUser = new File(userParentDirectory);
 	  	
 	  	if(possibleUser.exists())
 	  	{
@@ -408,7 +411,6 @@ public class SudokuGame extends JApplet
 	public boolean addUser(String username, String password)
 	{
 	  	String path = null;
-	  	String parentDir = null;
 	  	
 	  	try
 	  	{
@@ -416,14 +418,14 @@ public class SudokuGame extends JApplet
 	  		{
 	  			path = getClass().getClassLoader().getResource(".").getPath();
 	  			path = path.substring(0, path.length()-4);
-	  			parentDir = path + "data\\\\Users\\\\" + username;
+	  			userParentDirectory = path + "data\\\\Users\\\\" + username;
 	  			path = path + "data\\\\Users\\\\" + username + "\\\\userinfo.txt";
 	  		}
 	  		else if(OSDetector.isLinux() || OSDetector.isMac())
 	  		{
 			  	path = getClass().getClassLoader().getResource(".").getPath();
 			  	path = path.substring(0, path.length()-4) ;
-			  	parentDir = path + "data/Users/" + username;
+			  	userParentDirectory = path + "data/Users/" + username;
 			  	path = path + "data/Users/" + username + "/userinfo.txt";
 			}
 	  	} catch (Exception e)
@@ -431,12 +433,12 @@ public class SudokuGame extends JApplet
 	  		e.printStackTrace(System.err);
 	  	}
 	  	
-	  	System.out.println(parentDir);
+	  	System.out.println(userParentDirectory);
 	  	System.out.println(path);
 	  	
 	  	
 	  	
-	  	File newUser = new File(parentDir);
+	  	File newUser = new File(userParentDirectory);
 	  	
 	  	if(newUser.exists())
 	  	{
@@ -446,9 +448,9 @@ public class SudokuGame extends JApplet
 	  	else
 	  	{
 	  		try {
-	  			File userDirectory = new File(parentDir);
+	  			File userDirectory = new File(userParentDirectory);
 	  			userDirectory.mkdir();
-	  			File userInfo = new File(parentDir, ("userinfo.txt"));
+	  			File userInfo = new File(userParentDirectory, ("userinfo.txt"));
 	  			
 	  			try {
 					userInfo.createNewFile();
@@ -457,7 +459,7 @@ public class SudokuGame extends JApplet
 					e.printStackTrace();
 				}
 				PrintWriter writer = new PrintWriter(path);//, "UTF-8)");
-				writer.println(username);		//Is the password writing encrypted?
+				writer.println(username);
 				writer.println(password);
 				writer.println("#");
 				writer.println("##");
@@ -475,20 +477,96 @@ public class SudokuGame extends JApplet
 	
 	public void saveGame()
 	{
-		
-		
-		Cell[][] arrayToSave = activeField.getArray();
-		//Here you have the full array of cells. Now you just have to parse through this array and cell.getValue() to get all the values you want to write.
-		//You will also need to write whether or not the cell has been "locked" into the grid (the preset cells are all locked)
-		for(int i = 0; i < arrayToSave.length; i++)
+		try
 		{
-			for(int j = 0; j < arrayToSave[i].length; j++)
+			System.out.println(userParentDirectory);
+  			File savedGame = new File(userParentDirectory, ("/savedgame.txt"));
+  			savedGame.createNewFile();
+  			PrintWriter writer = new PrintWriter(userParentDirectory + "/savedgame.txt");
+  			
+  			Cell[][] arrayToSave = activeField.getArray();
+  			
+
+			//Here you have the full array of cells. Now you just have to parse through this array and cell.getValue() to get all the values you want to write.
+			//You will also need to write whether or not the cell has been "locked" into the grid (the preset cells are all locked)
+			for(int i = 0; i < arrayToSave.length; i++)
 			{
-				
+				for(int j = 0; j < arrayToSave[i].length; j++)
+				{
+					writer.println(i + ", " + j + ", " + arrayToSave[i][j].getValue() + ", " + arrayToSave[i][j].getLocked());
+					System.out.println(i + ", " + j + ", " + arrayToSave[i][j].getValue() + ", " + arrayToSave[i][j].getLocked());
+				}
 			}
+			
+			writer.close();
+			
+		}catch(IOException e)
+		{
+			e.printStackTrace();
 		}
-		System.out.println(arrayToSave.length);
-		System.out.println(arrayToSave[0].length);
+	}
+	
+	public void loadGame()
+	{
+		Puzzle savedPuzzle = new Puzzle(xoffset,cellsize,yoffset);
+
+		String currentLine = null;
+		
+  		//Get the password from that txt file
+	    File file = new File(userParentDirectory + "/savedgame.txt");
+	    FileInputStream fis = null;
+	    BufferedInputStream bis = null;
+	    DataInputStream dis = null;
+		    
+	    try {
+			fis = new FileInputStream(file);
+			bis = new BufferedInputStream(fis);
+			dis = new DataInputStream(bis);
+			
+			while((currentLine = dis.readLine()) != null)
+			{
+				System.out.println("Current line: " + currentLine);
+				char row = currentLine.charAt(0);
+				char col = currentLine.charAt(3);
+				char value = currentLine.charAt(6);
+				char locked = currentLine.charAt(9);
+				boolean b = true;
+				if(locked == 'f')
+				{
+					b = false;
+				}
+				
+				savedPuzzle.setCell((int)row, (int)col, (int)value, b);
+				
+				System.out.println(row);
+				System.out.println(col);
+				System.out.println(value);
+				System.out.println(locked);
+//				savedPuzzle.setCell(row, column, value, finished);
+			}
+	    } catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	    
+	    activeField.setGrid(savedPuzzle);
+		
+		
+//		try
+//		{
+//			FileInputStream fileIn = new FileInputStream(userParentDirectory + "/savedgame.txt");
+//			ObjectInputStream in = new ObjectInputStream(fileIn);
+//			activeField = (PlayingField) in.readObject();
+//			
+//			in.close();
+//			fileIn.close();
+//			
+//		}catch(IOException e)
+//		{
+//			e.printStackTrace();
+//		} catch (ClassNotFoundException e) {
+//			e.printStackTrace();
+//		}
 	}
 	
 	public boolean checkPuzzle()
@@ -527,21 +605,19 @@ public class SudokuGame extends JApplet
 			  		{
 			  			path = getClass().getClassLoader().getResource(".").getPath();
 			  			path = path.substring(0, path.length()-4);
-			  			path = path + "data\\\\puzzles\\\\" + puzzleName;
+			  			path = path + "data\\\\Puzzles\\\\" + puzzleName;
 			  		}
 			  		else if(OSDetector.isLinux() || OSDetector.isMac())
 			  		{
 					  	path = getClass().getClassLoader().getResource(".").getPath();
 					  	path = path.substring(0, path.length()-4);
-					  	path = path + "data/puzzles/" + puzzleName;
+					  	path = path + "data/Puzzles/" + puzzleName;
 					}
 			  	} catch (Exception e)
 			  	{
 			  		e.printStackTrace(System.err);
 			  	}
-			  	
-			  	
-			  	
+			  				  	
 			    File file = new File(path);
 			    FileInputStream fis = null;
 			    BufferedInputStream bis = null;

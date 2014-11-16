@@ -7,9 +7,7 @@ import java.awt.*;
 import java.io.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-
 import javax.swing.*;
-
 import cell.Cell;
 import playingfield.PlayingField;
 import puzzle.Puzzle;
@@ -19,7 +17,6 @@ import loginscreen.CreateUser;
 import loginscreen.LoginScreen;
 import loginscreen.User;
 import osdetector.OSDetector;
-
 import java.io.BufferedInputStream;
 import java.io.DataInputStream;
 import java.io.File;
@@ -95,7 +92,7 @@ public class SudokuGame extends JApplet
 		this.add(cards);
 				  
 		final CardLayout cardLayout = (CardLayout) cards.getLayout();
-				  
+						  
 		//Mouse Listeners for the Login Screen
 		card0.login.addMouseListener(new MouseAdapter(){
 			public void mousePressed(MouseEvent e){
@@ -130,17 +127,23 @@ public class SudokuGame extends JApplet
 		card1.createUser.addMouseListener(new MouseAdapter(){
 			public void mousePressed(MouseEvent e){
 				boolean passwordsMatch = true;
+				boolean usernameIsAcceptable = true;
 				
 				//Implement logic to add the user here
 				String username = card1.newUsername.getText();
 				char[] password = card1.newPassword.getPassword();
 				char[] confirmPassword = card1.confirmNewPassword.getPassword();
 				
+				if(username.contains("/") || username.contains("\\") || username.contains(".")){
+					usernameIsAcceptable = false;
+				}
+				
 				//If the passwords in both fields match then we search the password file to
 				//see if that user name has been taken, if it has not been taken then we add that
 				//login to our user "database" which for this assignment is going to just be a txt file			  
 				
-				if(password.length != confirmPassword.length || password.length == 0 || confirmPassword.length == 0)
+				if(password.length != confirmPassword.length || password.length == 0 || confirmPassword.length == 0 ||
+						password.length < 5 || password.length > 10)
 				{
 					passwordsMatch = false;
 				}
@@ -168,6 +171,11 @@ public class SudokuGame extends JApplet
 						String message = "The username " + username + " is already registered. \n\nPlease enter a different username.";				  
 						JOptionPane.showMessageDialog(null, message);
 					}
+					else if(usernameIsAcceptable == false)
+					{
+						String message = "That username contains unacceptable characters.  Please change your username.";				  
+						JOptionPane.showMessageDialog(null, message);
+					}
 					else
 					{
 						String message = username + " let's play Sudoku!\n\nSelect your difficulty level.";				  
@@ -177,7 +185,7 @@ public class SudokuGame extends JApplet
 				}
 				else
 				{
-					String message = "Invalid password or password mismatch. \n\nPlease re-enter your password";				  
+					String message = "Invalid password or password mismatch. \n\nPassword must be between 5 and 10 characters long. \n\nPlease re-enter your password";				  
 					JOptionPane.showMessageDialog(null, message);
 				}
 			}
@@ -242,7 +250,7 @@ public class SudokuGame extends JApplet
 			}
 		});
 		
-		card2.hardestButton.addMouseListener(new MouseAdapter(){
+		card2.expertButton.addMouseListener(new MouseAdapter(){
 			public void mousePressed(MouseEvent e){
 				int amount = ExpertList.size();
 				System.out.println("Size of ExpertList: "+ amount);
@@ -270,16 +278,21 @@ public class SudokuGame extends JApplet
 		  
 		card2.loadGame.addMouseListener(new MouseAdapter(){
 			public void mousePressed(MouseEvent e){
-				loadGame();
-				
-				
-				cardLayout.show(cards, "MainGame");
+				boolean gameExists = loadGame();
+				if(gameExists){
+					cardLayout.show(cards, "MainGame");
+				}
+				else{
+					String message = "You currently do not have a saved game.  \n\nPlease select a difficulty.";				  
+					JOptionPane.showMessageDialog(null, message);
+				}
 			}
 		});
 		  
 		  
 		card3.giveUp.addMouseListener(new MouseAdapter(){
 			public void mousePressed(MouseEvent e){
+				activeField.setButtonGridVisible(false);
 				EasyList.clear();
 				EasyList = new ArrayList<Puzzle>();
 				MediumList.clear();
@@ -298,7 +311,7 @@ public class SudokuGame extends JApplet
 		
 		card3.savePuzzle.addMouseListener(new MouseAdapter(){
 			public void mousePressed(MouseEvent e){
-				
+				activeField.setButtonGridVisible(false);
 				saveGame();
 				String message = "Your game has been saved!\nTo load your game select Load Game from the main menu.";				  
 				JOptionPane.showMessageDialog(null, message);	
@@ -524,7 +537,7 @@ public class SudokuGame extends JApplet
 		}
 	}
 	
-	public void loadGame()
+	public boolean loadGame()
 	{
 		Puzzle savedPuzzle = new Puzzle(xoffset,cellsize,yoffset);
 		File file = null;
@@ -548,40 +561,46 @@ public class SudokuGame extends JApplet
 	  		e.printStackTrace(System.err);
 	  	}
 	  	
-		    
-	    try {
-			fis = new FileInputStream(file);
-			bis = new BufferedInputStream(fis);
-			dis = new DataInputStream(bis);
-			
-			while((currentLine = dis.readLine()) != null)
-			{
-				System.out.println("Current line: " + currentLine);
+	  	if(file.exists())
+	  	{
+		    try {
+				fis = new FileInputStream(file);
+				bis = new BufferedInputStream(fis);
+				dis = new DataInputStream(bis);
 				
-				String tokens[] = currentLine.split(",");
-				
-	    		int row = Integer.parseInt(tokens[0]);
-	    		int column = Integer.parseInt(tokens[1]);
-	    		int value = Integer.parseInt(tokens[2]);
-	    		String locked = tokens[3];
-	    		
-
-				boolean b = true;
-				if(locked.equals("false"))
+				while((currentLine = dis.readLine()) != null)
 				{
-					b = false;
+					System.out.println("Current line: " + currentLine);
+					
+					String tokens[] = currentLine.split(",");
+					
+		    		int row = Integer.parseInt(tokens[0]);
+		    		int column = Integer.parseInt(tokens[1]);
+		    		int value = Integer.parseInt(tokens[2]);
+		    		String locked = tokens[3];
+		    		
+
+					boolean b = true;
+					if(locked.equals("false"))
+					{
+						b = false;
+					}
+					
+					savedPuzzle.setCell(row, column, value, false, b);
+					
+					System.out.println(row);
 				}
-				
-				savedPuzzle.setCell(row, column, value, false, b);
-				
-				System.out.println(row);
+		    } catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
-	    } catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	    
-	    activeField.setGrid(savedPuzzle);
+		    
+		    activeField.setGrid(savedPuzzle);
+		    return true;
+	  	}
+	  	else{
+			return false;
+	  	}
 	}
 	
 	public boolean checkPuzzle()

@@ -97,7 +97,6 @@ public class PlayingField extends JPanel implements Serializable
 		        {
 		            //System.out.println("Mouse Pressed - X: " + e.getX() + " Y: " + e.getY());
 		            checkCells(e.getX(),e.getY());
-		        	buttongrid.setVisible(true);	
 		        }
 		    });
 
@@ -126,8 +125,10 @@ public class PlayingField extends JPanel implements Serializable
 		//This function runs through every cell every time the user clicks, in order to tell when one has been clicked on
 		for(int j = 0; j<9; j++)
 			for(int i = 0; i<9; i++)
-				if(cellArray[j][i].checkClick(x, y) == true)
+				if(cellArray[j][i].checkClick(x, y) == true){
 					buttongrid.resetLoc(x, y, cellArray[j][i]);
+					buttongrid.setVisible(true);
+				}
 	}
 	
 	
@@ -299,9 +300,11 @@ public class PlayingField extends JPanel implements Serializable
 				
 			g2.drawLine(xoffset, y, xoffset + (cellsize * 9), y);		
 		}	
-		
-	
 	}
 	
+	public void setButtonGridVisible(boolean b)
+	{
+		buttongrid.setVisible(b);
+	}
     
 }

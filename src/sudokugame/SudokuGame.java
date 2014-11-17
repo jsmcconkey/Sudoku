@@ -69,12 +69,8 @@ public class SudokuGame extends JApplet
 		readPuzzles();
 		
 		rn = new Random();
-		
-		
-		
+				
 		activeField = new PlayingField(xoffset,cellsize,yoffset);
-
-				  
 				  
 		final JPanel cards = new JPanel(new CardLayout());  
 				  

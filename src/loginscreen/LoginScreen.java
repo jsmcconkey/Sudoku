@@ -19,7 +19,7 @@ public class LoginScreen extends JPanel{
 		
 		setSize(640, 480);
 		setLayout(null);
-		setBackground(Color.LIGHT_GRAY);
+		setBackground(new Color(224,224,224));
 		
 		introMessage = new JLabel("Let's Play Sudoku!");
 		introMessage.setFont(new Font("Arial", Font.BOLD, 24));

@@ -87,7 +87,7 @@ public class PlayingField extends JPanel implements Serializable
             savePuzzle.setBounds(510, 310, 120, 50);
             add(savePuzzle);
             
-            checkPuzzle = new JButton("Check Puzzle");
+            checkPuzzle = new JButton("FLUSH!");
             checkPuzzle.setBounds(510, 370, 120, 100);
             add(checkPuzzle); 
             

@@ -10,9 +10,11 @@ package sudokugame;
 import java.util.*;
 import java.awt.*;
 import java.io.*;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.*;
+
 import cell.Cell;
 import playingfield.PlayingField;
 import puzzle.Puzzle;
@@ -118,8 +120,8 @@ public class SudokuGame extends JApplet
 					
 			}
 		});
-		  
-		card0.newUser.addMouseListener(new MouseAdapter(){
+				  
+		card0.createLogin.addMouseListener(new MouseAdapter(){
 			public void mousePressed(MouseEvent e){
 				cardLayout.show(cards, "CreateUser");
 			}
@@ -192,8 +194,6 @@ public class SudokuGame extends JApplet
 			}
 		});
 		  
-		  
-		//Each of these will also need to implement the logic that makes up the difficulty
 		card2.easyButton.addMouseListener(new MouseAdapter(){
 			public void mousePressed(MouseEvent e){
 				int amount = EasyList.size();
@@ -289,10 +289,23 @@ public class SudokuGame extends JApplet
 				}
 			}
 		});
+		
+		card2.logout.addMouseListener(new MouseAdapter(){
+			public void mousePressed(MouseEvent e){
+				cardLayout.show(cards, "LoginScreen");
+			}
+		});
 		  
 		  
 		card3.giveUp.addMouseListener(new MouseAdapter(){
 			public void mousePressed(MouseEvent e){
+//				String message = "If you give up you will receive a partial score for your puzzle progress, but your game will not save. \n" +
+//						"To save progress to continue later please select save game.\n\n" +
+//						"Would you still like to to give up?";
+//				
+//				JOptionPane optionPane = new JOptionPane(message, JOptionPane.QUESTION_MESSAGE, JOptionPane.YES_NO_OPTION);
+//				optionPane.show(true);
+				
 				activeField.setButtonGridVisible(false);
 				EasyList.clear();
 				EasyList = new ArrayList<Puzzle>();

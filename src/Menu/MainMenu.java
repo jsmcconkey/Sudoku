@@ -11,9 +11,10 @@ public class MainMenu extends JPanel{
 	public JButton mediumButton;
 	public JButton hardButton;
 	public JButton expertButton;
-	public JButton userScores = new JButton("User Scores");
-	public JButton loadGame = new JButton("Load Game");
+	public JButton userScores;
+	public JButton loadGame;
 	public Color customColor = new Color(102, 178, 255);
+	public JButton logout;
 	
 	public MainMenu()
 	{
@@ -67,5 +68,9 @@ public class MainMenu extends JPanel{
 		loadGame.setBounds(this.getWidth()/3*2 - 75, 400, 150, 40);
 		add(loadGame);
 				
+		logout = new JButton("Logout");
+		logout.setBackground(customColor);
+		logout.setBounds(this.getWidth()-110, 10, 100, 40);
+		add(logout);
 	}
 }

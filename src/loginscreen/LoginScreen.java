@@ -23,17 +23,17 @@ public class LoginScreen extends JPanel{
 		setBackground(new Color(224,224,224));
 		
 		introMessage = new JLabel("Let's Play Sudoku!");
-		introMessage.setFont(new Font("Arial", Font.BOLD, 24));
+		introMessage.setFont(new Font("Chalkboard", Font.BOLD, 28));
 		introMessage.setBounds(this.getWidth()/2-250/2, this.getHeight()/10, 250, 25);
 		add(introMessage);
 		
 		username = new JLabel("Username:");
-		username.setFont(new Font("Arial", Font.BOLD, 18));
+		username.setFont(new Font("Chalkboard", Font.BOLD, 18));
 		username.setBounds(this.getWidth()/2-150, this.getHeight()/3, 150, 30);
 		add(username);
 		
 		password = new JLabel("Password:");
-		password.setFont(new Font("Arial", Font.BOLD, 18));
+		password.setFont(new Font("Chalkboard", Font.BOLD, 18));
 		password.setBounds(this.getWidth()/2-150, this.getHeight()/3+40, 150, 30);
 		add(password);
 		

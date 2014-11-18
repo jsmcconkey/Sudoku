@@ -14,7 +14,6 @@ import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.*;
-
 import cell.Cell;
 import playingfield.PlayingField;
 import puzzle.Puzzle;

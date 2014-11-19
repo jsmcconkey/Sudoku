@@ -10,6 +10,7 @@ package sudokugame;
 import java.util.*;
 import java.awt.*;
 import java.io.*;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.*;
@@ -69,12 +70,8 @@ public class SudokuGame extends JApplet
 		readPuzzles();
 		
 		rn = new Random();
-		
-		
-		
+				
 		activeField = new PlayingField(xoffset,cellsize,yoffset);
-
-				  
 				  
 		final JPanel cards = new JPanel(new CardLayout());  
 				  
@@ -122,8 +119,8 @@ public class SudokuGame extends JApplet
 					
 			}
 		});
-		  
-		card0.newUser.addMouseListener(new MouseAdapter(){
+				  
+		card0.createLogin.addMouseListener(new MouseAdapter(){
 			public void mousePressed(MouseEvent e){
 				cardLayout.show(cards, "CreateUser");
 			}
@@ -196,8 +193,6 @@ public class SudokuGame extends JApplet
 			}
 		});
 		  
-		  
-		//Each of these will also need to implement the logic that makes up the difficulty
 		card2.easyButton.addMouseListener(new MouseAdapter(){
 			public void mousePressed(MouseEvent e){
 				int amount = EasyList.size();
@@ -293,11 +288,16 @@ public class SudokuGame extends JApplet
 				}
 			}
 		});
+		
+		card2.logout.addMouseListener(new MouseAdapter(){
+			public void mousePressed(MouseEvent e){
+				cardLayout.show(cards, "LoginScreen");
+			}
+		});
 		  
 		  
 		card3.giveUp.addMouseListener(new MouseAdapter(){
-			public void mousePressed(MouseEvent e){
-				
+			public void mousePressed(MouseEvent e){		
 				boolean yesno = giveUp();
 				
 				if(yesno == true)

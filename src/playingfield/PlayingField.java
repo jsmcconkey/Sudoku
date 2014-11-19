@@ -30,11 +30,8 @@ import java.util.ArrayList;
 import java.util.Random;
 
 
-
-
 public class PlayingField extends JPanel implements Serializable
-
-	{
+{
 	private static final long serialVersionUID = -6651451576028481191L;
 	//Main Variables
 	public Cell[][] cellArray;
@@ -57,9 +54,9 @@ public class PlayingField extends JPanel implements Serializable
 	public int xoffset;
 	public int yoffset;
 	public int cellsize;
-
-
-
+	
+	//Timer
+	
 
 	
 	public JButton finishGame = new JButton("Finish Game");
@@ -88,7 +85,7 @@ public class PlayingField extends JPanel implements Serializable
             savePuzzle.setBounds(510, 310, 120, 50);
             add(savePuzzle);
             
-            checkPuzzle = new JButton("FLUSH!");
+            checkPuzzle = new JButton("Check");
             checkPuzzle.setBounds(510, 370, 120, 100);
             add(checkPuzzle); 
             

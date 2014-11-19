@@ -20,7 +20,7 @@ public class CreateUser extends JPanel{
 		
 		setSize(640, 480);
 		setLayout(null);
-		setBackground(Color.LIGHT_GRAY);
+		setBackground(new Color(224,224,224));
 		
 		message = new JLabel("Please enter a new username and password:");
 		message.setFont(new Font("Arial", Font.BOLD, 24));

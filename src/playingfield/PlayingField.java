@@ -44,6 +44,7 @@ public class PlayingField extends JPanel implements Serializable
 	public GridSelector buttongrid = new GridSelector();
 	public boolean flag = false;
 	public boolean hasAnswer = false;
+	public String diff;
 	
 	//Buttons
 	public JButton giveUp;
@@ -107,6 +108,8 @@ public class PlayingField extends JPanel implements Serializable
 	{
 	    //Main Setup 
 		cellArray = grid.getArray();
+		diff = grid.getDifficulty();
+		
 		
 		if(grid.hasAnswer() == true)
 		{
@@ -132,11 +135,38 @@ public class PlayingField extends JPanel implements Serializable
 	}
 	
 	
+	public int checkScore()
+	{
+		//This function checks for the victory condition when the user presses the finish button
+		int points = 0;
+		
+		
+		//If the board already has a stored answer
+		if(hasAnswer==true)
+		{			
+			for(int j = 0; j<9; j++)
+				for(int i = 0; i<9; i++)
+				{
+					int v1 = answerArray[j][i].getValue();
+					int v2 = cellArray[j][i].getValue();
+					
+					if((v1 == v2) && (cellArray[j][i].getLocked() ==false))
+						points++;
+				}		
+			
+		}
+		else
+			points = -1;
+		
+		
+		return points;
+
+	}
+	
 	public boolean checkVictory()
 	{
 		//This function checks for the victory condition when the user presses the finish button
-		boolean r = true;
-		
+		boolean r = false;
 		
 		//If the board already has a stored answer
 		if(hasAnswer==true)
@@ -151,65 +181,9 @@ public class PlayingField extends JPanel implements Serializable
 					
 					if(v1 != v2)
 						match = false;
-						
-				}		
-			r = match;
-		}
-		
-		
-		
-		//If the Puzzle does NOT have a stored answer
-		else if(hasAnswer==false)
-		{
-			//This loop checks every row for 1-9
-			for(int j = 0; j<9; j++)//Rows
-			{	
-				ArrayList<Integer> numbers = new ArrayList<Integer>();
-				
-				for(int i = 0; i<9; i++)//Columns
-				{
-					numbers.add(cellArray[j][i].getValue());								
-				}
-				
-				if(!(numbers.contains(1) && numbers.contains(2) && numbers.contains(3) && numbers.contains(4) && numbers.contains(5) && numbers.contains(6) && numbers.contains(7) && numbers.contains(8) && numbers.contains(9)))
-					r = false;			
-			}
-			
-			//This loops checks every column for 1-9
-			for(int j = 0; j<9; j++)//Rows
-			{	
-				ArrayList<Integer> numbers = new ArrayList<Integer>();
-				
-				for(int i = 0; i<9; i++)//Columns
-				{
-					numbers.add(cellArray[i][j].getValue());								
-				}
-				
-				if(!(numbers.contains(1) && numbers.contains(2) && numbers.contains(3) && numbers.contains(4) && numbers.contains(5) && numbers.contains(6) && numbers.contains(7) && numbers.contains(8) && numbers.contains(9)))
-					r = false;			
-			}
-			
-			//This loops checks the boxes
-			for(int j = 0; j<3; j++)//Box Rows
-			{	
-				
-				
-				for(int i = 0; i<3; i++)//Box Columns
-				{
-					ArrayList<Integer> numbers = new ArrayList<Integer>();
 					
-					for(int s = 0; s<3; s++)//Rows within the box
-					{
-						for(int p = 0; p<3; p++)
-						{
-							numbers.add(cellArray[i][j].getValue());				
-						}
-						
-						if(!(numbers.contains(1) && numbers.contains(2) && numbers.contains(3) && numbers.contains(4) && numbers.contains(5) && numbers.contains(6) && numbers.contains(7) && numbers.contains(8) && numbers.contains(9)))
-							r = false;						
-					}																
-				}		
-			}
+					r = match;
+				}					
 		}
 		
 		
@@ -307,4 +281,9 @@ public class PlayingField extends JPanel implements Serializable
 		buttongrid.setVisible(b);
 	}
     
+	public String getDifficulty()
+	{
+		return diff;
+	}
+	
 }

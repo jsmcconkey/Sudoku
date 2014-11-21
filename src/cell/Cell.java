@@ -1,5 +1,6 @@
 package cell;
 
+import java.awt.Color;
 import java.io.Serializable;
 
 
@@ -11,6 +12,7 @@ public class Cell implements Serializable
 	private int x;
 	private int y; 
 	private int cellsize;
+	private Color cellColor;
 	
 	boolean locked;
 	
@@ -81,4 +83,8 @@ public class Cell implements Serializable
 		return y;
 	}
 	
+	public void setColor(Color c)
+	{
+		cellColor = c;
+	}
 }

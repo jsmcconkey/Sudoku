@@ -8,6 +8,7 @@ import javax.swing.JPanel;
 
 import java.awt.Color;
 
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.ImageIcon;
 
@@ -47,14 +48,22 @@ public class PlayingField extends JPanel implements Serializable
 	public JButton savePuzzle;
 	public JButton checkPuzzle;
 	
-
-	
 	//Offsets
 	public int xoffset;
 	public int yoffset;
 	public int cellsize;
 	
 	//Timer
+	
+	//Color Note Taking System
+	public JButton blueButton;
+	public JButton greenButton;
+	public JButton redButton;
+	public JButton yellowButton;
+	public JButton clearColor;
+	public JButton backToGridSelector;
+	public boolean colorIsClicked;
+	public Color colorClicked;
 	
 
 	
@@ -78,15 +87,48 @@ public class PlayingField extends JPanel implements Serializable
             
             giveUp = new JButton("Give Up");
             giveUp.setBounds(510, 0, 120, 50);
+            giveUp.setBackground(new Color(102,255,255));
             add(giveUp);
             
             savePuzzle = new JButton("Save Puzzle");
             savePuzzle.setBounds(510, 310, 120, 50);
+            savePuzzle.setBackground(new Color(102,255,255));
             add(savePuzzle);
             
             checkPuzzle = new JButton("Check");
             checkPuzzle.setBounds(510, 370, 120, 100);
+            checkPuzzle.setBackground(new Color(102,255,255));
             add(checkPuzzle); 
+                        
+            blueButton = new JButton("");
+            blueButton.setBounds(510, 165, 55, 40);
+            blueButton.setBackground(Color.blue);
+            add(blueButton);
+            
+            greenButton = new JButton("");
+            greenButton.setBounds(575, 165, 55, 40);
+            greenButton.setBackground(Color.green);
+            add(greenButton);
+            
+            redButton = new JButton("");
+            redButton.setBounds(510, 210, 55, 40);
+            redButton.setBackground(Color.red);
+            add(redButton);
+            
+            yellowButton = new JButton("");
+            yellowButton.setBounds(575, 210, 55, 40);
+            yellowButton.setBackground(Color.yellow);
+            add(yellowButton);
+            
+            clearColor = new JButton("ERASE");
+            clearColor.setBounds(510, 120, 120, 40);
+            clearColor.setBackground(Color.white);
+            add(clearColor);
+            
+            backToGridSelector = new JButton("Selector");
+            backToGridSelector.setBounds(510, 75, 120, 40);
+            backToGridSelector.setBackground(Color.LIGHT_GRAY);
+            add(backToGridSelector);
             
     		    
 		    addMouseListener(new MouseAdapter() {
@@ -96,6 +138,53 @@ public class PlayingField extends JPanel implements Serializable
 		            checkCells(e.getX(),e.getY());
 		        }
 		    });
+		    
+			backToGridSelector.addMouseListener(new MouseAdapter(){
+				public void mousePressed(MouseEvent e){
+					colorIsClicked = false;
+					buttongrid.setVisible(true);
+				}
+			});
+			
+			clearColor.addMouseListener(new MouseAdapter(){
+				public void mousePressed(MouseEvent e){
+					colorIsClicked = true;
+					colorClicked = Color.white;
+					buttongrid.setVisible(false);
+				}
+			});
+			
+			blueButton.addMouseListener(new MouseAdapter(){
+				public void mousePressed(MouseEvent e){
+					colorIsClicked = true;
+					colorClicked = Color.blue;
+					buttongrid.setVisible(false);
+				}
+			});
+			
+			greenButton.addMouseListener(new MouseAdapter(){
+				public void mousePressed(MouseEvent e){
+					colorIsClicked = true;
+					colorClicked = Color.green;
+					buttongrid.setVisible(false);
+				}
+			});
+			
+			redButton.addMouseListener(new MouseAdapter(){
+				public void mousePressed(MouseEvent e){
+					colorIsClicked = true;
+					colorClicked = Color.red;
+					buttongrid.setVisible(false);
+				}
+			});
+			
+			yellowButton.addMouseListener(new MouseAdapter(){
+				public void mousePressed(MouseEvent e){
+					colorIsClicked = true;
+					colorClicked = Color.yellow;
+					buttongrid.setVisible(false);
+				}
+			});
 
 
 	}
@@ -122,10 +211,17 @@ public class PlayingField extends JPanel implements Serializable
 		//This function runs through every cell every time the user clicks, in order to tell when one has been clicked on
 		for(int j = 0; j<9; j++)
 			for(int i = 0; i<9; i++)
-				if(cellArray[j][i].checkClick(x, y) == true){
+			{
+				if(cellArray[j][i].checkClick(x, y) == true && colorIsClicked == false){
 					buttongrid.resetLoc(x, y, cellArray[j][i]);
 					buttongrid.setVisible(true);
 				}
+//				else if(cellArray[j][i].checkClick(x, y) == true && colorIsClicked == true){
+//					buttongrid.setVisible(false);
+//					cellArray[j][i].setColor(colorClicked);
+//				}
+			}
+				
 	}
 	
 	
@@ -240,9 +336,15 @@ public class PlayingField extends JPanel implements Serializable
 		
 			for(int i = 0; i<9; i++)
 			{
+//				if(cellArray[j][i].getLocked() == false && colorIsClicked)
+//				{
+//					g.setColor(colorClicked);
+//					g.fillRect(xoffset + (cellsize * i), yoffset + (cellsize * j), cellsize, cellsize);
+//					drawGrid(g, g2, cellsize, xoffset, yoffset);
+//				}
 				if(cellArray[j][i].getLocked() == true)//Dark gray for locked
 				{
-					g.setColor(Color.GRAY);
+					g.setColor(Color.gray);
 					g.fillRect(xoffset + (cellsize * i), yoffset + (cellsize * j), cellsize, cellsize);
 					drawGrid(g, g2, cellsize, xoffset, yoffset);										
 				}	

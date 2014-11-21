@@ -72,7 +72,7 @@ public class SudokuGame extends JApplet
 		rn = new Random();
 				
 		activeField = new PlayingField(xoffset,cellsize,yoffset);
-				  
+		
 		final JPanel cards = new JPanel(new CardLayout());  
 				  
 		final LoginScreen card0 = new LoginScreen();
@@ -80,8 +80,8 @@ public class SudokuGame extends JApplet
 		final MainMenu card2 = new MainMenu();
 		final PlayingField card3 = activeField;
 		final UserScores card4 = new UserScores();
-		 
-				  
+		
+		
 		//Each screen will be a different screen, we will switch between these like "cards"
 		//In the end our game should have login screen, main menu, game, and scores, for a total
 		//of four cards.
@@ -94,6 +94,7 @@ public class SudokuGame extends JApplet
 		this.add(cards);
 				  
 		final CardLayout cardLayout = (CardLayout) cards.getLayout();
+		
 						  
 		//Mouse Listeners for the Login Screen
 		card0.login.addMouseListener(new MouseAdapter(){
@@ -321,6 +322,42 @@ public class SudokuGame extends JApplet
 				cardLayout.show(cards, "MainMenu");
 			}
 		});
+		
+//		card3.backToGridSelector.addMouseListener(new MouseAdapter(){
+//			public void mousePressed(MouseEvent e){
+//				
+//			}
+//		});
+//		
+//		card3.clearColor.addMouseListener(new MouseAdapter(){
+//			public void mousePressed(MouseEvent e){
+//				
+//			}
+//		});
+//		
+//		card3.blueButton.addMouseListener(new MouseAdapter(){
+//			public void mousePressed(MouseEvent e){
+//				
+//			}
+//		});
+//		
+//		card3.greenButton.addMouseListener(new MouseAdapter(){
+//			public void mousePressed(MouseEvent e){
+//				
+//			}
+//		});
+//		
+//		card3.redButton.addMouseListener(new MouseAdapter(){
+//			public void mousePressed(MouseEvent e){
+//				
+//			}
+//		});
+//		
+//		card3.yellowButton.addMouseListener(new MouseAdapter(){
+//			public void mousePressed(MouseEvent e){
+//				
+//			}
+//		});
 		
 		card3.savePuzzle.addMouseListener(new MouseAdapter(){
 			public void mousePressed(MouseEvent e){

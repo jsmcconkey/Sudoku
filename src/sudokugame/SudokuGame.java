@@ -298,28 +298,14 @@ public class SudokuGame extends JApplet
 		  
 		  
 		card3.giveUp.addMouseListener(new MouseAdapter(){
-			public void mousePressed(MouseEvent e){
-//				String message = "If you give up you will receive a partial score for your puzzle progress, but your game will not save. \n" +
-//						"To save progress to continue later please select save game.\n\n" +
-//						"Would you still like to to give up?";
-//				
-//				JOptionPane optionPane = new JOptionPane(message, JOptionPane.QUESTION_MESSAGE, JOptionPane.YES_NO_OPTION);
-//				optionPane.show(true);
+			public void mousePressed(MouseEvent e){		
+				boolean yesno = giveUp();
 				
-				activeField.setButtonGridVisible(false);
-				EasyList.clear();
-				EasyList = new ArrayList<Puzzle>();
-				MediumList.clear();
-				MediumList = new ArrayList<Puzzle>();
-				HardList.clear();
-				HardList = new ArrayList<Puzzle>();
-				ExpertList.clear();
-				ExpertList = new ArrayList<Puzzle>();
-				UserList.clear();
-				UserList = new ArrayList<User>();
-				readPuzzles();
-				
-				cardLayout.show(cards, "MainMenu");
+				if(yesno == true)
+				{
+					cardLayout.show(cards, "UserScores");				
+					Reload();
+				}
 			}
 		});
 		
@@ -372,16 +358,10 @@ public class SudokuGame extends JApplet
 		
 		card3.checkPuzzle.addMouseListener(new MouseAdapter(){
 			public void mousePressed(MouseEvent e){
-				boolean puzzleComplete = checkPuzzle();
-				
+				boolean puzzleComplete = checkPuzzle();		
 				if(puzzleComplete == true)
-				{
-					
+				{	
 					cardLayout.show(cards, "UserScores");
-				}
-				else
-				{
-					//Do nothing
 				}
 			}
 		});
@@ -524,6 +504,7 @@ public class SudokuGame extends JApplet
 				PrintWriter writer = new PrintWriter(path);//, "UTF-8)");
 				writer.println(username);
 				writer.println(password);
+				writer.println("0");
 				writer.println("#");
 				writer.println("##");
 				writer.close();
@@ -656,24 +637,101 @@ public class SudokuGame extends JApplet
 	public boolean checkPuzzle()
 	{
 		boolean puzzleComplete = activeField.checkVictory();
+		int points = activeField.checkScore();
+		int mod = 1;
+		
+		if(activeField.getDifficulty().equals("medium"))
+			mod = 2;		
+		else if(activeField.getDifficulty().equals("hard"))
+			mod = 4;	
+		else if(activeField.getDifficulty().equals("expert"))
+			mod = 7;			
 
+		
+		
 		if(puzzleComplete == true)
-		{
-			String message = "GOOD JOB! \n\nPUZZLE COMPLETE!";				  
-			JOptionPane.showMessageDialog(null, message);
-			
+		{	
 			//Add to the user's score here
+			points = (points*mod);
 			
+			
+			String message = "Congratulations! you have successfully completed the puzzle for a full " + points + " points!";				  
+			JOptionPane.showMessageDialog(null, message);
 			
 			return true;
 		}
 		else
 		{
-			String message = "Puzzle is still incomplete. There must be an error in your answer.\n\nGood luck!";
+			String message = "Puzzle is still incomplete. If you would like to claim partial points, please press Give Up.\n\nGood luck!";
 			JOptionPane.showMessageDialog(null, message);
 			return false;
 		}
 	}
+	
+	public boolean giveUp()
+	{
+		boolean puzzleComplete = activeField.checkVictory();
+		int points = activeField.checkScore();
+		boolean r = true;
+		int mod = 1;
+		
+		if(activeField.getDifficulty().equals("medium"))
+			mod = 2;		
+		else if(activeField.getDifficulty().equals("hard"))
+			mod = 4;	
+		else if(activeField.getDifficulty().equals("expert"))
+			mod = 7;			
+
+		
+		
+		
+		
+		if(puzzleComplete == true)
+		{
+
+			//Add to the user's score here
+			points = (points*mod);
+			
+			
+			String message = "No need to give up! Your puzzle is completely correct. You have been awarded a full "+ points+" points!";				  
+			JOptionPane.showMessageDialog(null, message);
+	
+		}
+		else
+		{
+			String message = "You have given up on an incomplete Puzzle. You have been rewarded "+points+" points for your effort.";
+			JOptionPane.showMessageDialog(null, message);
+			
+			//Add to the user's score here	
+		}
+		
+		//R is going to be used for a "are you sure" type of option
+		return r;
+		
+	}
+	
+	
+	
+	  public void Reload()
+	  {		
+		    activeField.setButtonGridVisible(false);
+			EasyList.clear();
+			EasyList = new ArrayList<Puzzle>();
+			MediumList.clear();
+			MediumList = new ArrayList<Puzzle>();
+			HardList.clear();
+			HardList = new ArrayList<Puzzle>();
+			ExpertList.clear();
+			ExpertList = new ArrayList<Puzzle>();
+			UserList.clear();
+			UserList = new ArrayList<User>();
+			readPuzzles();
+		  
+		  
+		  
+		  
+		  
+	  }
 	  
 	  public void readPuzzles() 
 	  {
@@ -788,6 +846,15 @@ public class SudokuGame extends JApplet
 			    }
 			  }
 		}
+	  
+	  
+	  
+	  public void addPoints(int num)
+	  {
+		  
+		  
+		  
+	  }
 }
 
 

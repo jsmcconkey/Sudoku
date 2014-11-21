@@ -44,6 +44,11 @@ public class Puzzle {
 			r = false;
 		}
 		
+		if(hasAnswer == false)
+		{
+			r = false;
+		}
+		
 		int a = 0;
 		
 		for(int j = 0; j<9; j++)

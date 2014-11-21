@@ -504,9 +504,6 @@ public class SudokuGame extends JApplet
 				PrintWriter writer = new PrintWriter(path);//, "UTF-8)");
 				writer.println(username);
 				writer.println(password);
-				writer.println("0");
-				writer.println("#");
-				writer.println("##");
 				writer.close();
 			} catch (FileNotFoundException e) {
 				// TODO Auto-generated catch block
@@ -682,7 +679,6 @@ public class SudokuGame extends JApplet
 		else if(activeField.getDifficulty().equals("expert"))
 			mod = 7;			
 
-		
 		
 		
 		

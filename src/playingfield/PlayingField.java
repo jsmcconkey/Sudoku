@@ -186,8 +186,6 @@ public class PlayingField extends JPanel implements Serializable
 					buttongrid.setVisible(false);
 				}
 			});
-
-
 	}
 	
 	public void setGrid(Puzzle grid)

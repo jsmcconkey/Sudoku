@@ -13,7 +13,6 @@ public class Cell implements Serializable
 	private int y; 
 	private int cellsize;
 	private Color cellColor;
-	
 	boolean locked;
 	
 	
@@ -23,6 +22,9 @@ public class Cell implements Serializable
 		locked = l;
 		x = ix;
 		y = iy;
+		
+
+		cellColor = Color.white;
 		
 		cellsize = icellsize;
 		
@@ -86,5 +88,9 @@ public class Cell implements Serializable
 	public void setColor(Color c)
 	{
 		cellColor = c;
+	}
+	public Color getColor()
+	{
+		return cellColor;
 	}
 }

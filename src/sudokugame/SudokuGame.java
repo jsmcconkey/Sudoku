@@ -669,7 +669,7 @@ public class SudokuGame extends JApplet
 	{
 		boolean puzzleComplete = activeField.checkVictory();
 		int points = activeField.checkScore();
-		boolean r = true;
+		boolean r = true;	
 		int mod = 1;
 		
 		if(activeField.getDifficulty().equals("medium"))

@@ -38,6 +38,7 @@ public class GridSelector extends JPanel{
                                 button.setFont(customFont);
                                 button.setMargin(new Insets(0, 0, 0, 0));
                                 button.setBorder(null);
+                                
                                 button.setBackground(Color.lightGray);
                                 
                                 button.addActionListener(new ActionListener() {
@@ -67,6 +68,14 @@ public class GridSelector extends JPanel{
                                     	if(text.contains("text=9"))
                                     		value = 9;
                                  	    myCell.setValue(value);
+                                 	    
+                                 	    
+                                 	    if(myCell.getColor() == Color.white)
+                                 	    {
+                                 	    	System.out.println("Setting to light gray");               	    
+                                 	    	myCell.setColor(Color.LIGHT_GRAY);
+                                 	    }
+                                 	    	
                                     	setLocation(800,800);
                                     }                                	
                                 });                                                                                              
@@ -79,8 +88,15 @@ public class GridSelector extends JPanel{
         {
         	myCell = clickedCell;
         	setLocation(myCell.getX(), myCell.getY()); //Sets to the location of the cell instead of x,y where clicked
+        	//setColor(myCell.getColor());
         }
         
+        public void setColor(Color c)
+        {
+               grid[0][0].setBackground(c);         
+        }
+        	  		
+
 
         
         

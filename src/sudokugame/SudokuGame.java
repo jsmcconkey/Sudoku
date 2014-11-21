@@ -57,6 +57,8 @@ public class SudokuGame extends JApplet
 	private ArrayList<User> UserList;
 	
 	private String userParentDirectory = null;
+	private String userScoresParentDir = null;
+	private String username = null;
 	
   	public void init()
 	{
@@ -99,7 +101,7 @@ public class SudokuGame extends JApplet
 		//Mouse Listeners for the Login Screen
 		card0.login.addMouseListener(new MouseAdapter(){
 			public void mousePressed(MouseEvent e){
-				String username = card0.enterUsername.getText();
+				username = card0.enterUsername.getText();
 				char[] password = card0.enterPassword.getPassword();
 				String stringPassword = new String(password);
 								  
@@ -133,7 +135,7 @@ public class SudokuGame extends JApplet
 				boolean usernameIsAcceptable = true;
 				
 				//Implement logic to add the user here
-				String username = card1.newUsername.getText();
+				username = card1.newUsername.getText();
 				char[] password = card1.newPassword.getPassword();
 				char[] confirmPassword = card1.confirmNewPassword.getPassword();
 				
@@ -476,11 +478,6 @@ public class SudokuGame extends JApplet
 	  		e.printStackTrace(System.err);
 	  	}
 	  	
-	  	System.out.println(userParentDirectory);
-	  	System.out.println(path);
-	  	
-	  	
-	  	
 	  	File newUser = new File(userParentDirectory);
 	  	
 	  	if(newUser.exists())
@@ -558,7 +555,6 @@ public class SudokuGame extends JApplet
 			}
 			
 			writer.close();
-			
 		}catch(IOException e)
 		{
 			e.printStackTrace();
@@ -650,11 +646,9 @@ public class SudokuGame extends JApplet
 		{	
 			//Add to the user's score here
 			points = (points*mod);
-			
-			
+			updateUserScores(points);
 			String message = "Congratulations! you have successfully completed the puzzle for a full " + points + " points!";				  
 			JOptionPane.showMessageDialog(null, message);
-			
 			return true;
 		}
 		else
@@ -681,32 +675,112 @@ public class SudokuGame extends JApplet
 
 		
 		
-		
 		if(puzzleComplete == true)
 		{
-
-			//Add to the user's score here
 			points = (points*mod);
-			
-			
 			String message = "No need to give up! Your puzzle is completely correct. You have been awarded a full "+ points+" points!";				  
 			JOptionPane.showMessageDialog(null, message);
-	
+			updateUserScores(points);
 		}
 		else
 		{
 			String message = "You have given up on an incomplete Puzzle. You have been rewarded "+points+" points for your effort.";
 			JOptionPane.showMessageDialog(null, message);
-			
-			//Add to the user's score here	
+			updateUserScores(points);
 		}
+		    
+
 		
 		//R is going to be used for a "are you sure" type of option
 		return r;
 		
 	}
 	
-	
+	public void updateUserScores(int points)
+	{
+		//Add to the user's score here	
+		String path = null;
+		
+	  	try
+	  	{
+	  		if(OSDetector.isWindows())
+	  		{
+	  			path = getClass().getClassLoader().getResource(".").getPath();
+	  			path = path.substring(0, path.length()-4);
+	  			userScoresParentDir = path + "data\\\\TopScores\\\\";
+	  			path = path + "data\\\\TopScores\\\\" + username + ".txt";
+	  		}
+	  		else if(OSDetector.isLinux() || OSDetector.isMac())
+	  		{
+			  	path = getClass().getClassLoader().getResource(".").getPath();
+			  	path = path.substring(0, path.length()-4) ;
+			  	userScoresParentDir = path + "data/TopScores/";
+			  	path = path + "data/TopScores/"+username+".txt";
+			}
+	  	} catch (Exception e)
+	  	{
+	  		e.printStackTrace(System.err);
+	  	}
+		
+	  	//Search the file for the user, if they don't exist then add them
+	  	String currentLine = null;
+	  	File usersScoresFile = new File(path);
+	    FileInputStream fis = null;
+	    BufferedInputStream bis = null;
+	    DataInputStream dis = null;
+	    
+	    System.out.println("---------------------------------");
+	    
+	    if(usersScoresFile.exists() == false)
+	    {
+		    System.out.println("creating new file---------------------------------\n"+userScoresParentDir);
+
+	    	File newUserScoresFile = new File(userScoresParentDir, (username+".txt"));
+	    	
+	    	try {
+				newUserScoresFile.createNewFile();
+				PrintWriter writer = new PrintWriter(path);
+				writer.println(username+","+points);
+				writer.close();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+	    }
+	    else{
+		    try {
+				fis = new FileInputStream(usersScoresFile);
+				bis = new BufferedInputStream(fis);
+				dis = new DataInputStream(bis);
+				
+				System.out.println("Current line: " + currentLine);
+
+				currentLine = dis.readLine();
+				String tokens[] = currentLine.split(",");
+				
+				int oldScore = Integer.parseInt(tokens[1]);
+				points = oldScore+points;
+				
+				try {
+					PrintWriter writer = new PrintWriter(path);
+					writer.println(username+","+points);
+					writer.close();
+				} catch (FileNotFoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+		  		fis.close();
+		  		bis.close();
+		  		dis.close();
+		  		
+		    } catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+		}
+	}
 	
 	  public void Reload()
 	  {		

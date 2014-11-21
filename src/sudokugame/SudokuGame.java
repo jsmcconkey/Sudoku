@@ -696,92 +696,6 @@ public class SudokuGame extends JApplet
 		
 	}
 	
-	public void updateUserScores(int points)
-	{
-		//Add to the user's score here	
-		String path = null;
-		
-	  	try
-	  	{
-	  		if(OSDetector.isWindows())
-	  		{
-	  			path = getClass().getClassLoader().getResource(".").getPath();
-	  			path = path.substring(0, path.length()-4);
-	  			userScoresParentDir = path + "data\\\\TopScores\\\\";
-	  			path = path + "data\\\\TopScores\\\\" + username + ".txt";
-	  		}
-	  		else if(OSDetector.isLinux() || OSDetector.isMac())
-	  		{
-			  	path = getClass().getClassLoader().getResource(".").getPath();
-			  	path = path.substring(0, path.length()-4) ;
-			  	userScoresParentDir = path + "data/TopScores/";
-			  	path = path + "data/TopScores/"+username+".txt";
-			}
-	  	} catch (Exception e)
-	  	{
-	  		e.printStackTrace(System.err);
-	  	}
-		
-	  	//Search the file for the user, if they don't exist then add them
-	  	String currentLine = null;
-	  	File usersScoresFile = new File(path);
-	    FileInputStream fis = null;
-	    BufferedInputStream bis = null;
-	    DataInputStream dis = null;
-	    
-	    System.out.println("---------------------------------");
-	    
-	    if(usersScoresFile.exists() == false)
-	    {
-		    System.out.println("creating new file---------------------------------\n"+userScoresParentDir);
-
-	    	File newUserScoresFile = new File(userScoresParentDir, (username+".txt"));
-	    	
-	    	try {
-				newUserScoresFile.createNewFile();
-				PrintWriter writer = new PrintWriter(path);
-				writer.println(username+","+points);
-				writer.close();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-	    }
-	    else{
-		    try {
-				fis = new FileInputStream(usersScoresFile);
-				bis = new BufferedInputStream(fis);
-				dis = new DataInputStream(bis);
-				
-				System.out.println("Current line: " + currentLine);
-
-				currentLine = dis.readLine();
-				String tokens[] = currentLine.split(",");
-				
-				int oldScore = Integer.parseInt(tokens[1]);
-				points = oldScore+points;
-				
-				try {
-					PrintWriter writer = new PrintWriter(path);
-					writer.println(username+","+points);
-					writer.close();
-				} catch (FileNotFoundException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				
-		  		fis.close();
-		  		bis.close();
-		  		dis.close();
-		  		
-		    } catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			
-		}
-	}
-	
 	  public void Reload()
 	  {		
 		    activeField.setButtonGridVisible(false);
@@ -918,13 +832,93 @@ public class SudokuGame extends JApplet
 		}
 	  
 	  
-	  
-	  public void addPoints(int num)
-	  {
-		  
-		  
-		  
-	  }
+		public void updateUserScores(int points)
+		{
+			//Add to the user's score here	
+			String path = null;
+			
+			
+		  	try
+		  	{
+		  		if(OSDetector.isWindows())
+		  		{
+		  			path = getClass().getClassLoader().getResource(".").getPath();
+		  			path = path.substring(0, path.length()-4);
+		  			userScoresParentDir = path + "data\\\\TopScores\\\\";
+		  			path = path + "data\\\\TopScores\\\\" + username + ".txt";
+		  		}
+		  		else if(OSDetector.isLinux() || OSDetector.isMac())
+		  		{
+				  	path = getClass().getClassLoader().getResource(".").getPath();
+				  	path = path.substring(0, path.length()-4) ;
+				  	userScoresParentDir = path + "data/TopScores/";
+				  	path = path + "data/TopScores/"+username+".txt";
+				}
+		  	} catch (Exception e)
+		  	{
+		  		e.printStackTrace(System.err);
+		  	}
+			
+		  	//Search the file for the user, if they don't exist then add them
+		  	String currentLine = null;
+		  	File usersScoresFile = new File(path);
+		    FileInputStream fis = null;
+		    BufferedInputStream bis = null;
+		    DataInputStream dis = null;
+		    
+		    System.out.println("---------------------------------");
+		    
+		    if(usersScoresFile.exists() == false)
+		    {
+			    System.out.println("creating new file---------------------------------\n"+userScoresParentDir);
+
+		    	File newUserScoresFile = new File(userScoresParentDir, (username+".txt"));
+		    	
+		    	try {
+					newUserScoresFile.createNewFile();
+					PrintWriter writer = new PrintWriter(path);
+					writer.println(username+","+points);
+					writer.close();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+		    }
+		    else{
+			    try {
+					fis = new FileInputStream(usersScoresFile);
+					bis = new BufferedInputStream(fis);
+					dis = new DataInputStream(bis);
+					
+					System.out.println("Current line: " + currentLine);
+
+					currentLine = dis.readLine();
+					String tokens[] = currentLine.split(",");
+					
+					int oldScore = Integer.parseInt(tokens[1]);
+					points = oldScore+points;
+					
+					try {
+						PrintWriter writer = new PrintWriter(path);
+						writer.println(username+","+points);
+						writer.close();
+					} catch (FileNotFoundException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					
+			  		fis.close();
+			  		bis.close();
+			  		dis.close();
+			  		
+			    } catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+			}
+		}
+
 }
 
 

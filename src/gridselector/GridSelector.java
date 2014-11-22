@@ -39,7 +39,7 @@ public class GridSelector extends JPanel{
                                 button.setMargin(new Insets(0, 0, 0, 0));
                                 button.setBorder(null);
                                 
-                                button.setBackground(Color.lightGray);
+                                button.setBackground(new Color(243,217,182));
                                 
                                 button.addActionListener(new ActionListener() {
                                     public void actionPerformed(ActionEvent e)
@@ -70,11 +70,11 @@ public class GridSelector extends JPanel{
                                  	    myCell.setValue(value);
                                  	    
                                  	    
-                                 	    if(myCell.getColor() == Color.white)
-                                 	    {
-                                 	    	System.out.println("Setting to light gray");               	    
-                                 	    	myCell.setColor(Color.LIGHT_GRAY);
-                                 	    }
+//                                 	    if(myCell.getColor() == Color.white)
+//                                 	    {
+//                                 	    	System.out.println("Setting to light gray");               	    
+//                                 	    	myCell.setColor(Color.LIGHT_GRAY);
+//                                 	    }
                                  	    	
                                     	setLocation(800,800);
                                     }                                	

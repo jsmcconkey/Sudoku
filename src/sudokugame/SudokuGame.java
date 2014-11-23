@@ -1,10 +1,5 @@
 //Programmers <James McConkey, Ethan Smith>
 
-/*
- * Checked legitimacy of the puzzle input reader. 
- * Code looks good and does its job. 
- * Nice work guys. -Chris
- */
 package sudokugame;
 
 import java.util.*;

@@ -22,6 +22,7 @@ import cell.Cell;
 import gridselector.GridSelector;
 
 import java.awt.BorderLayout; 
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -57,6 +58,7 @@ public class PlayingField extends JPanel implements Serializable
 	public int cellsize;
 	
 	//Timer
+//	Timer clock;
 	
 	//Color Note Taking System
 	public JButton blueButton;
@@ -74,8 +76,7 @@ public class PlayingField extends JPanel implements Serializable
 	
 	public PlayingField(int x, int c, int y){
 		    super();		
-		    
-		    
+		    		    
 		    setBackground(Color.WHITE);	
 		    this.setLayout(null); //Allows us to put the button added where we want to...does not start it in a default spot
                     
@@ -96,18 +97,18 @@ public class PlayingField extends JPanel implements Serializable
             buttongrid.setBounds(0, 0, 54, 54); //Makes it so that the buttongrid does not show up until first click...
             
             giveUp = new JButton("Give Up");
-            giveUp.setBounds(510, 0, 120, 50);
-            giveUp.setBackground(new Color(102,255,255));
+            giveUp.setBounds(510, 5, 120, 50);
+            giveUp.setBackground(new Color(147,245,245));
             add(giveUp);
             
             savePuzzle = new JButton("Save Puzzle");
             savePuzzle.setBounds(510, 310, 120, 50);
-            savePuzzle.setBackground(new Color(102,255,255));
+            savePuzzle.setBackground(new Color(147,245,245));
             add(savePuzzle);
             
             checkPuzzle = new JButton("Check");
             checkPuzzle.setBounds(510, 370, 120, 100);
-            checkPuzzle.setBackground(new Color(102,255,255));
+            checkPuzzle.setBackground(new Color(147,245,245));
             add(checkPuzzle); 
                         
             blueButton = new JButton("");
@@ -130,7 +131,7 @@ public class PlayingField extends JPanel implements Serializable
             yellowButton.setBackground(yellowColor);
             add(yellowButton);
             
-            clearColor = new JButton("ERASE");
+            clearColor = new JButton("");
             clearColor.setBounds(510, 120, 120, 40);
             clearColor.setBackground(Color.white);
             add(clearColor);
@@ -140,8 +141,7 @@ public class PlayingField extends JPanel implements Serializable
             backToGridSelector.setBackground(Color.LIGHT_GRAY);
             add(backToGridSelector);
             
-    		    
-		    addMouseListener(new MouseAdapter() {
+            addMouseListener(new MouseAdapter() {
 		        public void mousePressed(MouseEvent e) 
 		        {
 		            //System.out.println("Mouse Pressed - X: " + e.getX() + " Y: " + e.getY());
@@ -154,7 +154,8 @@ public class PlayingField extends JPanel implements Serializable
 			backToGridSelector.addMouseListener(new MouseAdapter(){
 				public void mousePressed(MouseEvent e){
 					colorIsClicked = false;
-					buttongrid.setVisible(true);
+					checkCells(e.getX(), e.getY());
+					repaint();
 				}
 			});
 			
@@ -326,7 +327,7 @@ public class PlayingField extends JPanel implements Serializable
 			{	
 				if(cellArray[j][i].getLocked() == true)//Dark gray for locked
 				{
-					g.setColor(Color.gray);
+					g.setColor(Color.LIGHT_GRAY);
 					g.fillRect(xoffset + (cellsize * i), yoffset + (cellsize * j), cellsize, cellsize);
 					drawGrid(g, g2, cellsize, xoffset, yoffset);										
 				}	

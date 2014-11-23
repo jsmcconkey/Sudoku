@@ -382,6 +382,7 @@ public class SudokuGame extends JApplet
 			public void mousePressed(MouseEvent e){
 				activeField.setButtonGridVisible(false);
 				saveGame();
+				Reload();
 				String message = "Your game has been saved!\nTo load your game select Load Game from the main menu.";				  
 				JOptionPane.showMessageDialog(null, message);	
 				
@@ -757,9 +758,22 @@ public class SudokuGame extends JApplet
 		}
 		else
 		{
-			String message = "You have given up on an incomplete Puzzle. You have been rewarded "+points+" points for your effort.";
-			JOptionPane.showMessageDialog(null, message);
-			updateUserScores(points);
+			String cancelMessage = "Are you sure that you would like to give up?\nYou will be rewarded the number of spaces\nthat you have correct.";
+
+			int code = JOptionPane.showConfirmDialog(null, cancelMessage, "GIVE UP?!", JOptionPane.YES_NO_OPTION);
+
+			if (code == JOptionPane.NO_OPTION) 
+			{
+				System.out.println("This is cancel button");
+				r = false;
+			} 
+			else 
+			{
+				String message = "You have given up on an incomplete Puzzle. You have been rewarded "+points+" points for your effort.";
+				JOptionPane.showMessageDialog(null, message);
+				updateUserScores(points);
+				r = true;
+			} 
 		}
 		    
 

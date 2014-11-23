@@ -2,7 +2,7 @@
 
 /*
  * Checked legitimacy of the puzzle input reader. 
- * Code looks good and does it's job. 
+ * Code looks good and does its job. 
  * Nice work guys. -Chris
  */
 package sudokugame;
@@ -13,7 +13,9 @@ import java.io.*;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+
 import javax.swing.*;
+
 import cell.Cell;
 import playingfield.PlayingField;
 import puzzle.Puzzle;
@@ -23,6 +25,7 @@ import loginscreen.CreateUser;
 import loginscreen.LoginScreen;
 import loginscreen.User;
 import osdetector.OSDetector;
+
 import java.io.BufferedInputStream;
 import java.io.DataInputStream;
 import java.io.File;
@@ -53,12 +56,41 @@ public class SudokuGame extends JApplet
 	private ArrayList<Puzzle> MediumList;
 	private ArrayList<Puzzle> HardList;
 	private ArrayList<Puzzle> ExpertList;
+	private ArrayList<UserScore> ScoreList;
 	
 	private ArrayList<User> UserList;
 	
 	private String userParentDirectory = null;
 	private String userScoresParentDir = null;
 	private String username = null;
+	
+	private class UserScore
+	{
+		private int value;
+		private String name;
+		
+		public UserScore(String n, int v)
+		{
+			value = v;
+			name = n;
+		}
+		
+		public String getName()
+		{
+			return name;
+		}
+		
+		public int getValue()
+		{
+			return value;
+		}
+		
+		public void addPoints(int p)
+		{
+			value = value + p;
+		}
+	
+	}
 	
   	public void init()
 	{
@@ -69,7 +101,11 @@ public class SudokuGame extends JApplet
 		HardList = new ArrayList<Puzzle>();
 		ExpertList = new ArrayList<Puzzle>();
 		UserList = new ArrayList<User>();
+		
+		ScoreList = new ArrayList<UserScore>();
+		
 		readPuzzles();
+		readScores();
 		
 		rn = new Random();
 				
@@ -541,18 +577,40 @@ public class SudokuGame extends JApplet
   			savedGame.createNewFile();
   			
   			Cell[][] arrayToSave = activeField.getArray();
-  			
-
+  			Cell[][] answersToSave = activeField.getAnswerArray();
+  
 			//Here you have the full array of cells. Now you just have to parse through this array and cell.getValue() to get all the values you want to write.
 			//You will also need to write whether or not the cell has been "locked" into the grid (the preset cells are all locked)
+			writer.println(activeField.getDifficulty()); 			
+  			
 			for(int i = 0; i < arrayToSave.length; i++)
 			{
 				for(int j = 0; j < arrayToSave[i].length; j++)
 				{
-					writer.println(i + "," + j + "," + arrayToSave[i][j].getValue() + "," + arrayToSave[i][j].getLocked());
+					String C = "white";
+					if(arrayToSave[i][j].getColor() == Color.white)
+						C = "white";
+					if(arrayToSave[i][j].getColor() == Color.white)
+						C = "white";
+					if(arrayToSave[i][j].getColor() == Color.white)
+						C = "white";
+					
+					writer.println(i + "," + j + "," + arrayToSave[i][j].getValue() + "," + arrayToSave[i][j].getLocked() +","+ C);
 					System.out.println(i + "," + j + "," + arrayToSave[i][j].getValue() + "," + arrayToSave[i][j].getLocked());
 				}
 			}
+			
+			writer.println("/*correct answers");
+			
+			for(int i = 0; i < answersToSave.length; i++)
+			{
+				for(int j = 0; j < answersToSave[i].length; j++)
+				{
+					writer.println(i + "," + j + "," + answersToSave[i][j].getValue() + "," + answersToSave[i][j].getLocked());
+					System.out.println(i + "," + j + "," + answersToSave[i][j].getValue() + "," + answersToSave[i][j].getLocked());
+				}
+			}			
+			
 			
 			writer.close();
 		}catch(IOException e)
@@ -569,7 +627,8 @@ public class SudokuGame extends JApplet
 	    FileInputStream fis = null;
 	    BufferedInputStream bis = null;
 	    DataInputStream dis = null;
-	    		
+  		boolean finished = false;
+  		
 	  	try
 	  	{
 	  		if(OSDetector.isWindows())
@@ -586,33 +645,50 @@ public class SudokuGame extends JApplet
 	  	}
 	  	
 	  	if(file.exists())
-	  	{
+	  	{ 
+
+	  	
 		    try {
 				fis = new FileInputStream(file);
 				bis = new BufferedInputStream(fis);
 				dis = new DataInputStream(bis);
 				
 				while((currentLine = dis.readLine()) != null)
-				{
-					System.out.println("Current line: " + currentLine);
-					
-					String tokens[] = currentLine.split(",");
-					
-		    		int row = Integer.parseInt(tokens[0]);
-		    		int column = Integer.parseInt(tokens[1]);
-		    		int value = Integer.parseInt(tokens[2]);
-		    		String locked = tokens[3];
-		    		
+				{			
+					System.out.println("Current line: " + currentLine);				
 
-					boolean b = true;
-					if(locked.equals("false"))
+					
+					if(currentLine.contains("/*"))
 					{
-						b = false;
-					}
-					
-					savedPuzzle.setCell(row, column, value, false, b);
-					
-					System.out.println(row);
+						if(currentLine.contains("correct"))
+							finished = true;
+					}	
+					else if(currentLine.equals("easy") || currentLine.equals("medium") || currentLine.equals("hard") || currentLine.equals("expert"))
+			    	{
+			    		savedPuzzle.setDifficulty(currentLine);
+				        System.out.println(currentLine);
+			    	}
+					else
+					{
+						String tokens[] = currentLine.split(",");
+						
+			    		int row = Integer.parseInt(tokens[0]);
+			    		int column = Integer.parseInt(tokens[1]);
+			    		int value = Integer.parseInt(tokens[2]);
+			    		String locked = tokens[3];
+			    		
+			    		
+	
+						boolean b = true;
+						if(locked.equals("false"))
+						{
+							b = false;
+						}
+						
+						savedPuzzle.setCell(row, column, value, finished, b);
+						
+						System.out.println(row);
+						}
 				}
 		    } catch (IOException e) {
 				// TODO Auto-generated catch block
@@ -663,6 +739,8 @@ public class SudokuGame extends JApplet
 	{
 		boolean puzzleComplete = activeField.checkVictory();
 		int points = activeField.checkScore();
+
+		
 		boolean r = true;	
 		int mod = 1;
 		
@@ -776,7 +854,7 @@ public class SudokuGame extends JApplet
 							finished = true;
 				    		System.out.println("-------------------------------------------------\nLOADING SOLUTIONS FOR: "+ puzzleName + "\n-------------------------------------------------");
 						}
-						System.out.println("Comment Line");	
+						//System.out.println("Comment Line");	
 					}			
 					else if(s.equals("easy") || s.equals("medium") || s.equals("hard") || s.equals("expert"))
 			    	{
@@ -795,7 +873,7 @@ public class SudokuGame extends JApplet
 			    		int column = Integer.parseInt(tokens[1]) -1;
 			    		int value = Integer.parseInt(tokens[2]);
 			    		thisPuzzle.setCell(row, column, value,finished,true); 
-				        System.out.println(s);
+				        //System.out.println(s);
 			    	}
 			    	else
 			    	{
@@ -832,91 +910,205 @@ public class SudokuGame extends JApplet
 		}
 	  
 	  
-		public void updateUserScores(int points)
-		{
-			//Add to the user's score here	
+	  
+	  	public void readScores()
+	  	{
+	  		//Rewrites Scorelist every time you call this function. We don't want repeats
 			String path = null;
-			
-			
+					
 		  	try
 		  	{
 		  		if(OSDetector.isWindows())
 		  		{
 		  			path = getClass().getClassLoader().getResource(".").getPath();
 		  			path = path.substring(0, path.length()-4);
-		  			userScoresParentDir = path + "data\\\\TopScores\\\\";
-		  			path = path + "data\\\\TopScores\\\\" + username + ".txt";
+		  			userScoresParentDir = path + "data";
+		  			path = path + "data\\\\topscores.txt";
 		  		}
 		  		else if(OSDetector.isLinux() || OSDetector.isMac())
 		  		{
 				  	path = getClass().getClassLoader().getResource(".").getPath();
 				  	path = path.substring(0, path.length()-4) ;
-				  	userScoresParentDir = path + "data/TopScores/";
-				  	path = path + "data/TopScores/"+username+".txt";
+				  	userScoresParentDir = path + "data";
+				  	path = path + "data/topscores.txt";
 				}
 		  	} catch (Exception e)
 		  	{
 		  		e.printStackTrace(System.err);
 		  	}
 			
+	
 		  	//Search the file for the user, if they don't exist then add them
 		  	String currentLine = null;
-		  	File usersScoresFile = new File(path);
+		  	File file = new File(path);
 		    FileInputStream fis = null;
 		    BufferedInputStream bis = null;
 		    DataInputStream dis = null;
-		    
-		    System.out.println("---------------------------------");
-		    
-		    if(usersScoresFile.exists() == false)
+		    if(file.exists() == false)
 		    {
 			    System.out.println("creating new file---------------------------------\n"+userScoresParentDir);
 
-		    	File newUserScoresFile = new File(userScoresParentDir, (username+".txt"));
+		    	File newUserScoresFile = new File(userScoresParentDir, ("topscores.txt"));
 		    	
 		    	try {
 					newUserScoresFile.createNewFile();
 					PrintWriter writer = new PrintWriter(path);
-					writer.println(username+","+points);
+					writer.println("High Scores:");
 					writer.close();
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-		    }
-		    else{
-			    try {
-					fis = new FileInputStream(usersScoresFile);
-					bis = new BufferedInputStream(fis);
-					dis = new DataInputStream(bis);
+		    }	  		
+		    else try {
+			      fis = new FileInputStream(file);
+	
+			      // Here BufferedInputStream is added for fast reading.
+			      bis = new BufferedInputStream(fis);
+			      dis = new DataInputStream(bis);
+			      
+			      while (dis.available() != 0) 
+			      	{    	  
+					String s = dis.readLine();
 					
-					System.out.println("Current line: " + currentLine);
 
-					currentLine = dis.readLine();
-					String tokens[] = currentLine.split(",");
+
 					
-					int oldScore = Integer.parseInt(tokens[1]);
-					points = oldScore+points;
+				
+					String tokens[] = s.split(",");
+			
+					if(tokens.length == 2)
+					{		
+						System.out.println("Reading Scores: " + s);	
+						int v = Integer.parseInt(tokens[1]);
 					
-					try {
-						PrintWriter writer = new PrintWriter(path);
-						writer.println(username+","+points);
-						writer.close();
-					} catch (FileNotFoundException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
+						UserScore thisScore = new UserScore(tokens[0], v);
+						ScoreList.add(thisScore);
+				      	}
+			      	}
+			    	
+				    // dispose all the resources after using them.
+				    fis.close();
+				    bis.close();
+				    dis.close();	      
+		    }
+	
+			catch (FileNotFoundException e) 
+		    {
+				e.printStackTrace();
+			} 
+		    catch (IOException e) 
+		    {
+		    	e.printStackTrace();
+		    }
+		}
+	  	
+	  	public void writeScores()
+	  	{
+			String path = null;
+					
+		  	try
+		  	{
+		  		if(OSDetector.isWindows())
+		  		{
+		  			path = getClass().getClassLoader().getResource(".").getPath();
+		  			path = path.substring(0, path.length()-4);
+		  			userScoresParentDir = path + "data";
+		  			path = path + "data\\\\topscores.txt";
+		  		}
+		  		else if(OSDetector.isLinux() || OSDetector.isMac())
+		  		{
+				  	path = getClass().getClassLoader().getResource(".").getPath();
+				  	path = path.substring(0, path.length()-4) ;
+				  	userScoresParentDir = path + "data";
+				  	path = path + "data/topscores.txt";
+				}
+		  	} catch (Exception e)
+		  	{
+		  		e.printStackTrace(System.err);
+		  	}
+				
+		  	//Search the file for the user, if they don't exist then add them
+		  	String currentLine = null;
+		  	File file = new File(path);
+		    FileInputStream fis = null;
+		    BufferedInputStream bis = null;
+		    DataInputStream dis = null;
+		    if(file.exists() == false)
+		    {
+			    System.out.println("Score File does not exist. Creating a new one");
+
+		    	File newUserScoresFile = new File(userScoresParentDir, ("topscores.txt"));
+		    	
+		    	try {
+					newUserScoresFile.createNewFile();
+					PrintWriter writer = new PrintWriter(path);
+									
+					for(int i = 0; i<ScoreList.size(); i++)
+					{
+						writer.println(ScoreList.get(i).getName() + "," + ScoreList.get(i).getValue());
 					}
-					
-			  		fis.close();
-			  		bis.close();
-			  		dis.close();
-			  		
-			    } catch (IOException e) {
+						
+					writer.close();
+				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
+		    }	  		
+		    else try {
+				PrintWriter writer = new PrintWriter(path);
 				
+				for(int i = 0; i<ScoreList.size(); i++)
+				{
+					writer.println(ScoreList.get(i).getName() + "," + ScoreList.get(i).getValue());
+				}
+					
+				writer.close();	    	
+		    }
+	
+			catch (FileNotFoundException e) 
+		    {
+				e.printStackTrace();
+			} 
+		    catch (IOException e) 
+		    {
+		    	e.printStackTrace();
+		    }
+		}	  	
+  	
+	  
+		public void updateUserScores(int points)
+		{	
+			boolean found = false;
+			for(int i = 0; i<ScoreList.size(); i++)
+			{
+				if(username.equals(ScoreList.get(i).getName()))
+				{
+						found = true;
+						ScoreList.get(i).addPoints(points);		
+						System.out.println("Adding " + points + " to " + username + " for a total of "+ ScoreList.get(i).getValue());
+				}
+			}	
+			if(found == false)
+			{
+				System.out.println("Could not find user "+username+". Adding to the list");
+				UserScore thisScore = new UserScore(username, points);	
+				ScoreList.add(thisScore);
+
+				//Do some sorting here
 			}
+			
+			printList();
+			writeScores();		
+		}
+		
+		
+		public void printList()
+		{			
+			for(int i = 0; i<ScoreList.size(); i++)
+			{
+				System.out.println("Printing: "+ScoreList.get(i).getName() + ": " + ScoreList.get(i).getValue());
+			}	
 		}
 
 }

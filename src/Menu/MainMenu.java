@@ -58,7 +58,7 @@ public class MainMenu extends JPanel{
 		expertButton.setBounds(450, 150, 100, 60);
 		add(expertButton);
 		
-		userScores = new JButton("User Scores");
+		userScores = new JButton("High Scores");
 		userScores.setBackground(customColor);
 		userScores.setBounds(this.getWidth()/3-75, 400, 150, 40);
 		add(userScores);

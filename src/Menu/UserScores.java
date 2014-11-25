@@ -15,32 +15,29 @@ public class UserScores extends JPanel{
 		
 		setSize(640, 480);
 		setLayout(null);
-		setBackground(new Color(224,224,224));
+		setBackground(Color.black);
 		
 		message = new JLabel("HIGH SCORES");
 		message.setFont(new Font("Arial", Font.BOLD, 24));
-		message.setBounds(this.getWidth()/2-75, this.getHeight()/10, 200, 20);
+		message.setForeground(Color.yellow);
+		message.setBounds(this.getWidth()/2-100, this.getHeight()/10, 200, 20);
 		add(message);
 		
 		backButton = new JButton("<== Main Menu");
-		backButton.setBackground(new Color(102,255,255));
+		backButton.setBackground(Color.LIGHT_GRAY);
 		backButton.setBounds(this.getWidth()/20,this.getHeight()/20,150,50);
 		add(backButton);
 		
 		String[] columnNames = {"User", "Score"};
 		String[][] topScores = getTopScores();
 		userScores = new JTable(topScores, columnNames);
-		userScores.setPreferredScrollableViewportSize(new Dimension(200,200));
-		userScores.setBounds(this.getWidth()/2-200, 50, 400, 200);
+		userScores.setBounds(this.getWidth()/2-125, 100, 400, 200);
 		userScores.setRowHeight(20);
-		JScrollPane scrollPane = new JScrollPane(userScores);
-		userScores.setBounds(this.getWidth()/2-200, 50, 400, 200);
-		userScores.setFillsViewportHeight(true);
-		userScores.setVisible(true);
-		scrollPane.setVisible(true);
-
-		add(scrollPane);
-		
+		userScores.setBackground(Color.black);
+		userScores.setFont(new Font("Arial", Font.BOLD, 15));
+		userScores.setForeground(Color.white);
+		userScores.setShowGrid(false);
+		add(userScores);		
 	}
 	
 	public String[][] getTopScores()

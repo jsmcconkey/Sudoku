@@ -111,29 +111,34 @@ public class PlayingField extends JPanel implements Serializable
             checkPuzzle.setBackground(new Color(147,245,245));
             add(checkPuzzle); 
                         
-            blueButton = new JButton("");
+            blueButton = new JButton("B");
             blueButton.setBounds(510, 165, 55, 40);
             blueButton.setBackground(blueColor);
+            blueButton.setForeground(blueColor.darker());
             add(blueButton);
             
-            greenButton = new JButton("");
+            greenButton = new JButton("G");
             greenButton.setBounds(575, 165, 55, 40);
             greenButton.setBackground(greenColor);
+            greenButton.setForeground(greenColor.darker());
             add(greenButton);
             
-            redButton = new JButton("");
+            redButton = new JButton("R");
             redButton.setBounds(510, 210, 55, 40);
             redButton.setBackground(redColor);
+            redButton.setForeground(redColor.darker());
             add(redButton);
             
-            yellowButton = new JButton("");
+            yellowButton = new JButton("Y");
             yellowButton.setBounds(575, 210, 55, 40);
             yellowButton.setBackground(yellowColor);
+            yellowButton.setForeground(yellowColor.darker());
             add(yellowButton);
             
-            clearColor = new JButton("");
+            clearColor = new JButton("W");
             clearColor.setBounds(510, 120, 120, 40);
             clearColor.setBackground(Color.white);
+            clearColor.setForeground(Color.white.darker().darker());
             add(clearColor);
             
             backToGridSelector = new JButton("Selector");

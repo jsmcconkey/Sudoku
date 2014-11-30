@@ -1,6 +1,7 @@
 package Menu;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableCellRenderer;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -56,7 +57,9 @@ public class ScoresTable extends JPanel{
 		scoreTable = new JTable(topScores, columnNames);
 		scoreTable.setBounds(640/2-125, 100, 400, 200);
 		scoreTable.setRowHeight(20);
-		scoreTable.setBackground(Color.black);
+//		scoreTable.setBackground(Color.black);
+		scoreTable.setOpaque(false);
+		((DefaultTableCellRenderer)scoreTable.getDefaultRenderer(Object.class)).setOpaque(false);
 		scoreTable.setFont(new Font("Arial", Font.BOLD, 15));
 		scoreTable.setForeground(Color.white);
 		scoreTable.setShowGrid(false);

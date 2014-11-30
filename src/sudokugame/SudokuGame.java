@@ -1093,11 +1093,11 @@ public class SudokuGame extends JApplet
 		  	}	
 		  	
 		  		try {
-					titleBackground = ImageIO.read(new File(path + "lightgray.jpg"));
-					menuBackground = ImageIO.read(new File(path + "lightgray.jpg"));
-					createBackground = ImageIO.read(new File(path + "lightgray.jpg"));
+					titleBackground = ImageIO.read(new File(path + "blue.jpg"));
+					menuBackground = ImageIO.read(new File(path + "blue.jpg"));
+					createBackground = ImageIO.read(new File(path + "blue.jpg"));
 					scoresBackground = ImageIO.read(new File(path + "darkgray.jpg"));
-					gameBackground = ImageIO.read(new File(path + "lightgray.jpg"));
+					gameBackground = ImageIO.read(new File(path + "blue.jpg"));
 					
 				} catch (IOException e) {
 					e.printStackTrace();

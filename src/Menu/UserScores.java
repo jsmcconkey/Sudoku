@@ -122,25 +122,7 @@ public class UserScores extends JPanel{
 			}
 
 		}
-
-		
-		String [] firstScore = {scoreList.get(0).getName(), String.valueOf(scoreList.get(0).getValue())};
-		String [] secondScore = {scoreList.get(1).getName(), String.valueOf(scoreList.get(1).getValue())};
-		String [] thirdScore = {scoreList.get(2).getName(), String.valueOf(scoreList.get(2).getValue())};
-		String [] fourthScore = {scoreList.get(3).getName(), String.valueOf(scoreList.get(3).getValue())};
-		String [] fifthScore = {scoreList.get(4).getName(), String.valueOf(scoreList.get(4).getValue())};
-		String [] sixthScore = {scoreList.get(5).getName(), String.valueOf(scoreList.get(5).getValue())};
-		String [] seventhScore = {scoreList.get(6).getName(), String.valueOf(scoreList.get(6).getValue())};
-		String [] eigthScore = {scoreList.get(7).getName(), String.valueOf(scoreList.get(7).getValue())};
-		String [] ninthScore = {scoreList.get(8).getName(), String.valueOf(scoreList.get(8).getValue())};
-		String [] tenthScore = {scoreList.get(9).getName(), String.valueOf(scoreList.get(9).getValue())};
-
-		String[][] returnData = {firstScore, secondScore, thirdScore,
-				fourthScore, fifthScore, sixthScore, seventhScore, 
-				eigthScore, ninthScore, tenthScore};
-		
-		topScores = returnData;
-		
+	
 		for(int i = 0; i<10; i++)
 		{
 			userScores.setValueAt(scoreList.get(i).getName(), i, 0);

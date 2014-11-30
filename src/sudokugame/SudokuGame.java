@@ -47,6 +47,7 @@ public class SudokuGame extends JApplet
 	private Random rn;
 	
 	private PlayingField activeField;
+	private UserScores activeScoreCard;
 	
 	//Stores all of the puzzles and the users
 	private ArrayList<Puzzle> EasyList;
@@ -83,6 +84,7 @@ public class SudokuGame extends JApplet
 		rn = new Random();
 				
 		activeField = new PlayingField(xoffset,cellsize,yoffset);
+		activeScoreCard = new UserScores(ScoreList);
 		
 		final JPanel cards = new JPanel(new CardLayout());  
 				  
@@ -90,7 +92,7 @@ public class SudokuGame extends JApplet
 		final CreateUser card1 = new CreateUser();
 		final MainMenu card2 = new MainMenu();
 		final PlayingField card3 = activeField;
-		final UserScores card4 = new UserScores(ScoreList);
+		final UserScores card4 = activeScoreCard;
 		
 		
 		//Each screen will be a different screen, we will switch between these like "cards"
@@ -316,7 +318,9 @@ public class SudokuGame extends JApplet
 				if(yesno == true)
 				{
 					readScores();
-					card4.setScores(ScoreList);
+//					card4.setScores(ScoreList);
+//					activeScoreCard = new UserScores(ScoreList);
+					activeScoreCard.setScores(ScoreList);
 
 					cardLayout.show(cards, "UserScores");				
 					Reload();

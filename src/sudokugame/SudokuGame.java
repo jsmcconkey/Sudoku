@@ -85,7 +85,7 @@ public class SudokuGame extends JApplet
 		final CreateUser card1 = new CreateUser();
 		final MainMenu card2 = new MainMenu();
 		final PlayingField card3 = activeField;
-		final UserScores card4 = new UserScores(ScoreList);
+		UserScores card4 = new UserScores(ScoreList);
 		
 		
 		//Each screen will be a different screen, we will switch between these like "cards"

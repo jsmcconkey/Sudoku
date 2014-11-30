@@ -28,33 +28,35 @@ public class MainMenu extends JPanel{
 		//work better for centering
 		mainMenu = new JLabel("Main Menu");
 		mainMenu.setFont(new Font("Arial", Font.BOLD, 24));
-//		mainMenu.setForeground(new Color(102,51,0));
 		mainMenu.setBounds(this.getWidth()/2-75, this.getHeight()/10, 300, 20);
 		add(mainMenu);
 		
-		startPuzzle = new JLabel("Start a New Puzzle:");
+		startPuzzle = new JLabel("Select your difficulty:");
 		startPuzzle.setFont(new Font("Arial", Font.PLAIN, 24));
-		startPuzzle.setBounds(this.getWidth()/2-125, this.getHeight()/5, 300, 20);
+		startPuzzle.setBounds(this.getWidth()/2-125, this.getHeight()/5, 300, 25);
 		add(startPuzzle);
 		
 		easyButton = new JButton("Easy");
 		easyButton.setBackground(new Color(153,255,255));
+		easyButton.setForeground(new Color(153,255,255).darker().darker());
 		easyButton.setBounds(75,150,100,60);
 		add(easyButton);
 		
 		mediumButton = new JButton("Medium");
 		mediumButton.setBackground(new Color(102,255,255));
+		mediumButton.setForeground(new Color(102,255,255).darker().darker());
 		mediumButton.setBounds(200, 150, 100, 60);
 		add(mediumButton);
 
 		hardButton = new JButton("Hard");
 		hardButton.setBackground(new Color(0,255,255));
+		hardButton.setForeground(new Color(0,255,255).darker().darker());
 		hardButton.setBounds(325, 150, 100, 60);
 		add(hardButton);
 	
 		expertButton = new JButton("Expert");
 		expertButton.setBackground(new Color(0,204,204));
-//		expertButton.setForeground(Color.white);
+		expertButton.setForeground(new Color(0,204,204).darker().darker());
 		expertButton.setBounds(450, 150, 100, 60);
 		add(expertButton);
 		

@@ -16,7 +16,7 @@ expert
 1,5,0,false,white
 1,6,0,false,white
 1,7,3,true,white
-1,8,5,false,white
+1,8,0,false,white
 2,0,8,true,white
 2,1,0,false,white
 2,2,0,false,white
@@ -40,7 +40,7 @@ expert
 4,2,0,false,white
 4,3,0,false,white
 4,4,1,true,white
-4,5,0,false,white
+4,5,5,false,white
 4,6,0,false,white
 4,7,8,true,white
 4,8,5,false,white
@@ -52,7 +52,7 @@ expert
 5,5,0,false,white
 5,6,0,false,white
 5,7,0,false,white
-5,8,4,false,white
+5,8,1,false,white
 6,0,4,true,white
 6,1,9,true,white
 6,2,0,false,white
@@ -70,7 +70,7 @@ expert
 7,5,9,true,white
 7,6,0,false,white
 7,7,4,true,white
-7,8,5,false,white
+7,8,0,false,white
 8,0,2,true,white
 8,1,0,false,white
 8,2,0,false,white
@@ -79,7 +79,7 @@ expert
 8,5,0,false,white
 8,6,0,false,white
 8,7,0,false,white
-8,8,5,false,white
+8,8,0,false,white
 /*correct answers
 0,0,5,true
 0,1,4,true

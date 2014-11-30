@@ -15,6 +15,7 @@ import cell.Cell;
 import playingfield.PlayingField;
 import puzzle.Puzzle;
 import Menu.MainMenu;
+import Menu.UserScore;
 import Menu.UserScores;
 import loginscreen.CreateUser;
 import loginscreen.LoginScreen;
@@ -59,34 +60,6 @@ public class SudokuGame extends JApplet
 	private String userScoresParentDir = null;
 	private String username = null;
 	
-	private class UserScore
-	{
-		private int value;
-		private String name;
-		
-		public UserScore(String n, int v)
-		{
-			value = v;
-			name = n;
-		}
-		
-		public String getName()
-		{
-			return name;
-		}
-		
-		public int getValue()
-		{
-			return value;
-		}
-		
-		public void addPoints(int p)
-		{
-			value = value + p;
-		}
-	
-	}
-	
   	public void init()
 	{
 		this.setSize(WIDTH, HEIGHT);
@@ -112,7 +85,7 @@ public class SudokuGame extends JApplet
 		final CreateUser card1 = new CreateUser();
 		final MainMenu card2 = new MainMenu();
 		final PlayingField card3 = activeField;
-		final UserScores card4 = new UserScores();
+		final UserScores card4 = new UserScores(ScoreList);
 		
 		
 		//Each screen will be a different screen, we will switch between these like "cards"
@@ -305,6 +278,7 @@ public class SudokuGame extends JApplet
 		  
 		card2.userScores.addMouseListener(new MouseAdapter(){
 			public void mousePressed(MouseEvent e){
+				
 				cardLayout.show(cards, "UserScores");
 			}
 		});
@@ -336,47 +310,12 @@ public class SudokuGame extends JApplet
 				
 				if(yesno == true)
 				{
+//					card4.setScores(ScoreList);
 					cardLayout.show(cards, "UserScores");				
 					Reload();
 				}
 			}
 		});
-		
-//		card3.backToGridSelector.addMouseListener(new MouseAdapter(){
-//			public void mousePressed(MouseEvent e){
-//				
-//			}
-//		});
-//		
-//		card3.clearColor.addMouseListener(new MouseAdapter(){
-//			public void mousePressed(MouseEvent e){
-//				
-//			}
-//		});
-//		
-//		card3.blueButton.addMouseListener(new MouseAdapter(){
-//			public void mousePressed(MouseEvent e){
-//				
-//			}
-//		});
-//		
-//		card3.greenButton.addMouseListener(new MouseAdapter(){
-//			public void mousePressed(MouseEvent e){
-//				
-//			}
-//		});
-//		
-//		card3.redButton.addMouseListener(new MouseAdapter(){
-//			public void mousePressed(MouseEvent e){
-//				
-//			}
-//		});
-//		
-//		card3.yellowButton.addMouseListener(new MouseAdapter(){
-//			public void mousePressed(MouseEvent e){
-//				
-//			}
-//		});
 		
 		card3.savePuzzle.addMouseListener(new MouseAdapter(){
 			public void mousePressed(MouseEvent e){
@@ -979,11 +918,6 @@ public class SudokuGame extends JApplet
 			      while (dis.available() != 0) 
 			      	{    	  
 					String s = dis.readLine();
-					
-
-
-					
-				
 					String tokens[] = s.split(",");
 			
 					if(tokens.length == 2)
@@ -1010,6 +944,8 @@ public class SudokuGame extends JApplet
 		    {
 		    	e.printStackTrace();
 		    }
+		    
+		    UserScores.setScores(ScoreList);
 		}
 	  	
 	  	public void writeScores()

@@ -319,8 +319,7 @@ public class SudokuGame extends JApplet
 				{
 					readScores();
 //					card4.setScores(ScoreList);
-//					activeScoreCard = new UserScores(ScoreList);
-					activeScoreCard.setScores(ScoreList);
+					activeScoreCard = new UserScores(ScoreList);
 
 					cardLayout.show(cards, "UserScores");				
 					Reload();

@@ -6,6 +6,6 @@ Manny,6
 Christian,5
 ScoobyDoo,5
 BigJ,4
-Ethan,3
+Ethan,5
 Snoopy,2
 Janet,1

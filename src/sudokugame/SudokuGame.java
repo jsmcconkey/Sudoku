@@ -318,9 +318,7 @@ public class SudokuGame extends JApplet
 				if(yesno == true)
 				{
 					readScores();
-//					card4.setScores(ScoreList);
-					activeScoreCard = new UserScores(ScoreList);
-
+					activeScoreCard.setScores(ScoreList);
 					cardLayout.show(cards, "UserScores");				
 					Reload();
 				}

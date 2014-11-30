@@ -12,7 +12,7 @@ public class UserScores extends JPanel{
 	public JButton backButton;
 	static String[] columnNames = {"User", "Score"};
 	static String[][] topScores = null;
-	public JTable userScores;
+	public JTable scoreTable;
 	
 	public UserScores(ArrayList<UserScore> scoreList)
 	{
@@ -33,15 +33,6 @@ public class UserScores extends JPanel{
 		backButton.setBounds(this.getWidth()/20,this.getHeight()/20,150,50);
 		add(backButton);
 	
-		initializeScores(scoreList);
-	}
-
-	public void initializeScores(ArrayList<UserScore> scoreList) {		
-		topScores = null;
-		userScores = null;
-
-
-		
 		String [] firstScore = {scoreList.get(0).getName(), String.valueOf(scoreList.get(0).getValue())};
 		String [] secondScore = {scoreList.get(1).getName(), String.valueOf(scoreList.get(1).getValue())};
 		String [] thirdScore = {scoreList.get(2).getName(), String.valueOf(scoreList.get(2).getValue())};
@@ -59,26 +50,23 @@ public class UserScores extends JPanel{
 		
 		topScores = returnData;
 		
-		userScores = new JTable(topScores, columnNames);
-		userScores.setBounds(640/2-125, 100, 400, 200);
-		userScores.setRowHeight(20);
-		userScores.setBackground(Color.black);
-		userScores.setFont(new Font("Arial", Font.BOLD, 15));
-		userScores.setForeground(Color.white);
-		userScores.setShowGrid(false);
-		userScores.setVisible(true);
-		add(userScores);
+		scoreTable = new JTable(topScores, columnNames);
+		scoreTable.setBounds(640/2-125, 100, 400, 200);
+		scoreTable.setRowHeight(20);
+		scoreTable.setBackground(Color.black);
+		scoreTable.setFont(new Font("Arial", Font.BOLD, 15));
+		scoreTable.setForeground(Color.white);
+		scoreTable.setShowGrid(false);
+		scoreTable.setVisible(true);
+		add(scoreTable);
 	}
 	
-	public void setScores(ArrayList<UserScore> scoreList) {		
-		topScores = null;
-		userScores = null;
-
 	
+	public void setScores(ArrayList<UserScore> scoreList) {		
 		for(int i = 0; i<10; i++)
 		{
-			userScores.setValueAt(scoreList.get(i).getName(), i, 0);
-			userScores.setValueAt(String.valueOf(scoreList.get(i).getValue()), i, 1);
+			scoreTable.setValueAt(scoreList.get(i).getName(), i, 0);
+			scoreTable.setValueAt(String.valueOf(scoreList.get(i).getValue()), i, 1);
 		}
 		
 		repaint();

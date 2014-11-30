@@ -90,6 +90,8 @@ public class UserScores extends JPanel{
 		userScores.setFont(new Font("Arial", Font.BOLD, 15));
 		userScores.setForeground(Color.white);
 		userScores.setShowGrid(false);
+		
+		
 	}
 	
 }

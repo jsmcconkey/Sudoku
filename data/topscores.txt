@@ -1,11 +1,11 @@
+James,16
 Cody,12
-James,12
 Spanky,8
 Hessam,7
 Manny,6
 Christian,5
 ScoobyDoo,5
+Ethan,5
 BigJ,4
-Ethan,3
 Snoopy,2
 Janet,1

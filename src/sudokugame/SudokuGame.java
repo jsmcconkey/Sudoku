@@ -85,7 +85,7 @@ public class SudokuGame extends JApplet
 		final CreateUser card1 = new CreateUser();
 		final MainMenu card2 = new MainMenu();
 		final PlayingField card3 = activeField;
-		UserScores card4 = new UserScores(ScoreList);
+		final UserScores card4 = new UserScores(ScoreList);
 		
 		
 		//Each screen will be a different screen, we will switch between these like "cards"
@@ -278,7 +278,7 @@ public class SudokuGame extends JApplet
 		  
 		card2.userScores.addMouseListener(new MouseAdapter(){
 			public void mousePressed(MouseEvent e){
-				
+				readScores();
 				cardLayout.show(cards, "UserScores");
 			}
 		});
@@ -310,7 +310,9 @@ public class SudokuGame extends JApplet
 				
 				if(yesno == true)
 				{
-//					card4.setScores(ScoreList);
+					readScores();
+					card4.setScores(ScoreList);
+
 					cardLayout.show(cards, "UserScores");				
 					Reload();
 				}
@@ -334,6 +336,7 @@ public class SudokuGame extends JApplet
 				boolean puzzleComplete = checkPuzzle();		
 				if(puzzleComplete == true)
 				{	
+					readScores();
 					cardLayout.show(cards, "UserScores");
 				}
 			}
@@ -861,6 +864,7 @@ public class SudokuGame extends JApplet
 	  
 	  	public void readScores()
 	  	{
+	  		ScoreList.clear();
 	  		//Rewrites Scorelist every time you call this function. We don't want repeats
 			String path = null;
 					
@@ -945,7 +949,7 @@ public class SudokuGame extends JApplet
 		    	e.printStackTrace();
 		    }
 		    
-		    UserScores.setScores(ScoreList);
+//		    UserScores.setScores(ScoreList);
 		}
 	  	
 	  	public void writeScores()

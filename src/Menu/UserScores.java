@@ -35,10 +35,9 @@ public class UserScores extends JPanel{
 		
 
 		setScores(scoreList);
-		add(userScores);		
 	}
 
-	public static void setScores(ArrayList<UserScore> scoreList) {		
+	public void setScores(ArrayList<UserScore> scoreList) {		
 		topScores = null;
 
 		for(int i = 0; i<scoreList.size(); i++)
@@ -81,6 +80,7 @@ public class UserScores extends JPanel{
 		String[][] returnData = {firstScore, secondScore, thirdScore,
 				fourthScore, fifthScore, sixthScore, seventhScore, 
 				eigthScore, ninthScore, tenthScore};
+		
 		topScores = returnData;
 		
 		userScores = new JTable(topScores, columnNames);
@@ -90,6 +90,7 @@ public class UserScores extends JPanel{
 		userScores.setFont(new Font("Arial", Font.BOLD, 15));
 		userScores.setForeground(Color.white);
 		userScores.setShowGrid(false);
+		add(userScores);
 	}
 	
 }

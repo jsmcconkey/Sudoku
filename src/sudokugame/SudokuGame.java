@@ -957,13 +957,13 @@ public class SudokuGame extends JApplet
 		    	e.printStackTrace();
 		    }
 		    
-//		    UserScores.setScores(ScoreList);
+		    sortScores(ScoreList);
 		}
 	  	
 	  	public void writeScores()
 	  	{
 			String path = null;
-					
+			sortScores(ScoreList);
 		  	try
 		  	{
 		  		if(OSDetector.isWindows())
@@ -1097,6 +1097,34 @@ public class SudokuGame extends JApplet
 					e.printStackTrace();
 				}
 		  	
+		}
+		
+		public void sortScores(ArrayList<UserScore> scoreList)
+		{
+			for(int i = 0; i<scoreList.size(); i++)
+			{
+				int iPositionValue = scoreList.get(i).getValue();
+				int indexOfLargestValueLeftOnList = i;
+				
+				for(int j = i; j<scoreList.size(); j++)
+				{
+					int jPositionValue = scoreList.get(j).getValue();
+					if(iPositionValue < jPositionValue)
+					{
+						iPositionValue = jPositionValue;
+						indexOfLargestValueLeftOnList = j;
+					}
+				}
+				if(i == indexOfLargestValueLeftOnList){
+					
+				}
+				else{
+					UserScore tempIUser = new UserScore(scoreList.get(i).getName(), scoreList.get(i).getValue());
+					scoreList.set(i, scoreList.get(indexOfLargestValueLeftOnList));
+					scoreList.set(indexOfLargestValueLeftOnList, tempIUser);
+				}
+
+			}		
 		}
 		
 

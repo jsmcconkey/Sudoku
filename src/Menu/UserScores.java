@@ -40,30 +40,6 @@ public class UserScores extends JPanel{
 		topScores = null;
 		userScores = null;
 
-		for(int i = 0; i<scoreList.size(); i++)
-		{
-			int iPositionValue = scoreList.get(i).getValue();
-			int indexOfLargestValueLeftOnList = i;
-			
-			for(int j = i; j<scoreList.size(); j++)
-			{
-				int jPositionValue = scoreList.get(j).getValue();
-				if(iPositionValue < jPositionValue)
-				{
-					iPositionValue = jPositionValue;
-					indexOfLargestValueLeftOnList = j;
-				}
-			}
-			if(i == indexOfLargestValueLeftOnList){
-				
-			}
-			else{
-				UserScore tempIUser = new UserScore(scoreList.get(i).getName(), scoreList.get(i).getValue());
-				scoreList.set(i, scoreList.get(indexOfLargestValueLeftOnList));
-				scoreList.set(indexOfLargestValueLeftOnList, tempIUser);
-			}
-
-		}
 
 		
 		String [] firstScore = {scoreList.get(0).getName(), String.valueOf(scoreList.get(0).getValue())};
@@ -98,36 +74,14 @@ public class UserScores extends JPanel{
 		topScores = null;
 		userScores = null;
 
-		for(int i = 0; i<scoreList.size(); i++)
-		{
-			int iPositionValue = scoreList.get(i).getValue();
-			int indexOfLargestValueLeftOnList = i;
-			
-			for(int j = i; j<scoreList.size(); j++)
-			{
-				int jPositionValue = scoreList.get(j).getValue();
-				if(iPositionValue < jPositionValue)
-				{
-					iPositionValue = jPositionValue;
-					indexOfLargestValueLeftOnList = j;
-				}
-			}
-			if(i == indexOfLargestValueLeftOnList){
-				
-			}
-			else{
-				UserScore tempIUser = new UserScore(scoreList.get(i).getName(), scoreList.get(i).getValue());
-				scoreList.set(i, scoreList.get(indexOfLargestValueLeftOnList));
-				scoreList.set(indexOfLargestValueLeftOnList, tempIUser);
-			}
-
-		}
 	
 		for(int i = 0; i<10; i++)
 		{
 			userScores.setValueAt(scoreList.get(i).getName(), i, 0);
 			userScores.setValueAt(String.valueOf(scoreList.get(i).getValue()), i, 1);
 		}
+		
+		repaint();
 	}
 	
 }

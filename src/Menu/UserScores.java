@@ -32,8 +32,7 @@ public class UserScores extends JPanel{
 		backButton.setBackground(Color.LIGHT_GRAY);
 		backButton.setBounds(this.getWidth()/20,this.getHeight()/20,150,50);
 		add(backButton);
-		
-
+	
 		setScores(scoreList);
 	}
 

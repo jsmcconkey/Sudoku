@@ -1,7 +1,12 @@
 package loginscreen;
 
 import javax.swing.*;
+
+import osdetector.OSDetector;
+
 import java.awt.*;
+import java.io.File;
+import java.io.PrintWriter;
 
 public class LoginScreen extends JPanel{
 
@@ -14,13 +19,16 @@ public class LoginScreen extends JPanel{
 	public JButton createLogin;
 	public JButton login;
 	
-	public LoginScreen()
+	public Image background;
+		
+	public LoginScreen(Image b)
 	{
 		super();
 		
 		setSize(640, 480);
 		setLayout(null);
-		setBackground(new Color(224,224,224));
+		
+		background = b;
 		
 		introMessage = new JLabel("Let's Play Sudoku!");
 		introMessage.setFont(new Font("Arial", Font.BOLD, 22));
@@ -61,5 +69,11 @@ public class LoginScreen extends JPanel{
 		createLogin.setBackground(new Color(102,255,255));
 		createLogin.setBounds(enterPassword.getX(),enterPassword.getY()+200,enterPassword.getWidth(),60);
 		add(createLogin);
+	}
+	
+	
+	public void paintComponent(Graphics g)
+	{
+		g.drawImage(background, 0, 0, null);
 	}
 }

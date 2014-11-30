@@ -9,6 +9,7 @@ import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 
 import cell.Cell;
@@ -60,7 +61,10 @@ public class SudokuGame extends JApplet
 	private String userScoresParentDir = null;
 	private String username = null;
 	
-  	public void init()
+	//Images
+	private Image titleBackground;
+	
+	public void init()
 	{
 		this.setSize(WIDTH, HEIGHT);
 		
@@ -74,6 +78,7 @@ public class SudokuGame extends JApplet
 		
 		readPuzzles();
 		readScores();
+		loadImages();
 		
 		rn = new Random();
 				
@@ -81,7 +86,7 @@ public class SudokuGame extends JApplet
 		
 		final JPanel cards = new JPanel(new CardLayout());  
 				  
-		final LoginScreen card0 = new LoginScreen();
+		final LoginScreen card0 = new LoginScreen(titleBackground);
 		final CreateUser card1 = new CreateUser();
 		final MainMenu card2 = new MainMenu();
 		final PlayingField card3 = activeField;
@@ -1059,6 +1064,38 @@ public class SudokuGame extends JApplet
 				System.out.println("Printing: "+ScoreList.get(i).getName() + ": " + ScoreList.get(i).getValue());
 			}	
 		}
+		
+		public void loadImages()
+		{
+		  	String path = null;
+		  	try
+		  	{
+		  		if(OSDetector.isWindows())
+		  		{
+		  			path = getClass().getClassLoader().getResource(".").getPath();
+		  			path = path.substring(0, path.length()-4);
+		  			path = path + "data\\\\Graphics\\\\";
+		  		}
+		  		else if(OSDetector.isLinux() || OSDetector.isMac())
+		  		{
+				  	path = getClass().getClassLoader().getResource(".").getPath();
+				  	path = path.substring(0, path.length()-4);
+				  	path = path + "data/Graphics/";
+				}
+		  	} catch (Exception e)
+		  	{
+		  		e.printStackTrace(System.err);
+		  	}	
+		  	
+		  		try {
+					titleBackground = ImageIO.read(new File(path + "titlebackground.jpg"));
+
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+		  	
+		}
+		
 
 }
 

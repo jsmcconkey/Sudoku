@@ -1,6 +1,7 @@
 package Menu;
 
 import javax.swing.*;
+
 import java.awt.*;
 
 public class MainMenu extends JPanel{
@@ -15,10 +16,13 @@ public class MainMenu extends JPanel{
 	public JButton loadGame;
 	public Color customColor = new Color(102, 178, 255);
 	public JButton logout;
+	public Image background;
 	
-	public MainMenu()
+	public MainMenu(Image b)
 	{
 		super();
+		
+		background = b;
 		
 		setSize(640, 480);
 		setLayout(null);
@@ -74,5 +78,10 @@ public class MainMenu extends JPanel{
 		logout.setBackground(customColor);
 		logout.setBounds(this.getWidth()-110, 10, 100, 40);
 		add(logout);
+	}
+	
+	public void paintComponent(Graphics g)
+	{
+		g.drawImage(background, 0, 0, null);
 	}
 }

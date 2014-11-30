@@ -17,6 +17,7 @@ import puzzle.Puzzle;
 import java.awt.BasicStroke;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Image;
 
 import cell.Cell;
 import gridselector.GridSelector;
@@ -70,14 +71,17 @@ public class PlayingField extends JPanel implements Serializable
 	public boolean colorIsClicked;
 	public Color colorClicked;
 	
+	//Images
+	public Image background;
 
 	
 	public JButton finishGame = new JButton("Finish Game");
 	
-	public PlayingField(int x, int c, int y){
+	public PlayingField(int x, int c, int y, Image b){
 		    super();		
-		    		    
-		    setBackground(Color.WHITE);	
+		    
+		    background = b;
+		    		    	
 		    this.setLayout(null); //Allows us to put the button added where we want to...does not start it in a default spot
                     
             xoffset = x;
@@ -306,11 +310,10 @@ public class PlayingField extends JPanel implements Serializable
 	
     public void paintComponent(Graphics g)  
     {
+    	g.drawImage(background, 0, 0, null);
+    	
         int width = getWidth();            
         int height = getHeight();  
-        
-        super.paintComponent(g); 
-
 		
 		Graphics2D g2 = (Graphics2D) g;
 		

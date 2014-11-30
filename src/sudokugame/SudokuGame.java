@@ -17,7 +17,7 @@ import playingfield.PlayingField;
 import puzzle.Puzzle;
 import Menu.MainMenu;
 import Menu.UserScore;
-import Menu.UserScores;
+import Menu.ScoresTable;
 import loginscreen.CreateUser;
 import loginscreen.LoginScreen;
 import loginscreen.User;
@@ -47,7 +47,7 @@ public class SudokuGame extends JApplet
 	private Random rn;
 	
 	private PlayingField activeField;
-	private UserScores activeScoreCard;
+	private ScoresTable activeScoreCard;
 	
 	//Stores all of the puzzles and the users
 	private ArrayList<Puzzle> EasyList;
@@ -64,6 +64,10 @@ public class SudokuGame extends JApplet
 	
 	//Images
 	private Image titleBackground;
+	private Image gameBackground;
+	private Image scoresBackground;
+	private Image createBackground;
+	private Image menuBackground;
 	
 	public void init()
 	{
@@ -83,16 +87,16 @@ public class SudokuGame extends JApplet
 		
 		rn = new Random();
 				
-		activeField = new PlayingField(xoffset,cellsize,yoffset);
-		activeScoreCard = new UserScores(ScoreList);
+		activeField = new PlayingField(xoffset,cellsize,yoffset,gameBackground);
+		activeScoreCard = new ScoresTable(ScoreList,scoresBackground);
 		
 		final JPanel cards = new JPanel(new CardLayout());  
 				  
 		final LoginScreen card0 = new LoginScreen(titleBackground);
-		final CreateUser card1 = new CreateUser();
-		final MainMenu card2 = new MainMenu();
+		final CreateUser card1 = new CreateUser(createBackground);
+		final MainMenu card2 = new MainMenu(menuBackground);
 		final PlayingField card3 = activeField;
-		final UserScores card4 = activeScoreCard;
+		final ScoresTable card4 = activeScoreCard;
 		
 		
 		//Each screen will be a different screen, we will switch between these like "cards"
@@ -1089,8 +1093,12 @@ public class SudokuGame extends JApplet
 		  	}	
 		  	
 		  		try {
-					titleBackground = ImageIO.read(new File(path + "titlebackground.jpg"));
-
+					titleBackground = ImageIO.read(new File(path + "lightgray.jpg"));
+					menuBackground = ImageIO.read(new File(path + "lightgray.jpg"));
+					createBackground = ImageIO.read(new File(path + "lightgray.jpg"));
+					scoresBackground = ImageIO.read(new File(path + "darkgray.jpg"));
+					gameBackground = ImageIO.read(new File(path + "lightgray.jpg"));
+					
 				} catch (IOException e) {
 					e.printStackTrace();
 				}

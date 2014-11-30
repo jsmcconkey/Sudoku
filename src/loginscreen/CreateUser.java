@@ -13,10 +13,13 @@ public class CreateUser extends JPanel{
 	public JPasswordField newPassword;
 	public JPasswordField confirmNewPassword;
 	public JButton createUser;
+	public Image background;
 	
-	public CreateUser()
+	public CreateUser(Image b)
 	{
 		super();
+		
+		background = b;
 		
 		setSize(640, 480);
 		setLayout(null);
@@ -61,6 +64,11 @@ public class CreateUser extends JPanel{
 		createUser.setBackground(new Color(102,255,255));
 		createUser.setBounds(this.getWidth()-200,158,125,85);
 		add(createUser);
+	}
+	
+	public void paintComponent(Graphics g)
+	{
+		g.drawImage(background, 0, 0, null);
 	}
 	
 	

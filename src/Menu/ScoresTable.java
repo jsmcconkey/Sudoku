@@ -7,16 +7,19 @@ import java.util.ArrayList;
 
 import loginscreen.User;
 
-public class UserScores extends JPanel{
+public class ScoresTable extends JPanel{
 	public JLabel message;
 	public JButton backButton;
 	static String[] columnNames = {"User", "Score"};
 	static String[][] topScores = null;
 	public JTable scoreTable;
+	public Image background;
 	
-	public UserScores(ArrayList<UserScore> scoreList)
+	public ScoresTable(ArrayList<UserScore> scoreList,Image b)
 	{
 		super();
+		
+		background = b;
 		
 		setSize(640, 480);
 		setLayout(null);
@@ -70,6 +73,11 @@ public class UserScores extends JPanel{
 		}
 		
 		repaint();
+	}
+	
+	public void paintComponent(Graphics g)
+	{
+		g.drawImage(background, 0, 0, null);
 	}
 	
 }

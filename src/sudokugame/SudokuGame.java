@@ -347,7 +347,9 @@ public class SudokuGame extends JApplet
 				if(puzzleComplete == true)
 				{	
 					readScores();
-					cardLayout.show(cards, "UserScores");
+					activeScoreCard.setScores(ScoreList);
+					cardLayout.show(cards, "UserScores");	
+					Reload();
 				}
 			}
 		});

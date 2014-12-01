@@ -5,8 +5,7 @@ import java.io.Serializable;
 
 
 
-public class Cell implements Serializable
-{
+public class Cell implements Serializable {
 	private static final long serialVersionUID = -1794579801776158173L;
 	private int value;
 	private int x;
@@ -15,9 +14,7 @@ public class Cell implements Serializable
 	private Color cellColor;
 	boolean locked;
 	
-	
-	
-	public Cell(int n, boolean l, int ix, int iy, int icellsize){
+	public Cell(int n, boolean l, int ix, int iy, int icellsize) {
 		value = n;	
 		locked = l;
 		x = ix;
@@ -28,69 +25,57 @@ public class Cell implements Serializable
 		
 		cellsize = icellsize;
 		
-		if(locked==false)
-		{
+		if(locked==false) {
 			value = 0;
-		}
-		
+		}	
 	}
 	
-	public boolean getLocked()
-	{	
+	public boolean getLocked() {	
 		return locked;
 	}
 	
-	public int getValue()
-	{
+	public int getValue() {
 		return value;		
 	}
 	
-	public boolean checkClick(int mx, int my)
-	{
+	public boolean checkClick(int mx, int my) {
 		boolean r = false;
-		if((((mx >= x) && (mx <= (x + cellsize-1))) && ((my >= y) && (my <= (y + cellsize-1)))) && (locked == false))//If the bounds are correct
+		if((((mx >= x) && (mx <= (x + cellsize-1))) && ((my >= y) && (my <= (y + cellsize-1)))) && (locked == false)) {
 			r = true;
-
-		
+		}
 		return r;
-		
 	}
 	
-	public void setValue(int v)
-	{
+	public void setValue(int v) {
 		value = v;		
 	}
 	
-	public void overwriteCell(int v,boolean l)
-	{
+	public void overwriteCell(int v,boolean l) {
 		value = v;
 		locked = l;	
 	}
 	
-	public String getString()
-	{
-		if(value == 0)
-			return " ";		
-		else
+	public String getString() {
+		if(value == 0) {
+			return " ";
+		}
+		else {
 			return Integer.toString(value);
+		}
 	}
 	
-	public int getX()
-	{
+	public int getX() {
 		return x;
 	}
 	
-	public int getY()
-	{
+	public int getY() {
 		return y;
 	}
 	
-	public void setColor(Color c)
-	{
+	public void setColor(Color c) {
 		cellColor = c;
 	}
-	public Color getColor()
-	{
+	public Color getColor() {
 		return cellColor;
 	}
 }

@@ -4,7 +4,7 @@ import javax.swing.*;
 
 import java.awt.*;
 
-public class CreateUser extends JPanel{
+public class CreateUser extends JPanel {
 	public JLabel message;
 	public JLabel usernameLabel;
 	public JLabel passwordLabel;
@@ -15,8 +15,7 @@ public class CreateUser extends JPanel{
 	public JButton createUser;
 	public Image background;
 	
-	public CreateUser(Image b)
-	{
+	public CreateUser(Image b) {
 		super();
 		
 		background = b;
@@ -66,10 +65,7 @@ public class CreateUser extends JPanel{
 		add(createUser);
 	}
 	
-	public void paintComponent(Graphics g)
-	{
+	public void paintComponent(Graphics g) {
 		g.drawImage(background, 0, 0, null);
 	}
-	
-	
 }

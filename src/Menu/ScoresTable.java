@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 import loginscreen.User;
 
-public class ScoresTable extends JPanel{
+public class ScoresTable extends JPanel {
 	public JLabel message;
 	public JButton backButton;
 	static String[] columnNames = {"User", "Score"};
@@ -16,8 +16,8 @@ public class ScoresTable extends JPanel{
 	public JTable scoreTable;
 	public Image background;
 	
-	public ScoresTable(ArrayList<UserScore> scoreList,Image b)
-	{
+	//Constructors
+	public ScoresTable(ArrayList<UserScore> scoreList,Image b) {
 		super();
 		
 		background = b;
@@ -67,10 +67,9 @@ public class ScoresTable extends JPanel{
 		add(scoreTable);
 	}
 	
-	
+	//Methods
 	public void setScores(ArrayList<UserScore> scoreList) {		
-		for(int i = 0; i<10; i++)
-		{
+		for(int i = 0; i<10; i++) {
 			scoreTable.setValueAt(scoreList.get(i).getName(), i, 0);
 			scoreTable.setValueAt(String.valueOf(scoreList.get(i).getValue()), i, 1);
 		}
@@ -78,9 +77,7 @@ public class ScoresTable extends JPanel{
 		repaint();
 	}
 	
-	public void paintComponent(Graphics g)
-	{
+	public void paintComponent(Graphics g) {
 		g.drawImage(background, 0, 0, null);
 	}
-	
 }

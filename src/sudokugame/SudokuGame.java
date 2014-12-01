@@ -1007,8 +1007,3 @@ public class SudokuGame extends JApplet {
 		}		
 	}
 }
-
-
-
-
-

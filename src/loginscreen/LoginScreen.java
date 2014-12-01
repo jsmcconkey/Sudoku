@@ -8,7 +8,7 @@ import java.awt.*;
 import java.io.File;
 import java.io.PrintWriter;
 
-public class LoginScreen extends JPanel{
+public class LoginScreen extends JPanel {
 
 	public JLabel introMessage;
 	public JLabel username;
@@ -21,8 +21,7 @@ public class LoginScreen extends JPanel{
 	
 	public Image background;
 		
-	public LoginScreen(Image b)
-	{
+	public LoginScreen(Image b) {
 		super();
 		
 		setSize(640, 480);
@@ -72,8 +71,7 @@ public class LoginScreen extends JPanel{
 	}
 	
 	
-	public void paintComponent(Graphics g)
-	{
+	public void paintComponent(Graphics g) {
 		g.drawImage(background, 0, 0, null);
 	}
 }

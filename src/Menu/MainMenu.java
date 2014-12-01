@@ -4,7 +4,7 @@ import javax.swing.*;
 
 import java.awt.*;
 
-public class MainMenu extends JPanel{
+public class MainMenu extends JPanel {
 
 	public JLabel mainMenu;
 	public JLabel startPuzzle;
@@ -18,8 +18,7 @@ public class MainMenu extends JPanel{
 	public JButton logout;
 	public Image background;
 	
-	public MainMenu(Image b)
-	{
+	public MainMenu(Image b) {
 		super();
 		
 		background = b;
@@ -80,8 +79,7 @@ public class MainMenu extends JPanel{
 		add(logout);
 	}
 	
-	public void paintComponent(Graphics g)
-	{
+	public void paintComponent(Graphics g) {
 		g.drawImage(background, 0, 0, null);
 	}
 }

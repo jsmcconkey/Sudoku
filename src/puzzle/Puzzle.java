@@ -12,88 +12,72 @@ public class Puzzle {
 	private boolean hasAnswer = false;
 	
 	//Generates a Blank Puzzle
-	public Puzzle(int xoffset, int cellsize, int yoffset)
-	{
-		for(int j = 0; j<9; j++)
-			for(int i = 0; i<9; i++)
-			{
+	public Puzzle(int xoffset, int cellsize, int yoffset) {
+		for(int j = 0; j<9; j++) {
+			for(int i = 0; i<9; i++) {
 				answerArray[j][i] = new Cell(0,false, xoffset + (cellsize * i), yoffset + (cellsize * j), cellsize);	
 				cellArray[j][i] = new Cell(0,false, xoffset + (cellsize * i), yoffset + (cellsize * j), cellsize);		
 			}
-		
-			
+		}	
 	}
 	
-	public void setCell(int row, int column, int value, boolean finished, boolean locked)
-	{
-		if(finished == false)
+	public void setCell(int row, int column, int value, boolean finished, boolean locked) {
+		if(finished == false) {
 			cellArray[row][column].overwriteCell(value,locked);	
-		else
-		{
+		}
+		else {
 			answerArray[row][column].overwriteCell(value,locked);
 			hasAnswer = true;
 		}
 	}
 	
-	public boolean checkReal()
-	{
+	public boolean checkReal() {
 		//Checks the legitimacy of a puzzle after loading it
 		boolean r = true;
-		if(difficulty == null)
-		{
+		if(difficulty == null) {
 			r = false;
 		}
 		
-		if(hasAnswer == false)
-		{
+		if(hasAnswer == false) {
 			r = false;
 		}
 		
 		int a = 0;
 		
-		for(int j = 0; j<9; j++)
-			for(int i = 0; i<9; i++)
-			{
+		for(int j = 0; j<9; j++) {
+			for(int i = 0; i<9; i++) {
 				//Counts the amount of locked cells
-				if(cellArray[j][i].getLocked() == true)	
+				if(cellArray[j][i].getLocked() == true)	{
 					a++;
+				}
 			}	
-		
-		
-		
-		if(a<5)
-		{
+		}
+
+		if(a<5) {
 			r = false;			
 		}
 		
 		return r;
-		
 	}
 	
-	public String getDifficulty()
-	{
+	public String getDifficulty() {
 		return difficulty;
 	}
 	
-	public boolean hasAnswer()
-	{
+	public boolean hasAnswer() {
 		return hasAnswer;		
 	}
 	
-	public Cell[][] getAnswerArray()
-	{
+	public Cell[][] getAnswerArray() {
 		return answerArray;
 	}
 	
 	
-	public Cell[][] getArray()
-	{		
+	public Cell[][] getArray() {		
 		return cellArray;
 	}
 	
-	public void setDifficulty(String d)
-	{
+	public void setDifficulty(String d) {
 		difficulty = d;
 	}
-	
 }

@@ -7,36 +7,29 @@ public class User {
 	protected String password;
 	public int score;
 	
-	
 	//Constructors
-	public User()
-	{
+	public User() {
 		this.username = "unassigned";
 		this.password = "unassigned";
 		this.score = 0;
 	}
 	
-	public User(String username, String password, int score)
-	{
+	public User(String username, String password, int score) {
 		this.username = username;
 		this.password = password;
 		this.score = score;
 	}
 	
 	//Methods
-	public String getUsername()
-	{
+	public String getUsername() {
 		return this.username;
 	}
 	
-	public String getPassword()
-	{
+	public String getPassword() {
 		return this.password;
 	}
 	
-	public int getScore()
-	{
+	public int getScore() {
 		return this.score;
 	}
-
 }

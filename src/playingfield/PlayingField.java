@@ -1,3 +1,7 @@
+/*
+ * Programmers <James McConkey and Ethan Smith>
+ */
+
 package playingfield;
 
 import javax.swing.*;

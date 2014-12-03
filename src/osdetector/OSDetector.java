@@ -1,5 +1,7 @@
-//I got this OSDetector function from Stack Overflow
-//http://stackoverflow.com/questions/7024031/java-open-a-file-windows-mac
+/*
+*	OSDetector was copied directly from stack overflow
+*	http://stackoverflow.com/questions/7024031/java-open-a-file-windows-mac
+*/
 
 package osdetector;
 

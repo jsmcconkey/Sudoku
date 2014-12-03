@@ -1,3 +1,7 @@
+/*
+**Programmer <James McConkey and Ethan Smith>
+*/
+
 package gridselector;
 
 
@@ -14,7 +18,6 @@ import java.awt.event.ActionEvent;
 import cell.Cell;
  
 public class GridSelector extends JPanel {
- 
 	private boolean visible;
 	private JButton button[]=new JButton[10];
 	private Cell myCell;

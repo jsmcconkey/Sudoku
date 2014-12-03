@@ -1,12 +1,12 @@
+/*
+**Programmer <James McConkey and Ethan Smith>
+*/
+
 package cell;
 
 import java.awt.Color;
-import java.io.Serializable;
 
-
-
-public class Cell implements Serializable {
-	private static final long serialVersionUID = -1794579801776158173L;
+public class Cell {
 	private int value;
 	private int x;
 	private int y; 
@@ -20,7 +20,6 @@ public class Cell implements Serializable {
 		x = ix;
 		y = iy;
 		
-
 		cellColor = Color.white;
 		
 		cellsize = icellsize;

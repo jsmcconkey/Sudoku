@@ -1,3 +1,7 @@
+/*
+**Programmer <James McConkey and Ethan Smith>
+*/
+
 package Menu;
 
 public class UserScore {

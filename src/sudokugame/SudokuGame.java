@@ -1,5 +1,7 @@
-//Programmers <James McConkey, Ethan Smith>
-
+/*
+ * Programmers <James McConkey and Ethan Smith>
+ * 12/5/2014
+ */
 package sudokugame;
 
 import java.util.*;
@@ -201,7 +203,7 @@ public class SudokuGame extends JApplet {
 		card2.easyButton.addMouseListener(new MouseAdapter() {
 			public void mousePressed(MouseEvent e) {
 				int amount = EasyList.size();
-				System.out.println("Size of EasyList: "+ amount);
+//				System.out.println("Size of EasyList: "+ amount);
 				
 				if(amount == 0) {
 					String message = "There are no easy mazes in the data folder!";				  
@@ -218,7 +220,7 @@ public class SudokuGame extends JApplet {
 		card2.mediumButton.addMouseListener(new MouseAdapter() { 
 			public void mousePressed(MouseEvent e) {
 				int amount = MediumList.size();
-				System.out.println("Size of MediumList: "+ amount);
+//				System.out.println("Size of MediumList: "+ amount);
 				
 				if(amount == 0) {
 					String message = "There are no medium mazes in the data folder!";				  
@@ -235,7 +237,7 @@ public class SudokuGame extends JApplet {
 		card2.hardButton.addMouseListener(new MouseAdapter() {
 			public void mousePressed(MouseEvent e) {
 				int amount = HardList.size();
-				System.out.println("Size of HardList: "+ amount);
+//				System.out.println("Size of HardList: "+ amount);
 				
 				if(amount == 0) {
 					String message = "There are no hard mazes in the data folder!";				  
@@ -252,7 +254,7 @@ public class SudokuGame extends JApplet {
 		card2.expertButton.addMouseListener(new MouseAdapter() {
 			public void mousePressed(MouseEvent e) {
 				int amount = ExpertList.size();
-				System.out.println("Size of ExpertList: "+ amount);
+//				System.out.println("Size of ExpertList: "+ amount);
 				
 				if(amount == 0) {
 					String message = "There are no expert mazes in the data folder!";				  
@@ -390,7 +392,7 @@ public class SudokuGame extends JApplet {
 				e.printStackTrace();
 			}
 	  		
-	  		System.out.println("That is a user, now check the password.");
+//	  		System.out.println("That is a user, now check the password.");
 	  		if(password.equals(filePassword)) {
 	  			return true;
 	  		}
@@ -430,7 +432,7 @@ public class SudokuGame extends JApplet {
 	  	File newUser = new File(userParentDirectory);
 	  	
 	  	if(newUser.exists()) {
-	  		System.out.println("That user already exists");
+//	  		System.out.println("That user already exists");
 	  		return true;
 	  	}
 	  	else {
@@ -454,7 +456,7 @@ public class SudokuGame extends JApplet {
 				e.printStackTrace();
 			}
 	  		
-	  		System.out.println("That user does not exist");
+//	  		System.out.println("That user does not exist");
 	  		
 	  		return false;
 	  	}		
@@ -478,7 +480,7 @@ public class SudokuGame extends JApplet {
 	  	}
 		
 		try {
-			System.out.println(userParentDirectory);
+//			System.out.println(userParentDirectory);
   			savedGame.createNewFile();
   			
   			Cell[][] arrayToSave = activeField.getArray();
@@ -499,7 +501,7 @@ public class SudokuGame extends JApplet {
 						C = "white";
 					
 					writer.println(i + "," + j + "," + arrayToSave[i][j].getValue() + "," + arrayToSave[i][j].getLocked() +","+ C);
-					System.out.println(i + "," + j + "," + arrayToSave[i][j].getValue() + "," + arrayToSave[i][j].getLocked());
+//					System.out.println(i + "," + j + "," + arrayToSave[i][j].getValue() + "," + arrayToSave[i][j].getLocked());
 				}
 			}
 			
@@ -508,7 +510,7 @@ public class SudokuGame extends JApplet {
 			for(int i = 0; i < answersToSave.length; i++) {
 				for(int j = 0; j < answersToSave[i].length; j++) {
 					writer.println(i + "," + j + "," + answersToSave[i][j].getValue() + "," + answersToSave[i][j].getLocked());
-					System.out.println(i + "," + j + "," + answersToSave[i][j].getValue() + "," + answersToSave[i][j].getLocked());
+//					System.out.println(i + "," + j + "," + answersToSave[i][j].getValue() + "," + answersToSave[i][j].getLocked());
 				}
 			}			
 			
@@ -545,7 +547,7 @@ public class SudokuGame extends JApplet {
 				dis = new DataInputStream(bis);
 				
 				while((currentLine = dis.readLine()) != null) {			
-					System.out.println("Current line: " + currentLine);				
+//					System.out.println("Current line: " + currentLine);				
 					
 					if(currentLine.contains("/*")) {
 						if(currentLine.contains("correct")) {
@@ -554,7 +556,7 @@ public class SudokuGame extends JApplet {
 					}	
 					else if(currentLine.equals("easy") || currentLine.equals("medium") || currentLine.equals("hard") || currentLine.equals("expert")) {
 			    		savedPuzzle.setDifficulty(currentLine);
-				        System.out.println(currentLine);
+//				        System.out.println(currentLine);
 			    	}
 					else {
 						String tokens[] = currentLine.split(",");
@@ -571,7 +573,7 @@ public class SudokuGame extends JApplet {
 						
 						savedPuzzle.setCell(row, column, value, finished, b);
 						
-						System.out.println(row);
+//						System.out.println(row);
 					}
 				}
 		    } catch (IOException e) {
@@ -646,7 +648,7 @@ public class SudokuGame extends JApplet {
 			int code = JOptionPane.showConfirmDialog(null, cancelMessage, "GIVE UP?!", JOptionPane.YES_NO_OPTION);
 
 			if (code == JOptionPane.NO_OPTION) {
-				System.out.println("This is cancel button");
+//				System.out.println("This is cancel button");
 				r = false;
 			} 
 			else {
@@ -712,29 +714,22 @@ public class SudokuGame extends JApplet {
 		    	  Puzzle thisPuzzle = new Puzzle(xoffset,cellsize,yoffset);
 		    	  boolean finished = false;
 		    	  
-		    	  System.out.println("-------------------------------------------------\nLOADING PUZZLE: "+puzzleName+"\n-------------------------------------------------");
-		    	  
 			      // dis.available() returns 0 if the file does not have more lines.
-			      while (dis.available() != 0) {
-	
-			    	  
+			      while (dis.available() != 0) {			    	  
 					String s = dis.readLine();
 			    	
 					if(s.contains("/*")) {
 						if(s.contains("correct")) {
 							finished = true;
-				    		System.out.println("-------------------------------------------------\nLOADING SOLUTIONS FOR: "+ puzzleName + "\n-------------------------------------------------");
 						}
 						//System.out.println("Comment Line");	
 					}			
 					else if(s.equals("easy") || s.equals("medium") || s.equals("hard") || s.equals("expert")) {
 			    		thisPuzzle.setDifficulty(s);
-				        System.out.println(s);
 			    	}
 			    	else if(s.length() == 5) {
 			    		String tokens[] = s.split(",");
-			    		//System.out.println("Splitting "+s);		    		
-			    		
+
 			    		if(tokens.length != 3) {
 			    			break;
 			    		}
@@ -743,10 +738,9 @@ public class SudokuGame extends JApplet {
 			    		int column = Integer.parseInt(tokens[1]) -1;
 			    		int value = Integer.parseInt(tokens[2]);
 			    		thisPuzzle.setCell(row, column, value,finished,true); 
-				        //System.out.println(s);
 			    	}
 			    	else {
-			    		//System.out.println("Line Unread, cannot understand format!");	
+			    		System.out.println("Line Unread, cannot understand format!");	
 			    	}
 			    		
 			    	
@@ -813,7 +807,7 @@ public class SudokuGame extends JApplet {
 		    BufferedInputStream bis = null;
 		    DataInputStream dis = null;
 		    if(file.exists() == false) {
-			    System.out.println("creating new file---------------------------------\n"+userScoresParentDir);
+//			    System.out.println("creating new file---------------------------------\n"+userScoresParentDir);
 
 		    	File newUserScoresFile = new File(userScoresParentDir, ("topscores.txt"));
 		    	
@@ -839,7 +833,7 @@ public class SudokuGame extends JApplet {
 						String tokens[] = s.split(",");
 				
 						if(tokens.length == 2) {		
-							System.out.println("Reading Scores: " + s);	
+//							System.out.println("Reading Scores: " + s);	
 							int v = Integer.parseInt(tokens[1]);
 						
 							UserScore thisScore = new UserScore(tokens[0], v);
@@ -890,7 +884,7 @@ public class SudokuGame extends JApplet {
 		    BufferedInputStream bis = null;
 		    DataInputStream dis = null;
 		    if(file.exists() == false) {
-			    System.out.println("Score File does not exist. Creating a new one");
+//			    System.out.println("Score File does not exist. Creating a new one");
 
 		    	File newUserScoresFile = new File(userScoresParentDir, ("topscores.txt"));
 		    	
@@ -933,11 +927,11 @@ public class SudokuGame extends JApplet {
 				if(username.equals(ScoreList.get(i).getName())) {
 						found = true;
 						ScoreList.get(i).addPoints(points);		
-						System.out.println("Adding " + points + " to " + username + " for a total of "+ ScoreList.get(i).getValue());
+//						System.out.println("Adding " + points + " to " + username + " for a total of "+ ScoreList.get(i).getValue());
 				}
 			}	
 			if(found == false) {
-				System.out.println("Could not find user "+username+". Adding to the list");
+//				System.out.println("Could not find user "+username+". Adding to the list");
 				UserScore thisScore = new UserScore(username, points);	
 				ScoreList.add(thisScore);
 			}
@@ -949,7 +943,7 @@ public class SudokuGame extends JApplet {
 		
 		public void printList() {			
 			for(int i = 0; i<ScoreList.size(); i++) {
-				System.out.println("Printing: "+ScoreList.get(i).getName() + ": " + ScoreList.get(i).getValue());
+//				System.out.println("Printing: "+ScoreList.get(i).getName() + ": " + ScoreList.get(i).getValue());
 			}	
 		}
 		

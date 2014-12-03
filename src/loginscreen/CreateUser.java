@@ -1,3 +1,7 @@
+/*
+**Programmer <James McConkey and Ethan Smith>
+*/
+
 package loginscreen;
 
 import javax.swing.*;

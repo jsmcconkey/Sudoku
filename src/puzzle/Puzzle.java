@@ -1,3 +1,7 @@
+/*
+ * Programmers <James McConkey and Ethan Smith>
+ */
+
 package puzzle;
 
 import java.util.Random;

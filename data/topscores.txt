@@ -9,3 +9,4 @@ Christian,5
 BigJ,4
 Snoopy,2
 Janet,1
+Goat,0

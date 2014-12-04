@@ -5,6 +5,7 @@
 package loginscreen;
 
 import javax.swing.*;
+
 import java.awt.*;
 
 public class CreateUser extends JPanel {
@@ -16,6 +17,7 @@ public class CreateUser extends JPanel {
 	public JPasswordField newPassword;
 	public JPasswordField confirmNewPassword;
 	public JButton createUser;
+	public JButton backButton;
 	public Image background;
 	
 	//Constructor
@@ -29,8 +31,8 @@ public class CreateUser extends JPanel {
 		setBackground(new Color(224,224,224));
 		
 		message = new JLabel("Please enter a new username and password:");
-		message.setFont(new Font("Arial", Font.BOLD, 24));
-		message.setBounds(this.getWidth()/15, this.getHeight()/10, 600, 20);
+		message.setFont(new Font("Arial", Font.BOLD, 22));
+		message.setBounds(this.getWidth()/15, this.getHeight()/10, 600, 125);
 		add(message);
 		
 		usernameLabel = new JLabel("New Username:");
@@ -45,7 +47,7 @@ public class CreateUser extends JPanel {
 		
 		passwordLabel = new JLabel("Confirm Password:");
 		passwordLabel.setFont(new Font("Arial", Font.BOLD, 15));
-		passwordLabel.setBounds(this.getWidth()/2-200, this.getHeight()/3+60, 150, 20);
+		passwordLabel.setBounds(this.getWidth()/2-200, this.getHeight()/3+60, 160, 20);
 		add(passwordLabel);
 		
 		newUsername = new JTextField(15);
@@ -67,6 +69,11 @@ public class CreateUser extends JPanel {
 		createUser.setBackground(new Color(102,255,255));
 		createUser.setBounds(this.getWidth()-200,158,125,85);
 		add(createUser);
+		
+		backButton = new JButton("<== Login Screen");
+		backButton.setBackground(new Color(102,255,255));
+		backButton.setBounds(this.getWidth()/20,this.getHeight()/20,175,50);
+		add(backButton);
 	}
 	
 	public void paintComponent(Graphics g) {

@@ -137,6 +137,12 @@ public class SudokuGame extends JApplet {
 		
 		
 		//Create User Screen Action Listeners*****************
+		card1.backButton.addMouseListener(new MouseAdapter() {
+			public void mousePressed(MouseEvent e) {
+				cardLayout.show(cards, "LoginScreen");
+			}
+		});
+		
 		card1.createUser.addMouseListener(new MouseAdapter() {
 			public void mousePressed(MouseEvent e){
 				boolean passwordsMatch = true;
@@ -194,7 +200,8 @@ public class SudokuGame extends JApplet {
 				}
 			}
 		});
-		  
+		
+		//Main Menu Screen action listeners*******************S
 		card2.easyButton.addMouseListener(new MouseAdapter() {
 			public void mousePressed(MouseEvent e) {
 				int amount = EasyList.size();

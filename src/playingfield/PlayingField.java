@@ -4,37 +4,20 @@
 
 package playingfield;
 
-import javax.swing.*;
-
 import java.awt.Font;
-
 import javax.swing.JPanel;
-
 import java.awt.Color;
-
 import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.ImageIcon;
-
 import puzzle.Puzzle;
-
 import java.awt.BasicStroke;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
-
 import cell.Cell;
 import gridselector.GridSelector;
-
-import java.awt.BorderLayout; 
-import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.event.MouseMotionListener;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Random;
 
 
 public class PlayingField extends JPanel implements Serializable {

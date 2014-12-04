@@ -7,7 +7,6 @@ package gridselector;
 
 import javax.swing.JPanel; //imports JFrame library
 import javax.swing.JButton; //imports JButton library
-
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -24,7 +23,7 @@ public class GridSelector extends JPanel {
 	
 	JButton[][] grid; //names the grid of buttons
 	 
-	//Default Constructor
+	//Constructor
 	public GridSelector() {  	
 		setLayout(new GridLayout(3,3)); //set layout
 		grid=new JButton[3][3]; //allocate the size of grid

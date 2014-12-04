@@ -14,6 +14,7 @@ public class Cell {
 	private Color cellColor;
 	boolean locked;
 	
+	//Constructor
 	public Cell(int n, boolean l, int ix, int iy, int icellsize) {
 		value = n;	
 		locked = l;
@@ -29,6 +30,7 @@ public class Cell {
 		}	
 	}
 	
+	//Methods
 	public boolean getLocked() {	
 		return locked;
 	}

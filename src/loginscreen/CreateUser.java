@@ -5,7 +5,6 @@
 package loginscreen;
 
 import javax.swing.*;
-
 import java.awt.*;
 
 public class CreateUser extends JPanel {
@@ -19,6 +18,7 @@ public class CreateUser extends JPanel {
 	public JButton createUser;
 	public Image background;
 	
+	//Constructor
 	public CreateUser(Image b) {
 		super();
 		

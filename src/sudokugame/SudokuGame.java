@@ -7,13 +7,10 @@ package sudokugame;
 import java.util.*;
 import java.awt.*;
 import java.io.*;
-import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-
 import javax.imageio.ImageIO;
 import javax.swing.*;
-
 import cell.Cell;
 import playingfield.PlayingField;
 import puzzle.Puzzle;
@@ -24,29 +21,25 @@ import loginscreen.CreateUser;
 import loginscreen.LoginScreen;
 import loginscreen.User;
 import osdetector.OSDetector;
-
 import java.io.BufferedInputStream;
 import java.io.DataInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.net.URL;
-import java.nio.file.Files;
-import java.nio.file.LinkOption;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 
 public class SudokuGame extends JApplet {
+	//Data
 	private final int WIDTH = 640;
 	private final int HEIGHT = 480;
 	private final int yoffset = 1;
 	private final int xoffset = 30;
 	private final int cellsize = 52;
 	private final int AMNT_PUZZLES = 9;
+	private String userParentDirectory = null;
+	private String userScoresParentDir = null;
+	private String username = null;
 	private Random rn;
-	
 	private PlayingField activeField;
 	private ScoresTable activeScoreCard;
 	
@@ -56,64 +49,64 @@ public class SudokuGame extends JApplet {
 	private ArrayList<Puzzle> HardList;
 	private ArrayList<Puzzle> ExpertList;
 	private ArrayList<UserScore> ScoreList;
-	
 	private ArrayList<User> UserList;
 	
-	private String userParentDirectory = null;
-	private String userScoresParentDir = null;
-	private String username = null;
-	
-	//Images
+	//Background Images
 	private Image titleBackground;
 	private Image gameBackground;
 	private Image scoresBackground;
 	private Image createBackground;
 	private Image menuBackground;
 	
+	//Main initialization function
 	public void init() {
 		this.setSize(WIDTH, HEIGHT);
 		
+		//Initialize the Lists to be used for the game
 		EasyList = new ArrayList<Puzzle>();
 		MediumList = new ArrayList<Puzzle>();
 		HardList = new ArrayList<Puzzle>();
 		ExpertList = new ArrayList<Puzzle>();
 		UserList = new ArrayList<User>();
-		
 		ScoreList = new ArrayList<UserScore>();
 		
+		//Load all of the data using the file I/O system
 		readPuzzles();
 		readScores();
 		loadImages();
 		
+		//Random number to be used for puzzle selection
 		rn = new Random();
 				
+		//Sudoku PlayingField and HighScore  cards
 		activeField = new PlayingField(xoffset,cellsize,yoffset,gameBackground);
 		activeScoreCard = new ScoresTable(ScoreList,scoresBackground);
 		
+		
+		//The transitions in the game will be handled using a CardLayout.
 		final JPanel cards = new JPanel(new CardLayout());  
-				  
 		final LoginScreen card0 = new LoginScreen(titleBackground);
 		final CreateUser card1 = new CreateUser(createBackground);
 		final MainMenu card2 = new MainMenu(menuBackground);
 		final PlayingField card3 = activeField;
 		final ScoresTable card4 = activeScoreCard;
 		
-		
-		//Each screen will be a different screen, we will switch between these like "cards"
-		//In the end our game should have login screen, main menu, game, and scores, for a total
-		//of four cards.
 		cards.add(card0, "LoginScreen");
 		cards.add(card1, "CreateUser");
 		cards.add(card2, "MainMenu");
 		cards.add(card3, "MainGame");
 		cards.add(card4, "UserScores");
-				  
+		
 		this.add(cards);
-				  
 		final CardLayout cardLayout = (CardLayout) cards.getLayout();
 		
-						  
-		//Mouse Listeners for the Login Screen
+		
+		/*
+		 * Mouse Listeners that involve card transitions are found below because
+		 * card transitions must take place in this area of the game.
+		 */
+		
+		//Login Screen Action Listeners******************
 		card0.login.addMouseListener(new MouseAdapter() { 
 			public void mousePressed(MouseEvent e){
 				username = card0.enterUsername.getText();
@@ -141,7 +134,9 @@ public class SudokuGame extends JApplet {
 				cardLayout.show(cards, "CreateUser");
 			}
 		});
-		  
+		
+		
+		//Create User Screen Action Listeners*****************
 		card1.createUser.addMouseListener(new MouseAdapter() {
 			public void mousePressed(MouseEvent e){
 				boolean passwordsMatch = true;
@@ -203,8 +198,7 @@ public class SudokuGame extends JApplet {
 		card2.easyButton.addMouseListener(new MouseAdapter() {
 			public void mousePressed(MouseEvent e) {
 				int amount = EasyList.size();
-//				System.out.println("Size of EasyList: "+ amount);
-				
+
 				if(amount == 0) {
 					String message = "There are no easy mazes in the data folder!";				  
 					JOptionPane.showMessageDialog(null, message);					
@@ -220,7 +214,6 @@ public class SudokuGame extends JApplet {
 		card2.mediumButton.addMouseListener(new MouseAdapter() { 
 			public void mousePressed(MouseEvent e) {
 				int amount = MediumList.size();
-//				System.out.println("Size of MediumList: "+ amount);
 				
 				if(amount == 0) {
 					String message = "There are no medium mazes in the data folder!";				  
@@ -237,7 +230,6 @@ public class SudokuGame extends JApplet {
 		card2.hardButton.addMouseListener(new MouseAdapter() {
 			public void mousePressed(MouseEvent e) {
 				int amount = HardList.size();
-//				System.out.println("Size of HardList: "+ amount);
 				
 				if(amount == 0) {
 					String message = "There are no hard mazes in the data folder!";				  
@@ -254,7 +246,6 @@ public class SudokuGame extends JApplet {
 		card2.expertButton.addMouseListener(new MouseAdapter() {
 			public void mousePressed(MouseEvent e) {
 				int amount = ExpertList.size();
-//				System.out.println("Size of ExpertList: "+ amount);
 				
 				if(amount == 0) {
 					String message = "There are no expert mazes in the data folder!";				  
@@ -274,8 +265,7 @@ public class SudokuGame extends JApplet {
 				cardLayout.show(cards, "UserScores");
 			}
 		});
-		
-		  
+				  
 		card2.loadGame.addMouseListener(new MouseAdapter() {
 			public void mousePressed(MouseEvent e) {
 				boolean gameExists = loadGame();
@@ -295,7 +285,7 @@ public class SudokuGame extends JApplet {
 			}
 		});
 		  
-		  
+		//Main Game Action Listeners**********************
 		card3.giveUp.addMouseListener(new MouseAdapter() {
 			public void mousePressed(MouseEvent e) {		
 				boolean yesno = giveUp();
@@ -332,18 +322,16 @@ public class SudokuGame extends JApplet {
 				}
 			}
 		});
-				  
+		
+		//High Scores Screen Action Listeners*****************
 		card4.backButton.addMouseListener(new MouseAdapter() {
 			public void mousePressed(MouseEvent e) {
 				cardLayout.show(cards, "MainMenu");
 			}
 		});
-		
-		
-		
-	   }
+	}
   	
-  	
+  	//checkLogin checks to the I/O system if the login exists and if the password is correct
   	public boolean checkLogin(String username, String password) {
 	  	String path = null;
 	  	String fileUsername = null;
@@ -392,7 +380,6 @@ public class SudokuGame extends JApplet {
 				e.printStackTrace();
 			}
 	  		
-//	  		System.out.println("That is a user, now check the password.");
 	  		if(password.equals(filePassword)) {
 	  			return true;
 	  		}
@@ -408,7 +395,9 @@ public class SudokuGame extends JApplet {
 	  		return false;
 	  	}  	
 	}
-  
+  	
+  	//addUser creates a new folder for the user and stores information about the user such as
+  	//their username and password.
 	public boolean addUser(String username, String password) {
 	  	String path = null;
 	  	
@@ -432,7 +421,6 @@ public class SudokuGame extends JApplet {
 	  	File newUser = new File(userParentDirectory);
 	  	
 	  	if(newUser.exists()) {
-//	  		System.out.println("That user already exists");
 	  		return true;
 	  	}
 	  	else {
@@ -444,7 +432,6 @@ public class SudokuGame extends JApplet {
 	  			try {
 					userInfo.createNewFile();
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 				PrintWriter writer = new PrintWriter(path);//, "UTF-8)");
@@ -452,16 +439,14 @@ public class SudokuGame extends JApplet {
 				writer.println(password);
 				writer.close();
 			} catch (FileNotFoundException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-	  		
-//	  		System.out.println("That user does not exist");
 	  		
 	  		return false;
 	  	}		
 	}
 	
+	//saveGame saves each value in the user's puzzle to a file in the user's directory.
 	public void saveGame() {
 		File savedGame = null;
 		PrintWriter writer = null;
@@ -480,7 +465,6 @@ public class SudokuGame extends JApplet {
 	  	}
 		
 		try {
-//			System.out.println(userParentDirectory);
   			savedGame.createNewFile();
   			
   			Cell[][] arrayToSave = activeField.getArray();
@@ -501,7 +485,6 @@ public class SudokuGame extends JApplet {
 						C = "white";
 					
 					writer.println(i + "," + j + "," + arrayToSave[i][j].getValue() + "," + arrayToSave[i][j].getLocked() +","+ C);
-//					System.out.println(i + "," + j + "," + arrayToSave[i][j].getValue() + "," + arrayToSave[i][j].getLocked());
 				}
 			}
 			
@@ -510,7 +493,6 @@ public class SudokuGame extends JApplet {
 			for(int i = 0; i < answersToSave.length; i++) {
 				for(int j = 0; j < answersToSave[i].length; j++) {
 					writer.println(i + "," + j + "," + answersToSave[i][j].getValue() + "," + answersToSave[i][j].getLocked());
-//					System.out.println(i + "," + j + "," + answersToSave[i][j].getValue() + "," + answersToSave[i][j].getLocked());
 				}
 			}			
 			
@@ -520,6 +502,8 @@ public class SudokuGame extends JApplet {
 		}
 	}
 	
+	//loadGame goes through and loads the game that is saved in the user's profile.
+	//Currently the user can only save one game
 	public boolean loadGame() {
 		Puzzle savedPuzzle = new Puzzle(xoffset,cellsize,yoffset);
 		File file = null;
@@ -547,8 +531,6 @@ public class SudokuGame extends JApplet {
 				dis = new DataInputStream(bis);
 				
 				while((currentLine = dis.readLine()) != null) {			
-//					System.out.println("Current line: " + currentLine);				
-					
 					if(currentLine.contains("/*")) {
 						if(currentLine.contains("correct")) {
 							finished = true;
@@ -556,7 +538,6 @@ public class SudokuGame extends JApplet {
 					}	
 					else if(currentLine.equals("easy") || currentLine.equals("medium") || currentLine.equals("hard") || currentLine.equals("expert")) {
 			    		savedPuzzle.setDifficulty(currentLine);
-//				        System.out.println(currentLine);
 			    	}
 					else {
 						String tokens[] = currentLine.split(",");
@@ -572,12 +553,9 @@ public class SudokuGame extends JApplet {
 						}
 						
 						savedPuzzle.setCell(row, column, value, finished, b);
-						
-//						System.out.println(row);
 					}
 				}
 		    } catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		    
@@ -589,6 +567,8 @@ public class SudokuGame extends JApplet {
 	  	}
 	}
 	
+	//checkPuzzle checks the current Sudoku puzzle for completion and displays
+	//the appropriate message
 	public boolean checkPuzzle() {
 		boolean puzzleComplete = activeField.checkVictory();
 		int points = activeField.checkScore();
@@ -619,6 +599,9 @@ public class SudokuGame extends JApplet {
 		}
 	}
 	
+	//The giveUp function gives the user the option to confirm or cancel whether or not
+	//they would like to give up.  If they confirm then they will be rewarded for the spaces
+	//that they have correct.
 	public boolean giveUp() {
 		boolean puzzleComplete = activeField.checkVictory();
 		int points = activeField.checkScore();
@@ -648,7 +631,6 @@ public class SudokuGame extends JApplet {
 			int code = JOptionPane.showConfirmDialog(null, cancelMessage, "GIVE UP?!", JOptionPane.YES_NO_OPTION);
 
 			if (code == JOptionPane.NO_OPTION) {
-//				System.out.println("This is cancel button");
 				r = false;
 			} 
 			else {
@@ -662,20 +644,21 @@ public class SudokuGame extends JApplet {
 		return r;	
 	}
 	
-	  public void Reload() {		
-		    activeField.setButtonGridVisible(false);
-			EasyList.clear();
-			EasyList = new ArrayList<Puzzle>();
-			MediumList.clear();
-			MediumList = new ArrayList<Puzzle>();
-			HardList.clear();
-			HardList = new ArrayList<Puzzle>();
-			ExpertList.clear();
-			ExpertList = new ArrayList<Puzzle>();
-			UserList.clear();
-			UserList = new ArrayList<User>();
-			readPuzzles();
-	  }
+	//Reloads all of the puzzles into the appropriate data structures
+	public void Reload() {		
+		activeField.setButtonGridVisible(false);
+		EasyList.clear();
+		EasyList = new ArrayList<Puzzle>();
+		MediumList.clear();
+		MediumList = new ArrayList<Puzzle>();
+		HardList.clear();
+		HardList = new ArrayList<Puzzle>();
+		ExpertList.clear();
+		ExpertList = new ArrayList<Puzzle>();
+		UserList.clear();
+		UserList = new ArrayList<User>();
+		readPuzzles();
+	}
 	  
 	  public void readPuzzles() {
 		  	String path = null;
@@ -742,9 +725,6 @@ public class SudokuGame extends JApplet {
 			    	else {
 			    		System.out.println("Line Unread, cannot understand format!");	
 			    	}
-			    		
-			    	
-	
 			      }
 	
 			      // dispose all the resources after using them.
@@ -776,7 +756,7 @@ public class SudokuGame extends JApplet {
 		}
 	  
 	  
-	  
+	  	//readScores reads all of the scores into the scoreList data structure
 	  	public void readScores() {
 	  		ScoreList.clear();
 	  		//Rewrites Scorelist every time you call this function. We don't want repeats
@@ -798,7 +778,6 @@ public class SudokuGame extends JApplet {
 		  	} catch (Exception e) {
 		  		e.printStackTrace(System.err);
 		  	}
-			
 	
 		  	//Search the file for the user, if they don't exist then add them
 		  	String currentLine = null;
@@ -807,8 +786,6 @@ public class SudokuGame extends JApplet {
 		    BufferedInputStream bis = null;
 		    DataInputStream dis = null;
 		    if(file.exists() == false) {
-//			    System.out.println("creating new file---------------------------------\n"+userScoresParentDir);
-
 		    	File newUserScoresFile = new File(userScoresParentDir, ("topscores.txt"));
 		    	
 		    	try {
@@ -833,7 +810,6 @@ public class SudokuGame extends JApplet {
 						String tokens[] = s.split(",");
 				
 						if(tokens.length == 2) {		
-//							System.out.println("Reading Scores: " + s);	
 							int v = Integer.parseInt(tokens[1]);
 						
 							UserScore thisScore = new UserScore(tokens[0], v);
@@ -856,7 +832,8 @@ public class SudokuGame extends JApplet {
 		    
 		    sortScores(ScoreList);
 		}
-	  	
+	  
+	   //writeScores writes the scores to topscores.txt in the data file
 	   public void writeScores() {
 			String path = null;
 			sortScores(ScoreList);
@@ -884,8 +861,6 @@ public class SudokuGame extends JApplet {
 		    BufferedInputStream bis = null;
 		    DataInputStream dis = null;
 		    if(file.exists() == false) {
-//			    System.out.println("Score File does not exist. Creating a new one");
-
 		    	File newUserScoresFile = new File(userScoresParentDir, ("topscores.txt"));
 		    	
 		    	try {
@@ -898,7 +873,6 @@ public class SudokuGame extends JApplet {
 						
 					writer.close();
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 		    }	  		
@@ -920,33 +894,25 @@ public class SudokuGame extends JApplet {
 		    }
 		}	  	
   	
-	  
+	   	//updateUserScores updates the users score in the topscores.txt file
 		public void updateUserScores(int points) {	
 			boolean found = false;
 			for(int i = 0; i<ScoreList.size(); i++) {
 				if(username.equals(ScoreList.get(i).getName())) {
 						found = true;
 						ScoreList.get(i).addPoints(points);		
-//						System.out.println("Adding " + points + " to " + username + " for a total of "+ ScoreList.get(i).getValue());
 				}
 			}	
 			if(found == false) {
-//				System.out.println("Could not find user "+username+". Adding to the list");
 				UserScore thisScore = new UserScore(username, points);	
 				ScoreList.add(thisScore);
 			}
 			
-			printList();
+//			printList();
 			writeScores();		
 		}
 		
-		
-		public void printList() {			
-			for(int i = 0; i<ScoreList.size(); i++) {
-//				System.out.println("Printing: "+ScoreList.get(i).getName() + ": " + ScoreList.get(i).getValue());
-			}	
-		}
-		
+	//loadImages loads the background images to be used for the backgrounds in the game.
 	public void loadImages() {
 	  	String path = null;
 	  	
@@ -978,6 +944,7 @@ public class SudokuGame extends JApplet {
 	  	
 	}
 	
+	//sortScores uses bubble sort to put the scores in the scoreList in descending order.
 	public void sortScores(ArrayList<UserScore> scoreList) {
 		for(int i = 0; i<scoreList.size(); i++) {
 			int iPositionValue = scoreList.get(i).getValue();
@@ -1000,4 +967,11 @@ public class SudokuGame extends JApplet {
 			}
 		}		
 	}
+	
+//	printList is a print debug function
+//	public void printList() {			
+//		for(int i = 0; i<ScoreList.size(); i++) {
+//			System.out.println("Printing: "+ScoreList.get(i).getName() + ": " + ScoreList.get(i).getValue());
+//		}	
+//	}
 }

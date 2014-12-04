@@ -4,10 +4,7 @@
 
 package puzzle;
 
-import java.util.Random;
-
 import cell.Cell;
-
 
 public class Puzzle {
 	public Cell[][] cellArray = new Cell[9][9];

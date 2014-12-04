@@ -5,12 +5,7 @@
 package loginscreen;
 
 import javax.swing.*;
-
-import osdetector.OSDetector;
-
 import java.awt.*;
-import java.io.File;
-import java.io.PrintWriter;
 
 public class LoginScreen extends JPanel {
 
@@ -25,6 +20,7 @@ public class LoginScreen extends JPanel {
 	
 	public Image background;
 		
+	//Constructor
 	public LoginScreen(Image b) {
 		super();
 		

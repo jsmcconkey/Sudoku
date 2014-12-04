@@ -6,11 +6,8 @@ package Menu;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
-
 import java.awt.*;
 import java.util.ArrayList;
-
-import loginscreen.User;
 
 public class ScoresTable extends JPanel {
 	public JLabel message;
@@ -20,7 +17,7 @@ public class ScoresTable extends JPanel {
 	public JTable scoreTable;
 	public Image background;
 	
-	//Constructors
+	//Constructor
 	public ScoresTable(ArrayList<UserScore> scoreList,Image b) {
 		super();
 		
@@ -61,7 +58,6 @@ public class ScoresTable extends JPanel {
 		scoreTable = new JTable(topScores, columnNames);
 		scoreTable.setBounds(640/2-125, 100, 400, 200);
 		scoreTable.setRowHeight(20);
-//		scoreTable.setBackground(Color.black);
 		scoreTable.setOpaque(false);
 		((DefaultTableCellRenderer)scoreTable.getDefaultRenderer(Object.class)).setOpaque(false);
 		scoreTable.setFont(new Font("Arial", Font.BOLD, 15));
@@ -77,7 +73,6 @@ public class ScoresTable extends JPanel {
 			scoreTable.setValueAt(scoreList.get(i).getName(), i, 0);
 			scoreTable.setValueAt(String.valueOf(scoreList.get(i).getValue()), i, 1);
 		}
-		
 		repaint();
 	}
 	

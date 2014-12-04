@@ -5,7 +5,6 @@
 package Menu;
 
 import javax.swing.*;
-
 import java.awt.*;
 
 public class MainMenu extends JPanel {
@@ -22,6 +21,7 @@ public class MainMenu extends JPanel {
 	public JButton logout;
 	public Image background;
 	
+	//Constructor
 	public MainMenu(Image b) {
 		super();
 		

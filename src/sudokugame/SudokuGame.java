@@ -9,6 +9,8 @@ import java.awt.*;
 import java.io.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import cell.Cell;
@@ -28,7 +30,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
-public class SudokuGame extends JApplet {
+public class SudokuGame extends Frame implements WindowListener {
 	//Data
 	private final int WIDTH = 640;
 	private final int HEIGHT = 480;
@@ -58,9 +60,29 @@ public class SudokuGame extends JApplet {
 	private Image createBackground;
 	private Image menuBackground;
 	
+	public static void main(String[] args) {
+		SudokuGame game = new SudokuGame();
+//		game.setSize(640, 480);
+		game.setVisible(true);
+		game.setLayout(null);
+		game.setBounds(200, 200, 640, 480);
+	}
+	
+	public void windowClosing(WindowEvent e) {
+		dispose();
+		System.exit(0);
+	}
+	public void windowOpened(WindowEvent e){}
+	public void windowIconified(WindowEvent e){}
+	public void windowClosed(WindowEvent e){}
+	public void windowDeiconified(WindowEvent e){}
+	public void windowActivated(WindowEvent e){}
+	public void windowDeactivated(WindowEvent e){}
+	
 	//Main initialization function
-	public void init() {
+	public SudokuGame() {
 		this.setSize(WIDTH, HEIGHT);
+		this.addWindowListener(this);
 		
 		//Initialize the Lists to be used for the game
 		EasyList = new ArrayList<Puzzle>();
@@ -974,6 +996,7 @@ public class SudokuGame extends JApplet {
 			}
 		}		
 	}
+
 	
 //	printList is a print debug function
 //	public void printList() {			

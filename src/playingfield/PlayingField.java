@@ -20,9 +20,7 @@ import java.awt.event.MouseEvent;
 import java.io.Serializable;
 
 
-public class PlayingField extends JPanel implements Serializable {
-	private static final long serialVersionUID = -6651451576028481191L;
-	
+public class PlayingField extends JPanel {	
 	//Main Variables
 	public Cell[][] cellArray;
 	public Cell[][] answerArray;
